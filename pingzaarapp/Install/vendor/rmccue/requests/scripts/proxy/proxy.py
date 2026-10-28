@@ -1,3 +1,4 @@
+import utils.session
 def request(flow):
 	flow.request.headers["x-requests-proxy"] = "http"
 
