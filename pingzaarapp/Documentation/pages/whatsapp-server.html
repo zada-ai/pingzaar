@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WhatsApp server — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Servers & devices</h6>
+                        <h1 class="header-title"><i class="la la-server la-lg"></i> WhatsApp server</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Set up and run the WhatsApp server that your Zender installation talks to, link
+       WhatsApp accounts to it, and keep it reachable even when it can't get a public IP
+       address of its own.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/admin-waservers.png" target="_blank" rel="noopener"><img src="../assets/screenshots/admin-waservers.png" alt="Admin → WA Servers, where each server is registered" loading="lazy"></a>
+  <figcaption>Admin → WA Servers, where each server is registered</figcaption>
+</figure>
+
+<figure class="doc-shot">
+  <a href="../assets/screenshots/hosts-whatsapp.png" target="_blank" rel="noopener"><img src="../assets/screenshots/hosts-whatsapp.png" alt="Linked WhatsApp accounts" loading="lazy"></a>
+  <figcaption>Linked WhatsApp accounts</figcaption>
+</figure>
+
+    <p>WhatsApp is not sent by the PHP application itself. It's sent by a standalone
+       binary that you run as a <strong>separate process</strong> next to Zender, shipped
+       ready to run in your release's <code>WhatsApp/prebuilt/</code> folder. The PHP app
+       talks to it over plain HTTP, authenticated with a shared secret; the binary owns the
+       actual WhatsApp connections. This is the single most important piece of
+       infrastructure to get right before you tell customers WhatsApp works — if it's down
+       or misconfigured, every WhatsApp feature in the dashboard silently stops working.</p>
+    <p>Each running server is registered in the dashboard under <em>Admin &rarr; WA
+       Servers</em>. A Zender installation can have more than one WhatsApp server
+       registered — useful for spreading accounts across machines or assigning specific
+       servers to specific subscription packages.</p>
+
+    <h2>Choosing a binary</h2>
+    <p>Three platforms ship as tested, ready-to-run binaries in <code>WhatsApp/prebuilt/</code>:</p>
+    <table class="doc-table">
+      <thead><tr><th>File</th><th>Platform</th></tr></thead>
+      <tbody>
+        <tr><td><code>titansys-whatsapp-linux</code></td><td>Linux x86-64</td></tr>
+        <tr><td><code>titansys-whatsapp-arm64</code></td><td>Linux ARM64</td></tr>
+        <tr><td><code>titansys-whatsapp-macos</code></td><td>macOS (Apple Silicon)</td></tr>
+      </tbody>
+    </table>
+    <p>None of these binaries has any system library dependencies to install on the target
+       machine — copy the file over and run it.</p>
+
+    <h2>Running it</h2>
+    <p>Copy the binary to your server, make it executable, and start it with at minimum a
+       secret key:</p>
+    <pre><code>chmod +x titansys-whatsapp-linux
+./titansys-whatsapp-linux --key="YOUR_SECRET_KEY" --port=8899</code></pre>
+    <p><code>--key</code> is the only required flag — it's the shared secret that Zender
+       and this server use to authenticate requests to each other, and it must match the
+       secret you enter for this server in the dashboard. <code>--port</code> defaults to
+       <code>8899</code> if omitted; <code>--host</code> defaults to the wildcard
+       <code>0.0.0.0</code>. Run <code>./titansys-whatsapp-linux --help</code> on the
+       binary for the full flag list, including optional outbound proxy support
+       (<code>--proxy-host</code>, <code>--proxy-port</code>, <code>--proxy-protocol</code>,
+       <code>--proxy-username</code>, <code>--proxy-password</code>) and the ngrok
+       tunnelling flags covered below.</p>
+    <p>You can keep the settings in a file instead of passing flags. Copy
+       <code>config.example.json</code> (in <code>WhatsApp/src/</code>) to
+       <code>config.json</code> beside the binary and fill in
+       <code>server.secret</code>. Flags still win over the file where both are set.</p>
+
+    <div class="doc-warn">
+      <strong>Choose the secret properly — it is the entire authentication between Zender
+      and this server.</strong> Anyone who knows it can send messages from, and read
+      messages arriving at, every WhatsApp account linked to this server. Use a long random
+      string, not a word or a short number. The server refuses to start on an obvious
+      placeholder such as <code>123456</code> or <code>changeme</code>, but it cannot tell
+      a weak secret of your own invention from a strong one.
+    </div>
+    <div class="doc-warn">
+      The binary does <strong>not</strong> restart itself if it crashes or the process is
+      killed. Run it under a process supervisor — a systemd unit on Linux, or launchd on macOS — rather
+      than a bare terminal session or a plain <code>&amp;</code> background job. If the
+      WhatsApp server goes down unsupervised, every linked account stops sending and
+      receiving until someone notices and starts it back up by hand.
+    </div>
+
+    <h2>Registering it in Zender</h2>
+    <p>In <em>Admin &rarr; WA Servers</em>, click <strong>Add server</strong> and fill in
+       the server's name, its URL and port (the same host and port the binary is listening
+       on), and the secret — this must be exactly the value you passed to
+       <code>--key</code>. You can also cap how many WhatsApp accounts this server accepts
+       and restrict which subscription packages are allowed to use it.</p>
+
+    <h2>Linking an account</h2>
+    <p>Accounts are linked from <em>Hosts &rarr; WhatsApp</em>, not from the WA Servers
+       admin screen — WA Servers only registers the server process itself. Click
+       <strong>Add WhatsApp account</strong>, pick which registered server to use, and
+       click <strong>Link</strong>. Zender asks the server to create a new session, the
+       server generates a WhatsApp Web-style QR code, and the dashboard displays it for you
+       to scan from your phone's WhatsApp app (Linked devices &rarr; Link a device). Once
+       scanned, the session is established and persists in that server's own local session
+       store — it is not stored by the PHP application or in Zender's database, so if you
+       move an account to a different WhatsApp server it has to be linked again from
+       scratch.</p>
+
+    <h2>Running it without a public IP address, using ngrok</h2>
+    <p>If you're hosting the WhatsApp server on a machine that isn't reachable from the
+       internet — a home connection, a machine behind a router with no port forwarding, an
+       Android phone (see below) — Zender still needs some public address to reach it on.
+       The binary has built-in support for ngrok, a tunnelling service, so you don't have
+       to buy or configure a public IP yourself.</p>
+    <p>Sign up for a free ngrok account and copy your authtoken from your ngrok dashboard.
+       Then start the binary with the token and a comma-separated list of every Zender
+       site that should be updated automatically (each one prefixed with whichever scheme,
+       <code>http</code> or <code>https</code>, that site actually runs under):</p>
+    <pre><code>./titansys-whatsapp-linux --key="YOUR_SECRET_KEY" \
+  --ngroktoken="NGROK_AUTHTOKEN" \
+  --ngrokserver="site-one.example.com,site-two.example.com"</code></pre>
+    <div class="doc-note">
+      With ngrok enabled, the binary registers its public tunnel URL with every listed
+      Zender site automatically, over the same shared secret — you never have to look up
+      or type in the server's URL and port by hand, and this works across multiple Zender
+      sites at once as long as they all use the same secret key for this server.
+    </div>
+
+    <h2>Running it on an Android phone</h2>
+    <p>Because the binary has no system library dependencies, you're not limited to
+       renting a VPS to run it — an idle ARM64 Android phone works too, which is a cheap
+       way to add WhatsApp capacity if you already have spare devices lying around. Install
+       Termux (the F-Droid build, not the Play Store one) and use it to install a Ubuntu
+       userland — a one-time setup that takes a single long command inside Termux, and
+       gives you a normal Linux shell to copy the <code>titansys-whatsapp-arm64</code>
+       binary into and run exactly as you would on a server. Since a phone virtually never
+       has a public IP, you'll also need ngrok, above, to make it reachable.</p>
+    <div class="doc-warn">
+      Android will kill background apps to save battery, and Termux is no exception. Keep
+      Termux alive with its own wake-lock feature (or leave the screen on) for as long as
+      you need the WhatsApp server running on that device — if Termux gets suspended, the
+      binary stops with it and the phone's WhatsApp accounts go offline the same as any
+      other unsupervised crash.
+    </div>
+
+    <h2>Building for Windows</h2>
+    <p>Windows is the one platform without a ready-to-run binary in the release. The full
+       source ships at <code>WhatsApp/src/</code>, so you can build it yourself. You'll
+       need Go 1.25 or newer:</p>
+    <pre><code>cd WhatsApp/src
+make build-windows   # Windows x86-64  -&gt; dist/titansys-whatsapp-win.exe
+</code></pre>
+    <div class="doc-note">
+      This target cross-compiles fine from a Linux or macOS host — you don't need a Windows
+      machine to produce the binary, only to verify it runs. Unlike the three binaries in
+      <code>WhatsApp/prebuilt/</code>, the Windows build is <strong>not</strong> pre-built
+      or tested by Titan Systems as part of the release, so verify it on your own Windows
+      hardware before relying on it.
+    </div>
+
+    <h2>Backing up sessions</h2>
+    <p>Each linked account's WhatsApp session lives entirely on the server's own disk,
+       independent of the PHP application. Before replacing or upgrading the binary, back
+       up its session and storage directories rather than assuming an in-place upgrade is
+       safe — there's no migration or rollback tooling built into the binary for its local
+       session data, so a bad upgrade can mean re-linking every account on that server from
+       scratch. Stop the process before copying its data directory to avoid backing up a
+       database file mid-write.</p>
+  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

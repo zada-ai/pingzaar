@@ -1,0 +1,22 @@
+# Build output and IDE/build caches. These arrived inside the release ZIP but
+# are machine-local state, not source.
+.gradle/
+.idea/
+build/
+app/build/
+local.properties
+captures/
+
+# Signing credentials. Neither the keystore nor the passwords that unlock it are
+# tracked: together they are the only thing stopping someone else from publishing
+# an update that Android accepts as ours. Ignoring them here also means that if
+# this repo is ever given a remote, the key cannot follow it by accident.
+#
+# The consequence is that git holds NO copy. Back app.ks and keystore.properties
+# up somewhere durable off this machine -- lose them and the app can never be
+# updated again, on Play or anywhere else. See README.md, "Signing".
+keystore.properties
+app.ks
+
+.DS_Store
+local.properties

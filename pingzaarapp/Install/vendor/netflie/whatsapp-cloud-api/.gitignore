@@ -1,0 +1,9 @@
+composer.phar
+/vendor/
+.env
+/tests/WhatsAppCloudApiTestConfiguration.php
+.phpunit.result.cache
+composer.lock
+.php-cs-fixer.cache
+.idea/
+.phpunit.cache

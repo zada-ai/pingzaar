@@ -1,0 +1,16 @@
+/build/
+/docs/
+/vendor/
+
+
+# Excluding the IDE files and paths
+/.settings
+.buildpath
+.project
+
+# Excluding extra files and logs
+composer.phar
+*_log
+*.log
+.phpunit.result.cache
+.phpunit.cache

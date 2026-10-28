@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Updating — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Maintenance</h6>
+                        <h1 class="header-title"><i class="la la-sync la-lg"></i> Updating</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>This page describes exactly what happens when you apply an update package, in the
+       order it happens. Read it before you run an update on a live installation &mdash;
+       applying one makes real, irreversible changes to your files and database with no
+       built-in rollback.</p>
+
+    <h2>Before you update</h2>
+    <div class="doc-warn">
+      <strong>Back up your database and your entire install directory before you start.</strong>
+      There is no undo. If the SQL step or the file copy fails partway through (see
+      <em>If something goes wrong</em>, below), the only way back is a backup.
+    </div>
+    <p>Updates apply <strong>one version at a time, in order</strong>. Every package under
+       <code>Updates/</code> in the release is built against one specific starting version and
+       named for that transition &mdash; for example
+       <code>Updates/v3.9.8-fix-102525 to v3.10.0/update.zip</code> is only safe to apply to an
+       install that is currently running <code>v3.9.8-fix-102525</code>. Nothing in the
+       updater checks this for you (see <em>What an update package contains</em>), so if your
+       site is several versions behind, apply each package in sequence &mdash; don't skip
+       ahead to the newest one. Your installed version is shown as <strong>Installed</strong>
+       on the System card at <em>Admin &rarr; Overview</em>.</p>
+    <p>Running an update requires a <strong>super admin</strong> account (the original
+       admin created at install time) &mdash; anyone else gets <em>"You don't have
+       permission for this action!"</em>.</p>
+
+    <h2>Applying an update</h2>
+    <p>Go to <em>Admin &rarr; Overview</em>. The <strong>System</strong> card there has an
+       <strong>Update</strong> button, which opens a form with a single file field. Choose
+       the <code>update.zip</code> from the <code>Updates/</code> folder matching your
+       currently installed version, submit, and wait &mdash; don't navigate away or close
+       the tab. Only a <code>.zip</code> file is accepted; anything else is rejected before
+       it's even saved.</p>
+    <p>In order, the update process then:</p>
+    <ol>
+      <li>Saves the upload, failing with <em>"Failed uploading update file!"</em> if it
+          isn't there afterward.</li>
+      <li>Extracts it. If extraction fails, the failure is logged &mdash; but the process
+          carries on to the next step regardless of whether the extraction actually
+          produced anything.</li>
+      <li>Copies everything under the package's <code>files/</code> folder over your live
+          installation, file by file, overwriting anything with the same path. Copy
+          failures here are silently ignored &mdash; nothing is written to the log for this
+          step.</li>
+      <li>Checks for <code>manual.conf</code>. If it's present, you're redirected
+          immediately to the changelog URL written inside that file, and the process
+          <strong>stops</strong> &mdash; <code>instructions.conf</code> and
+          <code>remove.conf</code> are never read on this path. See the warning below.</li>
+      <li>Otherwise, reads <code>instructions.conf</code> line by line. A <code>database</code>
+          line imports <code>update.sql</code>; a <code>cache</code> line wipes and recreates
+          the system cache. SQL import failures are logged as <em>"Update SQL Error"</em>;
+          cache-clear failures are silently ignored.</li>
+      <li>Reads <code>remove.conf</code> line by line and deletes each path listed, now that
+          <code>files/</code> has already been copied in. Entries must be individual files,
+          not directories; missing files and failed deletes are silently ignored.</li>
+      <li>Deletes the extracted temporary files and responds with success.</li>
+    </ol>
+    <div class="doc-note">
+      On success the dashboard shows a toast and then <strong>reloads the page automatically</strong>
+      once you dismiss it &mdash; this is the "wait for the page to reload" step. There's no
+      progress bar in between; the request is synchronous, so the tab will simply sit on the
+      loading state until the whole sequence above has finished.
+    </div>
+    <div class="doc-warn">
+      If the response tells you the update <strong>requires manual intervention</strong>, that
+      means the package included <code>manual.conf</code> and none of the database changes,
+      cache clearing, or file removals below were applied. You'll be redirected to a changelog
+      page after a few seconds &mdash; follow the manual steps written there, since the updater
+      itself didn't do them for you.
+    </div>
+    <p>Nothing in this process writes a new version number anywhere. The version shown
+       throughout the dashboard is read straight from a version file in your installation,
+       and the only reason it changes after an update is that a new copy of that file is
+       sitting inside the package's <code>files/</code> tree and gets copied over the old
+       one in step 3 above. If a package is missing that file, or you build one by hand,
+       your installed version won't advance even though everything else updated.</p>
+
+    <h2>What an update package contains</h2>
+    <table class="doc-table">
+      <thead><tr><th>Entry</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>files/</code></td><td>New and changed files, copied over your installation.</td></tr>
+        <tr><td><code>update.sql</code></td><td>Database changes, applied only if <code>instructions.conf</code> lists <code>database</code>.</td></tr>
+        <tr><td><code>instructions.conf</code></td><td>Tells the updater whether to run <code>update.sql</code> and/or clear the system cache &mdash; one keyword (<code>database</code> or <code>cache</code>) per line.</td></tr>
+        <tr><td><code>remove.conf</code></td><td>Individual file paths, one per line, deleted after <code>files/</code> has been copied in &mdash; files that existed in the previous version and don't exist in this one.</td></tr>
+        <tr><td><code>manual.conf</code></td><td>If present, a changelog URL. Its mere presence short-circuits the whole handler before <code>instructions.conf</code> or <code>remove.conf</code> run &mdash; used for versions that need steps a script can't safely perform.</td></tr>
+      </tbody>
+    </table>
+    <p>None of these files are required to exist &mdash; every check above is an
+       <code>if(...exists(...))</code> guard, so a package can ship just <code>files/</code>
+       and nothing else if that's all a given version needs.</p>
+
+    <h2>If something goes wrong</h2>
+    <p>Check your installation's error log first. Of everything that can go wrong during
+       an update, only two failure points are actually written there:</p>
+    <ul>
+      <li><strong>"System Update Error: ..."</strong> &mdash; the uploaded zip couldn't be
+          opened/extracted (corrupt upload, or not actually a zip despite the extension).</li>
+      <li><strong>"Update SQL Error: ..."</strong> &mdash; <code>update.sql</code> failed to
+          import (bad database credentials, or the SQL itself doesn't apply cleanly to your
+          current schema).</li>
+    </ul>
+    <p>Everything else that can fail &mdash; the initial upload, copying <code>files/</code>
+       over your installation, clearing the cache directory, and every individual delete in
+       <code>remove.conf</code> &mdash; is either reported straight back to the browser (the
+       upload) or fails silently, with nothing written to the log. An update that "does
+       nothing" after you submit it, with no error log entry at all, most likely means the zip
+       extracted and the files copied, but the response never made it back to your browser
+       (a server timeout on a slow connection, for instance) &mdash; check whether your files
+       actually changed before re-uploading the same package.</p>
+    <p>If the site is stuck showing a maintenance message afterward, see
+       <a href="troubleshooting.html">Troubleshooting</a> for what
+       <code>updating.lock</code> does and how to clear it.</p>
+  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

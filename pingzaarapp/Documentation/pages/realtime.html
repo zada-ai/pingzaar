@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Realtime — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Servers & devices</h6>
+                        <h1 class="header-title"><i class="la la-bolt la-lg"></i> Realtime</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Turn on live updates so the dashboard reacts the moment something happens —
+       delivery receipts, incoming messages and admin announcements appear as they arrive,
+       without anyone reloading the page.</p>
+
+    <h2 id="what-it-does">What realtime does</h2>
+    <p>With realtime configured, the dashboard opens a WebSocket connection and reacts
+       instantly: toasts for sent, delivered and failed messages, incoming SMS and
+       WhatsApp chats, USSD replies, tables that refresh themselves, and admin
+       announcements. Without it, none of that is lost — it is simply not <em>live</em>.
+       Everything still appears when the page is next loaded or refreshed.</p>
+    <p><strong>Realtime is optional.</strong> Leave the credentials blank and Zender works
+       exactly as before, minus the live updates. Nothing else in the product depends
+       on it.</p>
+
+    <h2 id="providers">Choosing a provider</h2>
+    <p>Zender speaks the Pusher protocol, which is supported by a hosted service and by
+       several servers you can run yourself. Pick whichever suits you — the protocol is
+       identical, so only the connection details differ.</p>
+    <table class="table table-sm">
+      <thead>
+        <tr><th>Provider</th><th>Who runs it</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Pusher</strong></td>
+          <td>Pusher (hosted)</td>
+          <td>The quickest to set up — sign up, create an app, paste the credentials in.
+              Has a free tier with limits on connections and daily messages.</td>
+        </tr>
+        <tr>
+          <td><strong>Sockety</strong></td>
+          <td>You</td>
+          <td>Titan Systems' own realtime platform. If you already own Sockety, create an
+              app in its dashboard and use those credentials here.</td>
+        </tr>
+        <tr>
+          <td><strong>Soketi</strong></td>
+          <td>You</td>
+          <td>Open-source Pusher-compatible server.</td>
+        </tr>
+        <tr>
+          <td><strong>Laravel Reverb</strong></td>
+          <td>You</td>
+          <td>Also Pusher-compatible, and works with Zender even though Zender is not a
+              Laravel application.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="setup">Setting it up</h2>
+    <p>Go to <em>Admin &rarr; Overview</em>, press <strong>System</strong>, and find the
+       <strong>Realtime Notifications</strong> section.</p>
+    <ol>
+      <li>Set <strong>Provider</strong> to <em>Pusher (Cloud)</em> or
+          <em>Compatible Server (Self-hosted)</em>.</li>
+      <li>Fill in <strong>App ID</strong>, <strong>App Key</strong> and
+          <strong>App Secret</strong> from your provider.</li>
+      <li>For Pusher, pick the <strong>Cluster</strong> your app was created in. Choosing
+          the wrong one is a common cause of a connection that never establishes.</li>
+      <li>For a self-hosted server, enter its full <strong>Server URL</strong> including
+          the scheme and port, for example
+          <code>https://sockets.example.com:6001</code>.</li>
+      <li>Press <strong>Test Connection</strong>. This sends a real event through your
+          provider and reports back — do not skip it, see below.</li>
+      <li>Save, then reload the dashboard.</li>
+    </ol>
+
+    <div class="doc-warn">
+      <p class="mb-0"><strong>Always use Test Connection.</strong> If any credential is
+         wrong, the provider silently rejects every event. Nothing errors and nothing
+         appears in the interface — live updates just never arrive, which is very hard to
+         tell apart from "nothing has happened yet". The test button is the only quick
+         way to distinguish the two.</p>
+    </div>
+
+    <p>The App Key and App Secret are shown as masked fields and are never sent back to
+       the browser. Once saved, they display a <em>Configured</em> badge and stay blank —
+       leaving them blank when you save keeps the stored value, so you only retype them
+       when you actually want to change them.</p>
+
+    <h2 id="security">What travels over the connection</h2>
+    <p>Each signed-in user gets a private channel that only they can join. The browser
+       asks Zender for permission before subscribing, and Zender only ever grants a user
+       their own channel, so one customer's message notifications can never reach
+       another's browser.</p>
+    <p>Admin announcements work differently. The realtime message carries only a
+       reference number, never the announcement itself. Each browser then asks Zender for
+       that announcement over its own signed-in session, and anyone who was not a
+       recipient gets nothing back. The text of an announcement is therefore never
+       delivered to people it was not addressed to.</p>
+
+    <h2 id="troubleshooting">If live updates do not arrive</h2>
+    <ul>
+      <li><strong>Press Test Connection first.</strong> If it fails, the problem is the
+          credentials or the server address, not Zender.</li>
+      <li><strong>Check the cluster</strong> if you are on Pusher. It must match the
+          cluster shown on your app in the Pusher dashboard.</li>
+      <li><strong>Check the port and scheme</strong> for a self-hosted server. The URL
+          needs the scheme and, unless you are on the default port, the port too.</li>
+      <li><strong>A site served over HTTPS cannot open an insecure WebSocket.</strong> If
+          your Zender install uses <code>https</code>, your realtime server must use
+          <code>https</code> as well, or the browser will block the connection.</li>
+      <li><strong>Check your provider's limits.</strong> Hosted plans cap concurrent
+          connections and daily messages; once you are over the cap, events stop being
+          delivered.</li>
+      <li><strong>Look in <code>system/storage/temporary/error.log</code></strong>. Failed
+          sends are recorded there with the reason returned by the provider.</li>
+    </ul>
+    <p>Realtime failures never block anything. If the provider is unreachable or
+       misconfigured, messages are still sent, received and recorded exactly as normal —
+       only the live notification is missed.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

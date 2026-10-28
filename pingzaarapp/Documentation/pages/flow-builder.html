@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flow builder — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Automation & API</h6>
+                        <h1 class="header-title"><i class="la la-project-diagram la-lg"></i> Flow builder</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Build multi-step, no-code automations that react to an incoming SMS or WhatsApp
+       message — branch on its content, reply, hand it to AI, save the sender as a
+       contact, or pause and resume the conversation.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/tools-flows.png" target="_blank" rel="noopener"><img src="../assets/screenshots/tools-flows.png" alt="Saved automation flows" loading="lazy"></a>
+  <figcaption>Saved automation flows</figcaption>
+</figure>
+
+    <p>Flows are visual automations built on a drag-and-drop canvas, reached from
+       <em>Tools &rarr; Flows</em> in the sidebar (visible when your subscription includes
+       flows), which lists your saved flows and their source (SMS or WhatsApp). Its
+       <strong>Create flow</strong> button opens a blank canvas in a new tab; each row's
+       edit button reopens a saved one.</p>
+
+    <h2>What flows do</h2>
+    <p>A flow is evaluated every time an inbound message arrives that matches one of its
+       source nodes — separately for WhatsApp and for SMS. Both load every flow you've
+       saved for that source, find the source node(s) matching the specific device or
+       WhatsApp account the message came in on, and walk the connected nodes from
+       there.</p>
+    <p>Processing has two built-in safety limits: a flow can walk at most <strong>50
+       nodes</strong> per execution before it stops itself (cycle/runaway protection), and
+       any node already visited on the current path is skipped rather than reprocessed if a
+       loop is drawn. Neither limit is configurable.</p>
+
+    <h2>Trigger types</h2>
+    <p>Every flow starts from exactly one kind of source node, and a flow only ever fires
+       for the specific device or account that node is bound to:</p>
+    <ul>
+      <li><strong>SMS source</strong> — bound to one of your Android gateway devices. The
+          flow only runs for messages received on that device.</li>
+      <li><strong>WhatsApp source</strong> — bound to one of your linked WhatsApp accounts.
+          The flow only runs for messages received on that account.</li>
+    </ul>
+    <p>The builder refuses to save a flow with no source node, a source node with nothing
+       wired to it, or an SMS source with no device selected / WhatsApp source with no
+       account selected.</p>
+
+    <h2>Node types</h2>
+    <p>These are the blocks in the left-hand palette. Four are marked
+       <strong>WhatsApp only</strong> — wiring them under an SMS source produces no step at
+       all, since sending media that way only works for WhatsApp.</p>
+    <table class="doc-table">
+      <thead><tr><th>Node</th><th>Behavior</th></tr></thead>
+      <tbody>
+        <tr><td><code>condition</code></td><td>Branches on the incoming message text:
+            <code>starts_with</code>, <code>ends_with</code>, <code>contains</code>,
+            <code>equal</code> (case-insensitive), <code>not_contain</code>, or
+            <code>regex</code> (delimiters added automatically if you didn't supply any, then
+            tested for validity before use). If the condition evaluates false, that path —
+            and everything downstream of it — is marked invalid and skipped for the rest of
+            this run.</td></tr>
+        <tr><td><code>send_text</code></td><td>Queues a text reply on the matching device or
+            WhatsApp account. Supports the shortcodes <code>{{phone}}</code>,
+            <code>{{message}}</code>, <code>{{date.now}}</code>, <code>{{date.time}}</code>,
+            plus your plan's footermark, and a Priority switch (send immediately vs. queue
+            normally — same semantics as Quick send).</td></tr>
+        <tr><td><code>send_image</code> / <code>send_video</code> / <code>send_audio</code> /
+            <code>send_document</code></td><td><strong>WhatsApp only.</strong> Sends a file
+            by URL (or one uploaded through the node's own <strong>Upload</strong> button —
+            see Import and export below), with an optional caption on everything except
+            audio.</td></tr>
+        <tr><td><code>ai_reply</code></td><td>Sends the incoming message to one of your AI
+            keys (see the AI features page) and replies with whatever comes back. Saving a
+            flow with an <code>ai_reply</code> node that has no AI key selected is rejected
+            before it's ever saved.</td></tr>
+        <tr><td><code>save_contact</code></td><td>Adds the sender to a contact group if
+            they're not already a contact, or merges the group onto their existing contact
+            if they are (never removes them from a group they're already in).</td></tr>
+        <tr><td><code>pause</code></td><td>Suspends further automation for that sender for a
+            duration you set, scoped to a context — <code>flow</code>, <code>autoreply</code>,
+            or <code>all</code> (both). While paused, the engine skips every node type except
+            <code>resume</code>, <code>condition</code>, and the source nodes themselves, so a
+            paused conversation can still be re-armed by a matching message.</td></tr>
+        <tr><td><code>resume</code></td><td>Clears a pause for the same context. A flow whose
+            only path to a <code>resume</code> node is reachable by the incoming message is
+            allowed to run even while the sender is paused, so the paused conversation has a
+            way back in.</td></tr>
+      </tbody>
+    </table>
+    <div class="doc-note">
+      Every executed step (except <code>condition</code> and <code>pause</code>/<code>resume</code>
+      bookkeeping) writes a log entry — see Testing a flow below.
+    </div>
+
+    <h2>Testing a flow</h2>
+    <p>There's no simulate/preview button — a flow is only exercised by an actual inbound
+       message hitting its source device or account. After saving a flow, send it a real SMS
+       or WhatsApp message that should match, then check <em>Tools &rarr; Logger</em>. Each
+       step the flow ran logs an entry there (reason text like "Send Message Flow Executed",
+       "AI Flow Response Generated/Failed", or "Contact Save Flow Executed") with the
+       recipient and message content, so you can confirm which nodes fired without guessing
+       from the Sent/Received tables alone.</p>
+    <p>If nothing logs at all, the most common causes are: the source node's device/account
+       doesn't match where the test message actually arrived, the sender is currently paused
+       under a context your flow doesn't resume, or the flow never got past a
+       <code>condition</code> node — none of which produce an error, they just produce no
+       steps.</p>
+
+    <h2>Import and export</h2>
+    <p>The canvas itself has no whole-flow download/upload — <strong>Save</strong>
+       serializes the canvas and saves it to your account; loading an existing flow does the
+       reverse in the browser. Editing an existing flow updates that same saved flow in
+       place — it doesn't keep prior versions.</p>
+    <p>Each media node's own <strong>Upload</strong> button is a per-node file upload used
+       by the Send Image/Video/Audio/Document nodes: it rejects anything over a
+       <strong>10&nbsp;MB</strong> cap, stores the file, and hands that node the resulting
+       URL. Uploads are restricted to a fixed list of image, video, audio and document
+       extensions; anything else is rejected with an invalid-file-type error. Scriptable
+       formats such as SVG, HTML and XML are deliberately excluded, because
+       <code>uploads/</code> is served directly by your web server.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

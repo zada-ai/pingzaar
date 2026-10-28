@@ -1,0 +1,33 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
+
+RewriteRule ^(system|vendor|templates|uploads)/$ - [R=404]
+RewriteRule ^(system|vendor|templates|uploads)/.*/$ - [R=404]
+RewriteRule ^templates/.*\.(tpl|scss|gitkeep)$ - [R=404]
+RewriteRule ^(system|vendor)/.*\.(php|dat|tpl|scss|gitkeep|inc|json|log)$ - [R=404,NC]
+
+# uploads/ holds user-supplied files and sits inside the document root, so nothing
+# under it may ever be handed to an interpreter. This is defence in depth — every
+# upload handler also whitelists extensions — and it covers templates/ too, which
+# serves only static assets.
+#
+# [NC] is load-bearing, not decoration: RewriteRule is case-sensitive by default
+# while Apache hands "shell.PHP" to the PHP handler regardless of case, so without
+# it an uppercase extension executes straight through this rule.
+RewriteRule ^(uploads|templates)/.*\.(php|php[0-9]|phtml|phps|pht|phar|inc|cgi|pl|py|sh)$ - [R=404,NC]
+
+# Dotfiles that change how the server itself behaves. AllowOverride is on, so an
+# uploaded .htaccess could re-enable PHP for its directory, and .user.ini can set
+# auto_prepend_file, which executes arbitrary PHP.
+RewriteRule ^(uploads|templates)/.*(\.htaccess|\.user\.ini)$ - [R=404,NC]
+
+# Stop browsers second-guessing the declared type of a user-supplied file. The
+# IfModule guard matters: a bare Header directive on a host without mod_headers
+# makes Apache return 500 for the whole application.
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>

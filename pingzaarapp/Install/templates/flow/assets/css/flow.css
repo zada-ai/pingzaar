@@ -1,0 +1,758 @@
+/* CerebriSans Font Family */
+@font-face {
+    font-family: 'CerebriSans';
+    src: url('../fonts/cerebrisans/cerebrisans-regular.eot');
+    src: url('../fonts/cerebrisans/cerebrisans-regular.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/cerebrisans/cerebrisans-regular.woff') format('woff'),
+         url('../fonts/cerebrisans/cerebrisans-regular.ttf') format('truetype'),
+         url('../fonts/cerebrisans/cerebrisans-regular.svg#CerebriSans') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CerebriSans';
+    src: url('../fonts/cerebrisans/cerebrisans-medium.eot');
+    src: url('../fonts/cerebrisans/cerebrisans-medium.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/cerebrisans/cerebrisans-medium.woff') format('woff'),
+         url('../fonts/cerebrisans/cerebrisans-medium.ttf') format('truetype'),
+         url('../fonts/cerebrisans/cerebrisans-medium.svg#CerebriSans') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CerebriSans';
+    src: url('../fonts/cerebrisans/cerebrisans-semibold.eot');
+    src: url('../fonts/cerebrisans/cerebrisans-semibold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/cerebrisans/cerebrisans-semibold.woff') format('woff'),
+         url('../fonts/cerebrisans/cerebrisans-semibold.ttf') format('truetype'),
+         url('../fonts/cerebrisans/cerebrisans-semibold.svg#CerebriSans') format('svg');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CerebriSans';
+    src: url('../fonts/cerebrisans/cerebrisans-bold.eot');
+    src: url('../fonts/cerebrisans/cerebrisans-bold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/cerebrisans/cerebrisans-bold.woff') format('woff'),
+         url('../fonts/cerebrisans/cerebrisans-bold.ttf') format('truetype'),
+         url('../fonts/cerebrisans/cerebrisans-bold.svg#CerebriSans') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+:root {
+  --border-color: #cacaca;
+  --background-color: #ffffff;
+  --background-box-title: #f7f7f7;
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'CerebriSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+header {
+  height: 66px;
+  border-bottom: 1px solid var(--border-color);
+  padding-left: 20px;
+}
+
+header h2 {
+  margin: 0px;
+  line-height: 66px;
+}
+
+header a {
+  color: black;
+}
+
+.them-edit-link {
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  color: black;
+  font-size: 40px;
+}
+
+.them-edit-link a {
+  text-decoration: none;
+}
+
+.github-link {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: black;
+}
+
+.wrapper {
+  width: 100%;
+  height: calc(100vh);
+  display: flex;
+}
+
+.col {
+  overflow: auto;
+  width: 300px;
+  height: 100%;
+  border-right: 1px solid var(--border-color);
+}
+
+.drag-drawflow {
+  line-height: 50px;
+  border-bottom: 1px solid var(--border-color);
+  padding-left: 20px;
+  cursor: move;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+.menu {
+  position: absolute;
+  height: 40px;
+  display: block;
+  background: white;
+  width: 100%;
+}
+
+.menu ul {
+  padding: 0px;
+  margin: 0px;
+  line-height: 40px;
+}
+
+.menu ul li {
+  display: inline-block;
+  margin-left: 10px;
+  border-right: 1px solid var(--border-color);
+  padding-right: 10px;
+  line-height: 40px;
+  cursor: pointer;
+}
+
+.menu ul li.selected {
+  font-weight: bold;
+}
+
+.btn-export {
+  float: right;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #0e5ba3;
+  background: #4ea9ff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 5;
+  text-transform: uppercase;
+}
+
+.btn-clear {
+  float: right;
+  position: absolute;
+  top: 10px;
+  right: 85px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #96015b;
+  background: #e3195a;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 5;
+  text-transform: uppercase;
+}
+
+.swal-wide {
+  width: 80% !important;
+}
+
+.btn-lock {
+  float: right;
+  position: absolute;
+  bottom: 10px;
+  right: 140px;
+  display: flex;
+  font-size: 24px;
+  color: white;
+  padding: 5px 10px;
+  background: #555555;
+  border-radius: 4px;
+  border-right: 1px solid var(--border-color);
+  z-index: 5;
+  cursor: pointer;
+}
+
+.bar-zoom {
+  float: right;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  font-size: 24px;
+  color: white;
+  padding: 5px 10px;
+  background: #555555;
+  border-radius: 4px;
+  border-right: 1px solid var(--border-color);
+  z-index: 5;
+}
+
+.bar-zoom svg {
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.bar-zoom svg:nth-child(1) {
+  padding-left: 0px;
+}
+
+#drawflow {
+  position: relative;
+  width: calc(100vw - 301px);
+  height: calc(100% - 0px);
+  background: var(--background-color);
+  background-size: 25px 25px;
+  background-image:
+    linear-gradient(to right, #f1f1f1 1px, transparent 1px),
+    linear-gradient(to bottom, #f1f1f1 1px, transparent 1px);
+}
+
+@media only screen and (max-width: 768px) {
+  .col {
+    width: 50px;
+  }
+
+  .col .drag-drawflow span {
+    display: none;
+  }
+
+  #drawflow {
+    width: calc(100vw - 51px);
+  }
+}
+
+
+
+/* Editing Drawflow */
+
+.drawflow .drawflow-node {
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
+  box-shadow: 0 2px 15px 2px var(--border-color);
+  padding: 0px;
+  width: 250px !important;
+}
+
+.drawflow .drawflow-node.selected {
+  background: white;
+  border: 1px solid #4ea9ff;
+  -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
+  box-shadow: 0 2px 20px 2px #4ea9ff;
+}
+
+.drawflow .drawflow-node.selected .title-box {
+  color: #22598c;
+  /*border-bottom: 1px solid #4ea9ff;*/
+}
+
+.drawflow .connection .main-path {
+  stroke: #4ea9ff;
+  stroke-width: 3px;
+}
+
+.drawflow .drawflow-node .input,
+.drawflow .drawflow-node .output {
+  height: 15px;
+  width: 15px;
+  border: 2px solid var(--border-color);
+}
+
+.drawflow .drawflow-node .input:hover,
+.drawflow .drawflow-node .output:hover {
+  background: #4ea9ff;
+}
+
+.drawflow .drawflow-node .output {
+  right: 10px;
+}
+
+.drawflow .drawflow-node .input {
+  left: -10px;
+  background: white;
+}
+
+.drawflow>.drawflow-delete {
+  border: 2px solid #43b993;
+  background: white;
+  color: #43b993;
+  -webkit-box-shadow: 0 2px 20px 2px #43b993;
+  box-shadow: 0 2px 20px 2px #43b993;
+}
+
+.drawflow-delete {
+  border: 2px solid #4ea9ff;
+  background: white;
+  color: #4ea9ff;
+  -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
+  box-shadow: 0 2px 20px 2px #4ea9ff;
+}
+
+.drawflow-node .title-box {
+  height: 50px;
+  line-height: 50px;
+  background: var(--background-box-title);
+  border-bottom: 1px solid #e9e9e9;
+  border-radius: 4px 4px 0px 0px;
+  padding-left: 10px;
+  text-transform: uppercase;
+}
+
+.drawflow .title-box svg {
+  position: initial;
+}
+
+.drawflow-node .box {
+  padding: 10px;
+}
+
+.drawflow-node .box p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.drawflow-node.welcome {
+  width: 250px;
+}
+
+.drawflow-node.slack .title-box {
+  border-radius: 4px;
+}
+
+.drawflow-node input,
+.drawflow-node select,
+.drawflow-node textarea {
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  width: 158px;
+  color: #555555;
+}
+
+.drawflow-node textarea {
+  height: 100px;
+}
+
+
+.drawflow-node.personalized {
+  background: red;
+  height: 200px;
+  text-align: center;
+  color: white;
+}
+
+.drawflow-node.personalized .input {
+  background: yellow;
+}
+
+.drawflow-node.personalized .output {
+  background: green;
+}
+
+.drawflow-node.personalized.selected {
+  background: blue;
+}
+
+.drawflow .connection .point {
+  stroke: var(--border-color);
+  stroke-width: 2;
+  fill: white;
+
+}
+
+.drawflow .connection .point.selected,
+.drawflow .connection .point:hover {
+  fill: #4ea9ff;
+}
+
+
+/* Modal */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.close {
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.upload-area {
+  border: 2px dashed #ddd;
+  border-radius: 6px;
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.btn-upload {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+  margin-top: 4px;
+}
+
+.btn-upload:hover {
+  background-color: #45a049;
+  transform: translateY(-1px);
+}
+
+.btn-upload i {
+  font-size: 14px;
+}
+
+.file-info {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.upload-progress {
+  margin-top: 20px;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #4CAF50;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.modal-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.btn-primary {
+  background-color: #2196F3;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0b7dda;
+}
+
+.drawflow .drawflow-node input[type="text"],
+.drawflow .drawflow-node input[type="file"],
+.drawflow .drawflow-node textarea,
+.drawflow .drawflow-node select {
+  width: 100% !important;
+  box-sizing: border-box;
+  margin: 5px 0;
+}
+
+/* Multiple select styling */
+select[multiple] {
+  height: 120px !important;
+  min-height: 120px !important;
+  padding: 8px !important;
+  overflow-y: auto !important;
+}
+
+select[multiple] option {
+  padding: 8px !important;
+  margin: 2px 0 !important;
+  border-radius: 4px !important;
+}
+
+select[multiple] option:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.iziToast-title {
+  text-transform: uppercase;
+}
+
+@keyframes ldio-k6xrhuhg6o {
+  0% {
+    top: 100.80000000000001px;
+    left: 100.80000000000001px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+
+  100% {
+    top: 18.900000000000002px;
+    left: 18.900000000000002px;
+    width: 163.8px;
+    height: 163.8px;
+    opacity: 0;
+  }
+
+}
+
+.ldio-k6xrhuhg6o div {
+  position: absolute;
+  border-width: 4.2px;
+  border-style: solid;
+  opacity: 1;
+  border-radius: 50%;
+  animation: ldio-k6xrhuhg6o 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.ldio-k6xrhuhg6o div:nth-child(1) {
+  border-color: #000;
+  animation-delay: 0s;
+}
+
+.ldio-k6xrhuhg6o div:nth-child(2) {
+  border-color: #000;
+  animation-delay: -0.5s;
+}
+
+.loadingio-spinner-ripple-c4xwekkbyc9 {
+  width: 210px;
+  height: 210px;
+  display: inline-block;
+  overflow: hidden;
+  background: none;
+}
+
+.ldio-k6xrhuhg6o {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+}
+
+.ldio-k6xrhuhg6o div {
+  box-sizing: content-box;
+}
+
+/* Logical direction support for RTL */
+
+html[dir="rtl"] body,
+:dir(rtl) body {
+  direction: rtl;
+}
+
+/* Header */
+:dir(rtl) header {
+  padding-left: 0;
+  padding-right: 20px;
+}
+
+:dir(rtl) .them-edit-link {
+  right: auto;
+  left: 100px;
+}
+
+:dir(rtl) .github-link {
+  right: auto;
+  left: 20px;
+}
+
+/* Columns */
+:dir(rtl) .col {
+  border-right: none;
+  border-left: 1px solid var(--border-color);
+}
+
+:dir(rtl) .drag-drawflow {
+  padding-left: 0;
+  padding-right: 20px;
+}
+
+/* Menu */
+:dir(rtl) .menu ul li {
+  margin-left: 0;
+  margin-right: 10px;
+  border-right: none;
+  border-left: 1px solid var(--border-color);
+  padding-right: 0;
+  padding-left: 10px;
+}
+
+/* Export & Clear buttons */
+:dir(rtl) .btn-export {
+  right: auto;
+  left: 10px;
+}
+
+:dir(rtl) .btn-clear {
+  right: auto;
+  left: 85px;
+}
+
+/* Lock and Zoom buttons */
+:dir(rtl) .btn-lock {
+  right: auto;
+  left: 140px;
+}
+
+:dir(rtl) .bar-zoom {
+  right: auto;
+  left: 10px;
+}
+
+:dir(rtl) .bar-zoom svg {
+  padding-left: 0;
+  padding-right: 10px;
+}
+
+:dir(rtl) .bar-zoom svg:nth-child(1) {
+  padding-right: 0px;
+}
+
+/* Drawflow Inputs */
+:dir(rtl) .drawflow .drawflow-node .input {
+  left: auto;
+  right: -10px;
+}
+
+:dir(rtl) .drawflow .drawflow-node .output {
+  right: auto;
+  left: 10px;
+}
+
+/* Title box */
+:dir(rtl) .drawflow-node .title-box {
+  padding-left: 0;
+  padding-right: 10px;
+  text-align: right;
+}
+
+/* File Preview Styles */
+.file-preview-container {
+    text-align: center;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+.file-preview-image {
+    display: block;
+    margin: 0 auto 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.file-info-text {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.file-info-text strong {
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+    word-break: break-all;
+}
+
+.file-preview-container i {
+    color: #666;
+    display: block;
+}
+
+/* Specific file type colors */
+.file-preview-container .la-video {
+    color: #8e44ad;
+}
+
+.file-preview-container .la-volume-up {
+    color: #3498db;
+}
+
+.file-preview-container .la-file-pdf {
+    color: #e74c3c;
+}
+
+.file-preview-container .la-file {
+    color: #95a5a6;
+}
+

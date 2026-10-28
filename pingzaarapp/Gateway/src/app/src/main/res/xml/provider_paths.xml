@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path name="compressed_files" path="compressed/"/>
+    <cache-path name="attachment_files" path="attachments/"/>
+    <cache-path name="mms_files" path="mms/"/>
+    <external-files-path name="latest_apk" path="latest_apk/"/>
+</paths>
+

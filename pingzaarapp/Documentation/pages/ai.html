@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI features — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Automation & API</h6>
+                        <h1 class="header-title"><i class="la la-robot la-lg"></i> AI features</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Connect your own AI provider account to power automatic replies, and control what
+       it can see and do.</p>
+    <p>AI configuration lives under its own <em>Artificial Intelligence</em> section in the
+       dashboard sidebar, visible when your subscription includes it: <em>API Keys</em> and
+       <em>Plugins</em>.</p>
+
+    <div class="doc-warn">
+      Every AI call — auto-reply, flow <code>ai_reply</code> nodes, and the moderation check
+      described on the API page — goes <strong>directly from your server to the provider</strong>
+      whose key you supplied. Nothing is routed through us, and no licence check is involved.
+      All AI features need is <strong>outbound internet access</strong> from your server to
+      that provider, and a working API key.
+    </div>
+
+    <h2>Setting up AI auto-reply</h2>
+    <p>AI isn't its own auto-reply type in the UI — it's a <strong>match type</strong> on
+       the same Auto-reply widget described on the SMS and WhatsApp pages
+       (<em>Tools &rarr; Actions</em>). Selecting <strong>Artificial
+       Intelligence</strong> as the match type swaps the keyword field for two selects:
+       which <strong>AI key</strong> to use, and optionally one or more <strong>AI
+       plugins</strong> to make available to it. Every other auto-reply setting — source
+       (SMS device / WhatsApp account), Group Trigger, priority — behaves the same as a
+       keyword-matched auto-reply.</p>
+    <p>Flows have the equivalent as a node instead of a match type — see <em>Node
+       types</em> on the Flow builder page for <code>ai_reply</code>.</p>
+
+    <h2>Providers and models</h2>
+    <p>An AI key (<em>AI &rarr; API Keys &rarr; Add API Key</em>) picks one provider and
+       one of that provider's models — both are validated against a fixed list, so a model
+       name that isn't on the list for its provider is rejected before the key is saved:</p>
+    <table class="doc-table">
+      <thead><tr><th>Provider</th><th>Models</th></tr></thead>
+      <tbody>
+        <tr><td><code>openai</code></td><td><code>gpt-5</code>, <code>gpt-5-pro</code>,
+            <code>gpt-5-mini</code>, <code>gpt-5-nano</code> (default), <code>gpt-4.1</code>,
+            <code>gpt-4.1-mini</code>, <code>gpt-4.1-nano</code></td></tr>
+        <tr><td><code>geminiai</code></td><td><code>gemini-2.5-pro</code>,
+            <code>gemini-2.5-flash</code>, <code>gemini-2.5-flash-lite</code> (default)</td></tr>
+        <tr><td><code>claudeai</code></td><td><code>claude-opus-4-1</code>,
+            <code>claude-opus-4-0</code>, <code>claude-sonnet-4-5</code>,
+            <code>claude-sonnet-4-0</code></td></tr>
+        <tr><td><code>grokai</code></td><td><code>grok-3</code>, <code>grok-3-mini</code> —
+            neither supports vision</td></tr>
+        <tr><td><code>deepseekai</code></td><td><code>deepseek-chat</code> — doesn't support
+            vision</td></tr>
+      </tbody>
+    </table>
+    <p>The API key you enter on this form is <strong>your own key from that
+       provider</strong> (e.g. an OpenAI secret key), not a Zender or Titan Systems
+       credential — Zender forwards it on every call.</p>
+
+    <h2>Prompts and conversation history</h2>
+    <p>Each AI key has two prompt fields — an initial <strong>prompt</strong> (at least 5
+       characters, required) that sets the assistant's behavior, and an optional
+       <strong>post prompt</strong> appended after it — plus a numeric <strong>max
+       tokens</strong> and a <strong>history threshold</strong> (minimum <code>5</code>,
+       defaults to <code>50</code> in the form) capping how many prior turns are kept per
+       conversation.</p>
+    <p>Conversation state is tracked per sender, computed the same way whether the message
+       arrived through auto-reply or through a flow's <code>ai_reply</code> node — so the
+       same phone number talking to the same AI key keeps one continuous conversation
+       thread regardless of which entry point handled it.</p>
+    <div class="doc-note">
+      Editing an existing AI key resets its conversation history automatically, so a
+      changed prompt or model doesn't get applied on top of a stale conversation. This
+      logs a "Conversation Reset!" entry to <em>Tools &rarr; Logger</em>.
+    </div>
+
+    <h2>Vision and transcription</h2>
+    <p>Two independent toggles on the AI key form, both off by default:</p>
+    <ul>
+      <li><strong>Vision</strong> — lets the AI see image attachments sent alongside the
+          message. Not offered for <code>grokai</code> or <code>deepseekai</code> models,
+          which don't support it.</li>
+      <li><strong>Transcription</strong> — shown only for the <code>openai</code> provider in
+          the form (<code>system-transcription-openai</code>); lets the AI receive audio
+          attachments as transcribed text.</li>
+    </ul>
+    <p>Both are passed to <code>aiConversation()</code> as booleans (enabled when the stored
+       value is <code>1</code>), and an attachment link — resolved from the inbound WhatsApp
+       message before the AI call — is only meaningful when the corresponding toggle is on.</p>
+
+    <h2>AI plugins</h2>
+    <p>Plugins are tool-calling schemas, not code you write for Zender itself. From
+       <em>AI &rarr; Plugins &rarr; Add Plugin</em> you give a name, an optional callback
+       endpoint URL, and a schema — a JSON document edited in-page, with a starting sample
+       linked from the form. The only validation is that the schema is well-formed JSON;
+       the shape of the tool definition itself isn't checked, so an invalid tool schema
+       will save but may be rejected or ignored by the AI provider at call time.</p>
+    <p>A plugin becomes available to a request when it's attached — to an
+       <code>Artificial Intelligence</code> auto-reply via its <strong>AI Plugin(s)</strong>
+       multi-select, or to an action. Titan Systems' backend fetches the plugin schemas for
+       a given action, authenticated with your site's system token, just before it decides
+       whether to invoke one — it isn't something you call directly.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

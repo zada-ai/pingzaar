@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Configuration — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Getting started</h6>
+                        <h1 class="header-title"><i class="la la-cogs la-lg"></i> Configuration</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>What the installer wrote for you, what to check once your site is live, and how to
+       turn on spam protection for your login and registration forms.</p>
+
+    <h2>Your configuration file</h2>
+    <p>The installer writes a small configuration file holding your database connection
+       details and a randomly generated security token. The token authenticates internal
+       system callbacks — treat it like a password: never share it, and never commit it
+       to a public code repository.</p>
+
+    <div class="doc-warn">
+      This file lives inside Zender's own application folders, which both shipped
+      web-server configurations already block from direct browser access. Don't move or
+      copy it anywhere inside your public-facing document root.
+    </div>
+
+    <h2>Site settings</h2>
+    <p>The site name, description, purchase code, and protocol you entered on the
+       installer form all become editable settings — you're not stuck with what you
+       typed during installation. Change any of them later from the admin dashboard's
+       system settings screens (<em>Admin &rarr; Overview &rarr; System</em>).</p>
+
+    <h2>Timezone and currency</h2>
+    <p>Two different things are called "timezone" in Zender, and it's worth telling them
+       apart:</p>
+    <ul>
+      <li>The timezone and country you chose on the installer form describe <strong>the
+          admin account created at install time</strong> — not the system as a whole.</li>
+      <li>Separately, the system ships with site-wide defaults used for new accounts and
+          date handling: Asia/Manila and the Philippines, out of the box.</li>
+    </ul>
+    <p>Currency works the same way — the system ships defaulting to US Dollars. Update
+       the timezone, country, and currency defaults from <em>Admin &rarr; Overview &rarr; System</em> to
+       match your own deployment rather than leaving the shipped defaults in place.</p>
+
+    <h2>Setting up reCAPTCHA</h2>
+    <p>Zender can protect your login, registration, and password-reset forms with
+       Google's reCAPTCHA v2 (the "I'm not a robot" checkbox), turned on from
+       <em>Admin &rarr; Overview &rarr; System</em>.</p>
+    <ol>
+      <li>In Google's reCAPTCHA admin console, register a new site: give it a label,
+          choose reCAPTCHA v2 ("I'm not a robot" checkbox), and add your domain.</li>
+      <li>Copy the site key and secret key it gives you.</li>
+      <li>Paste both into <em>Admin &rarr; Overview &rarr; System</em>, and set reCAPTCHA to
+          <strong>Enable</strong>.</li>
+    </ol>
+    <div class="doc-warn">
+      Turn this on only after you've pasted in both keys. If reCAPTCHA is enabled but
+      either key is missing, login, registration, and password reset all stop working
+      for <strong>every</strong> account on your site — not just new sign-ups — until you
+      fix the keys or switch reCAPTCHA back off.
+    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

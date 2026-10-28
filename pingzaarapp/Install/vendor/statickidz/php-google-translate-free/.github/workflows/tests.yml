@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * 0" # Runs at 00:00 (midnight) every Sunday
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: php-actions/composer@v6
+
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
+        with:
+          version: 9.6
+          php_version: 8.2
+          bootstrap: vendor/autoload.php
+          configuration: phpunit.xml
+          args: --coverage-text

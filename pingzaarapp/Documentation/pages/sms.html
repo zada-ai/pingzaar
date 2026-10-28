@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sending SMS — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Messaging</h6>
+                        <h1 class="header-title"><i class="la la-comment la-lg"></i> Sending SMS</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Send one-off texts, run bulk campaigns, and keep track of every SMS that goes out
+       or comes in.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/sms-send.png" target="_blank" rel="noopener"><img src="../assets/screenshots/sms-send.png" alt="Sent SMS messages, with delivery status per message" loading="lazy"></a>
+  <figcaption>Sent SMS messages, with delivery status per message</figcaption>
+</figure>
+
+    <p>SMS lives under its own menu in the dashboard sidebar, visible only to accounts
+       whose subscription includes SMS: <em>Queue</em>, <em>Sent</em>, <em>Received</em>,
+       <em>Campaigns</em>, and <em>Scheduled</em> — plus <em>Transactions</em> for
+       partner accounts.</p>
+
+    <h2>Sending a single message</h2>
+    <p>From <em>SMS &rarr; Queue</em>, <strong>Quick send</strong> opens a one-off send
+       form. Enter a recipient number, a message, and choose a sending mode: device or
+       gateway/credits.</p>
+    <p>Every message is checked against a minimum length (5 characters by default) and,
+       if your site sets one, a maximum — there is no upper limit by default, and
+       messages that go over an active maximum are rejected rather than sent, not
+       trimmed. There's no built-in splitting either: Zender queues the message exactly
+       as written, and if it ends up longer than a single SMS segment, breaking it into
+       multiple parts for delivery is handled by the sending device or gateway, the same
+       as it would be for any text messaging app.</p>
+    <p>If your plan includes a footer mark, your site's configured signature text
+       (<em>"Sent by Zender"</em> out of the box) is appended on a new line before the
+       message is queued — but only for device-mode sends.</p>
+
+    <h2>Choosing a device or gateway</h2>
+    <p>Every send form offers the same choice, controlled by a mode selector:</p>
+    <ul>
+      <li><strong>Device mode</strong> — the message is queued against one of your
+          Android gateway devices (managed under <em>Hosts &rarr; Android</em>; see the
+          Android gateway page under Servers &amp; devices). You also pick a SIM slot
+          and whether the message is high priority.</li>
+      <li><strong>Credits/gateway mode</strong> — the message is sent through an
+          installed third-party SMS gateway, or through another user's device shared
+          globally, and its cost is deducted from your account credits.</li>
+    </ul>
+    <p>Both Quick send and the bulk forms below expose this same switch, so a single
+       send — or campaign — can only target one mode at a time; you can't mix device and
+       gateway recipients in one send.</p>
+
+    <h2>Message templates, translation, and spintax</h2>
+    <p>Bulk and spreadsheet sends let you pick a saved message template
+       (<em>Tools &rarr; Templates</em>) to fill the message box instead of typing it out
+       every time.</p>
+    <p>The message box also has a built-in translator: type your message, pick a target
+       language, and it's translated in place before you send — handy when your
+       recipients don't share your language.</p>
+    <p>Every send form also supports <strong>spintax</strong>: wrap alternatives in curly
+       braces separated by pipes, and the platform picks one at random per message — for
+       example, <code>Tom is a {good|bad} cat</code> sends either "Tom is a good cat" or
+       "Tom is a bad cat." Alternatives can be nested inside each other.</p>
+    <p>Bulk forms also support shortcodes that get filled in per recipient — the
+       contact's name and number, the group name, the current date and time, and
+       unsubscribe links or keywords — shown directly in the send form. The spreadsheet
+       form uses a similar set, plus one for any extra columns in your sheet.</p>
+
+    <h2>Delivery statuses</h2>
+    <p>The Queue, Sent, and Campaigns tables report one of four statuses per message:</p>
+    <table class="doc-table">
+      <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Pending</td><td>Queued and waiting to be picked up by the target device
+            or gateway.</td></tr>
+        <tr><td>Queued</td><td>Accepted by a gateway that reports delivery
+            asynchronously, awaiting its callback.</td></tr>
+        <tr><td>Sent</td><td>Confirmed sent — by the device, or immediately by a gateway
+            that doesn't use callbacks.</td></tr>
+        <tr><td>Failed</td><td>The device or gateway reported it could not deliver the
+            message.</td></tr>
+      </tbody>
+    </table>
+    <p>For device-mode messages, the report also shows the device's own delivery code
+       alongside the status above, whenever the device has reported one.</p>
+
+    <div class="doc-note">
+      The unsubscribed list is checked on bulk paste, spreadsheet uploads, and scheduled
+      sends when they go out. <strong>Quick send is the exception</strong> — sending
+      directly to a number from Quick send reaches it even if that number has
+      unsubscribed.
+    </div>
+
+    <h2>Bulk sending from a spreadsheet</h2>
+    <p>From <em>SMS &rarr; Campaigns</em>, <strong>Bulk send</strong> lets you paste
+       numbers and/or pick contact groups directly in the form; <strong>Send from
+       Excel</strong> lets you upload a spreadsheet instead.</p>
+    <p>The spreadsheet must be an <code>.xlsx</code> file. A ready-to-fill template is
+       linked directly from the upload form. Your header row needs three columns, by
+       name: <code>phone</code>, <code>sim</code>, and <code>priority</code> — if any of
+       the three is missing, the whole upload is rejected before anything is queued.</p>
+    <p>Both bulk forms let you name the send as a <strong>campaign</strong>; every
+       recipient from that submission is grouped under it and appears on the Campaigns
+       page, split evenly across whichever devices or gateways you selected.</p>
+
+    <div class="doc-warn">
+      Deleting a campaign from the Campaigns page permanently deletes its
+      <strong>entire</strong> message history — not just what's still pending. Sent and
+      failed messages are erased right along with anything still queued. This cannot be
+      undone.
+    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

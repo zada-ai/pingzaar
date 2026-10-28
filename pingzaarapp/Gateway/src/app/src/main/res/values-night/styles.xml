@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Login theme with matching background colors for night mode -->
+    <style name="LoginTheme" parent="AppTheme.NoActionBar">
+        <item name="android:statusBarColor">?android:attr/colorBackground</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+        <!-- Set text colors for dark mode -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorTertiary">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+        <item name="android:textColorSecondaryInverse">@color/white</item>
+        <item name="android:textColorTertiaryInverse">@color/white</item>
+        <!-- Set button text colors -->
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+    <!-- Terminal theme with purple status bar for night mode -->
+    <style name="TerminalTheme" parent="AppTheme.NoActionBar">
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+        <!-- Set text colors for dark mode -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorTertiary">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+        <item name="android:textColorSecondaryInverse">@color/white</item>
+        <item name="android:textColorTertiaryInverse">@color/white</item>
+        <!-- Menu styling for white dots -->
+        <item name="actionOverflowMenuStyle">@style/Widget.AppCompat.PopupMenu.Overflow</item>
+        <item name="android:actionOverflowButtonStyle">@style/WhiteOverflowButtonStyle</item>
+    </style>
+</resources> 

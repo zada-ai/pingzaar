@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cron jobs — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Servers & devices</h6>
+                        <h1 class="header-title"><i class="la la-clock la-lg"></i> Cron jobs</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Set up the background schedule Zender needs to actually dispatch scheduled
+       messages, wake up devices, expire subscriptions, and clean up old files — none of
+       which happen on their own without it.</p>
+    <p>Zender doesn't run any background process of its own. Everything time-based —
+       dispatching scheduled messages, prompting devices and WhatsApp accounts to fetch
+       their queued sends, expiring subscriptions, and clearing old files — only happens
+       when something calls one of the endpoints below from outside the app, on a
+       schedule you set up yourself. Without cron configured, none of it runs on its own,
+       no matter how long the site is up.</p>
+    <p>Every job is called the same way: <code>/cron/{endpoint}/{token}</code>, where
+       <code>{token}</code> is your site's system token (see the Configuration page for
+       where that value lives). A wrong or missing token is rejected and nothing runs. A
+       super admin can see the exact command for every job below, pre-filled with your
+       site's real token, from <em>Admin &rarr; Overview</em> — the <strong>Cron</strong>
+       button there opens the same setup guide this page is describing.</p>
+
+    <div class="doc-warn">
+      Without cron running, scheduled SMS and WhatsApp messages never go out — they just
+      sit queued forever — and expired subscriptions never get cleaned up or emailed
+      about. If a customer reports scheduled sends "doing nothing," check cron before
+      anything else.
+    </div>
+
+    <h2>Endpoints</h2>
+    <table class="doc-table">
+      <thead><tr><th>Endpoint</th><th>Purpose</th><th>Recommended interval</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>sender</code></td>
+          <td>Pushes an FCM wake-up to every device and WhatsApp account with messages
+              waiting in their queue, so they fetch and send immediately instead of
+              waiting for their next poll.</td>
+          <td>Every minute</td>
+        </tr>
+        <tr>
+          <td><code>sms.scheduled</code></td>
+          <td>Finds SMS scheduled sends whose time (or repeat interval) has arrived,
+              builds the recipient list from pasted numbers and/or contact groups, and
+              queues the actual messages for sending.</td>
+          <td>Every minute</td>
+        </tr>
+        <tr>
+          <td><code>wa.scheduled</code></td>
+          <td>The WhatsApp equivalent of <code>sms.scheduled</code> — resolves due
+              schedules, checks the target WhatsApp account is actually connected, and
+              queues the messages before asking the WhatsApp server to send them.</td>
+          <td>Every minute</td>
+        </tr>
+        <tr>
+          <td><code>subscription</code></td>
+          <td>Warns subscribers by email 5 days before their package expires, and deletes
+              (plus emails) subscriptions that have already expired.</td>
+          <td>Every 5&ndash;15 minutes</td>
+        </tr>
+        <tr>
+          <td><code>cleaner</code></td>
+          <td>Deletes WhatsApp received/sent media files older than the configured
+              retention period, and asks every registered WhatsApp server to run the same
+              garbage collection on its own stored files.</td>
+          <td>Once daily</td>
+        </tr>
+        <tr>
+          <td><code>quota</code></td>
+          <td>Resets usage quotas — see the warning below before scheduling this one.</td>
+          <td>See below</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="doc-warn">
+      <code>quota</code> is destructive and unconditional: every time this endpoint is hit,
+      it wipes usage counters for <strong>every user on the site</strong> at once, not just
+      whoever is due for a reset. Schedule it to match your site's actual reset cadence
+      (<em>daily</em> or <em>monthly</em>, set from the Settings screen under
+      <em>Admin &rarr; Overview</em> — the dashboard's cron setup guide shows you which one
+      applies) and nothing more often. Adding it to a per-minute crontab line like the
+      other jobs will reset every user's SMS/WhatsApp usage counters every minute.
+    </div>
+
+    <h2>Example crontab</h2>
+    <p>Replace <code>your-domain.com</code> with your real site domain, prefixed with
+       whichever scheme (<code>http</code> or <code>https</code>) your site actually runs
+       under, and <code>YOUR_SYSTEM_TOKEN</code> with your real system token:</p>
+    <pre><code>* * * * * curl -s "your-domain.com/cron/sender/YOUR_SYSTEM_TOKEN" > /dev/null
+* * * * * curl -s "your-domain.com/cron/sms.scheduled/YOUR_SYSTEM_TOKEN" > /dev/null
+* * * * * curl -s "your-domain.com/cron/wa.scheduled/YOUR_SYSTEM_TOKEN" > /dev/null
+*/5 * * * * curl -s "your-domain.com/cron/subscription/YOUR_SYSTEM_TOKEN" > /dev/null
+0 3 * * * curl -s "your-domain.com/cron/cleaner/YOUR_SYSTEM_TOKEN" > /dev/null
+0 0 * * * curl -s "your-domain.com/cron/quota/YOUR_SYSTEM_TOKEN" > /dev/null</code></pre>
+    <p>The last line assumes <em>Daily</em> reset mode and runs at midnight; on
+       <em>Monthly</em> reset mode, move it to a monthly line (e.g.
+       <code>0 0 1 * *</code>) instead.</p>
+  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

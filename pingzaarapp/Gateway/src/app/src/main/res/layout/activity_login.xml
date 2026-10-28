@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Pairing / login screen, in two modes.
+
+    The prebuilt APK shipped with Zender (BuildConfig.PREBUILT) belongs to no
+    particular site, so a credential form would have nowhere to post until a QR
+    supplies a URL. The credential group is hidden there, and so is the logo,
+    because the bundled drawable is only a "BRAND" placeholder.
+
+    A build from source is made for one specific Zender, so its address is
+    compiled in (gradle.properties -> defaultSiteUrl) and never asked for. That
+    build shows the sign-in form and drops the pairing explanation, which would
+    otherwise push the screen past a phone viewport.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="?android:attr/colorBackground">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:src="@drawable/logo"
+                android:contentDescription="@string/logo_description"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/pairTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/pair_title"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="?android:attr/textColorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/logoImage" />
+
+            <TextView
+                android:id="@+id/pairInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/pair_instructions"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="?android:attr/textColorSecondary"
+                app:layout_constraintTop_toBottomOf="@id/pairTitle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/qrLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/pair_scan_button"
+                android:padding="14dp"
+                app:icon="@drawable/ic_qr_scan"
+                app:iconGravity="textStart"
+                app:backgroundTint="@color/login_button_color"
+                app:layout_goneMarginTop="28dp"
+                app:layout_constraintTop_toBottomOf="@id/pairInstructions" />
+            <!-- goneMarginTop above stacks with the margins of the two views it
+                 chains through: pairTitle (20dp) and pairInstructions (10dp) both
+                 collapse to points using their own regular margins when the group
+                 is hidden. The effective logo-to-button gap in a source build is
+                 therefore 58dp, not 28dp. Change any of the three together. -->
+
+            <!-- The pairing explanation. Shown only in the prebuilt, where the QR
+                 is the whole screen and needs describing. A source build has the
+                 logo and the sign-in form as well, and keeping this too made the
+                 screen scroll. -->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/pairIntroGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="pairTitle,pairInstructions" />
+
+            <!-- Everything below is hidden in the prebuilt. -->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/credentialGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="credentialDivider,emailLayout,passwordLayout,loginButton" />
+
+            <TextView
+                android:id="@+id/credentialDivider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/pair_or_sign_in"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textColor="?android:attr/textColorSecondary"
+                app:layout_constraintTop_toBottomOf="@id/qrLoginButton" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/email"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?attr/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/credentialDivider">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/password"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?attr/colorPrimary"
+                app:endIconMode="password_toggle"
+                app:layout_constraintTop_toBottomOf="@id/emailLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/login"
+                android:padding="12dp"
+                app:backgroundTint="@color/login_button_color"
+                app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loginProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminateTint="@color/login_loading_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

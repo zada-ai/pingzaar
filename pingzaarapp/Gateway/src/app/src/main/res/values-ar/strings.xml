@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- ======================================================================================== -->
+    <!-- APP IDENTIFICATION -->
+    <!-- ======================================================================================== -->
+    <string name="app_launcher_name">بوابة الرسائل</string>
+
+    <!-- ======================================================================================== -->
+    <!-- COMMON ACTIONS -->
+    <!-- ======================================================================================== -->
+    <string name="ok">موافق</string>
+    <string name="cancel">إلغاء</string>
+    <string name="confirm">تأكيد</string>
+    <string name="continue_button">متابعة</string>
+    <string name="exit">خروج</string>
+    <string name="grant">منح</string>
+    <string name="configure">إعداد</string>
+    <string name="update">تحديث</string>
+    <string name="enabled">مُفعّل</string>
+    <string name="disabled">مُعطّل</string>
+
+    <!-- ======================================================================================== -->
+    <!-- LOGIN SCREEN -->
+    <!-- ======================================================================================== -->
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="login_with_qr">تسجيل الدخول برمز QR</string>
+    <string name="logo_description">شعار بوابة الرسائل</string>
+
+    <!-- Login Errors -->
+    <string name="unsupported_device">جهاز غير مدعوم</string>
+    <string name="unsupported_device_message">يتطلب هذا التطبيق نظام Android 8.0 أو أحدث. جهازك يعمل بنظام Android %s!</string>
+    <string name="invalid_qr_format">تنسيق رمز QR غير صالح!</string>
+    <string name="qr_scan_cancelled">تم إلغاء مسح رمز QR!</string>
+    <string name="qr_scan_error">خطأ في مسح رمز QR!</string>
+    <string name="please_enter_credentials">الرجاء إدخال البريد الإلكتروني وكلمة المرور!</string>
+    <string name="unable_to_get_device_id">تعذر الحصول على معرف الجهاز. الرجاء المحاولة مرة أخرى!</string>
+    <string name="unable_to_login_em2001">تعذر تسجيل الدخول: EM2001</string>
+    <string name="unable_to_login_em2002">تعذر تسجيل الدخول: EM2002</string>
+    <string name="unable_to_login_em2003">تعذر تسجيل الدخول: EM2003</string>
+    <string name="unable_to_login_em2004">تعذر تسجيل الدخول: EM2004</string>
+    <string name="unable_to_login_em2005">تعذر تسجيل الدخول: EM2005</string>
+    <string name="unable_to_login_em2006">تعذر تسجيل الدخول: EM2006</string>
+    <string name="unable_to_login_em2007">تعذر تسجيل الدخول: EM2007</string>
+    <string name="unable_to_login_em2008">تعذر تسجيل الدخول: EM2008</string>
+    <string name="unable_to_login_em2009">تعذر تسجيل الدخول: EM2009</string>
+    <string name="unable_to_login_em2010">تعذر تسجيل الدخول: EM2010</string>
+    <string name="unable_to_login_em2011">تعذر تسجيل الدخول: EM2011</string>
+
+    <!-- ======================================================================================== -->
+    <!-- GATEWAY SCREEN -->
+    <!-- ======================================================================================== -->
+    <string name="logout">تسجيل الخروج</string>
+    <string name="logout_confirmation">هل أنت متأكد من تسجيل الخروج؟ سيؤدي هذا إلى إعادة تعيين التطبيق وستحتاج لتسجيل الدخول مرة أخرى!</string>
+    <string name="sms_status_changed">SMS %s!</string>
+    <string name="ussd_status_changed">USSD %s!</string>
+
+    <!-- Default SMS App -->
+    <string name="make_default">تعيين كافتراضي</string>
+    <string name="make_default_sms_app">تعيين كتطبيق SMS افتراضي</string>
+    <string name="make_default_sms_message">تعيين هذا التطبيق كتطبيق SMS افتراضي سيؤدي إلى:\n\n• استبدال تطبيق المراسلة الحالي (Google Messages، إلخ.)\n• سيتم معالجة جميع رسائل SMS/MMS بواسطة هذا التطبيق\n\nهذا التطبيق يستقبل بالفعل رسائل SMS وتقارير التسليم دون أن يكون افتراضياً. قم بتعيينه كافتراضي فقط إذا كان هذا جهاز بوابة مخصص.</string>
+    <string name="app_set_as_default">تم تعيين التطبيق كتطبيق SMS افتراضي!</string>
+    <string name="failed_to_set_default">فشل التعيين كتطبيق SMS افتراضي!</string>
+    <string name="already_default_sms">التطبيق هو بالفعل تطبيق SMS الافتراضي!</string>
+    <string name="sms_role_unavailable">دور SMS غير متاح على هذا الجهاز!</string>
+
+    <!-- Device Information -->
+    <string name="device_info">معلومات الجهاز</string>
+    <string name="device_information">معلومات الجهاز</string>
+    <string name="device_manufacturer">الشركة المصنعة: %s</string>
+    <string name="device_name">اسم الجهاز: %s</string>
+    <string name="device_id">معرف الجهاز: %s</string>
+    <string name="device_model">طراز الجهاز: %s</string>
+    <string name="device_os">نظام التشغيل: Android %s</string>
+    <string name="build_number">رقم البناء: %s</string>
+
+    <!-- ======================================================================================== -->
+    <!-- QR SCANNER -->
+    <!-- ======================================================================================== -->
+    <string name="point_camera_at_qr">وجّه الكاميرا نحو رمز QR</string>
+    <string name="camera_permission_required">مطلوب إذن الكاميرا</string>
+
+    <!-- ======================================================================================== -->
+    <!-- PERMISSIONS -->
+    <!-- ======================================================================================== -->
+    <string name="permission_required">إذن مطلوب</string>
+    <string name="permission_required_message">هذا الإذن مطلوب لكي يعمل التطبيق بشكل صحيح.</string>
+    <string name="contacts_permission_denied">تم رفض إذن جهات الاتصال - لن يتم عرض أسماء جهات الاتصال</string>
+    <string name="notification_permission_denied">تم رفض إذن الإشعارات - ستظل خدمات المقدمة تعمل</string>
+
+    <!-- ======================================================================================== -->
+    <!-- BATTERY OPTIMIZATION -->
+    <!-- ======================================================================================== -->
+    <string name="exclusion_required">الاستثناء مطلوب</string>
+    <string name="battery_exclusion_required">الاستثناء مطلوب</string>
+    <string name="battery_exclusion_message">يجب استثناء التطبيق من تحسين البطارية لضمان تسليم الرسائل بشكل موثوق.</string>
+    <string name="battery_optimization_message">يجب استثناء التطبيق من تحسين البطارية لضمان تسليم الرسائل بشكل موثوق.</string>
+    <string name="battery_optimization_error">تعذر طلب إذن تحسين البطارية.</string>
+    <string name="battery_optimization_enabled">تحسين البطارية لا يزال مُفعّلاً - قد لا يعمل التطبيق بشكل موثوق</string>
+    <string name="battery_optimization_disabled">تحسين البطارية مُعطّل - يمكن للتطبيق العمل في الخلفية</string>
+
+    <!-- ======================================================================================== -->
+    <!-- APP UPDATES -->
+    <!-- ======================================================================================== -->
+    <string name="update_required">تحديث مطلوب</string>
+    <string name="update_required_message">يتوفر إصدار جديد (%s). الرجاء التحديث إلى أحدث إصدار.</string>
+    <string name="update_available_message">يتوفر إصدار جديد (%s). الرجاء التحديث إلى أحدث إصدار.</string>
+    <string name="error">خطأ</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION CHANNELS -->
+    <!-- ======================================================================================== -->
+    <string name="channel_sms_sending">إرسال SMS</string>
+    <string name="channel_sms_sending_desc">إشعارات تقدم إرسال SMS</string>
+    <string name="channel_ussd_sending">إرسال USSD</string>
+    <string name="channel_ussd_sending_desc">إشعارات تقدم إرسال USSD</string>
+    <string name="channel_message_processing">معالجة الرسائل</string>
+    <string name="channel_message_processing_desc">إشعارات موحدة لجميع أنشطة معالجة الرسائل</string>
+    <string name="channel_sms_processing">معالجة SMS</string>
+    <string name="channel_sms_processing_desc">عرض تقدم معالجة رسائل SMS</string>
+    <string name="channel_ussd_processing">معالجة USSD</string>
+    <string name="channel_ussd_processing_desc">عرض تقدم معالجة طلبات USSD</string>
+    <string name="channel_unified_processing">المعالجة الموحدة</string>
+    <string name="channel_unified_processing_desc">عرض تقدم معالجة SMS وUSSD مجتمعة</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION SERVICE NAMES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_sms_service">خدمة SMS</string>
+    <string name="notification_ussd_service">خدمة USSD</string>
+    <string name="notification_message_service">خدمة الرسائل</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION TITLES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_initializing">%s - جارٍ التهيئة</string>
+    <string name="notification_queuing">%s - جارٍ الإدراج في الطابور</string>
+    <string name="notification_priority_queue">%s - طابور الأولوية</string>
+    <string name="notification_standard_queue">%s - الطابور القياسي</string>
+    <string name="notification_processing">%s - جارٍ المعالجة</string>
+    <string name="notification_completing">%s - جارٍ الإنهاء</string>
+    <string name="notification_error">%s - خطأ</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION MESSAGES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_starting_up">جارٍ البدء والتحقق من الطابور…</string>
+    <string name="notification_organizing" tools:ignore="PluralsCandidate">جارٍ تنظيم %d عنصر حسب الأولوية…</string>
+    <string name="notification_processing_priority_progress">جارٍ معالجة عناصر الأولوية… %1$d%% (%2$d/%3$d)</string>
+    <string name="notification_processing_priority">جارٍ معالجة عناصر الأولوية…</string>
+    <string name="notification_processing_standard_progress">جارٍ معالجة العناصر القياسية… %1$d%% (%2$d/%3$d)</string>
+    <string name="notification_processing_standard">جارٍ معالجة العناصر القياسية…</string>
+    <string name="notification_processing_ussd">جارٍ معالجة طلبات USSD…</string>
+    <string name="notification_finishing">جارٍ الإنهاء وتنظيف الموارد…</string>
+    <string name="notification_error_occurred">حدث خطأ أثناء المعالجة</string>
+    <string name="notification_processing_messages">جارٍ معالجة الرسائل…</string>
+    <string name="notification_fetching_database">جارٍ جلب الرسائل من قاعدة البيانات…</string>
+    <string name="notification_waiting_next">انتظار %1$ds قبل الرسالة التالية (%2$d/%3$d)</string>
+    <string name="notification_processing_completed">تمت المعالجة بنجاح</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION EXPANDED TEXT -->
+    <!-- ======================================================================================== -->
+    <string name="notification_progress">التقدم: %1$d/%2$d (%3$d%%)</string>
+    <string name="notification_queue_status">حالة الطابور:</string>
+    <string name="notification_priority_count">  • الأولوية: %d</string>
+    <string name="notification_standard_count">  • القياسي: %d</string>
+    <string name="notification_processing_count">  • قيد المعالجة: %d</string>
+    <string name="notification_completed_count">  • المكتملة: %d</string>
+    <string name="notification_failed_count">  • الفاشلة: %d</string>
+    <string name="notification_performance">الأداء:</string>
+    <string name="notification_rate">  • المعدل: %.1f عنصر/دقيقة</string>
+    <string name="notification_time_remaining">  • الوقت المتبقي المقدر: %s</string>
+    <string name="notification_last_processed">آخر معالجة: %s</string>
+    <string name="notification_errors_encountered">الأخطاء المواجهة: %d</string>
+    <string name="notification_queue_subtext" tools:ignore="PluralsCandidate">الطابور: %1$d قيد الانتظار، %2$d تمت معالجتها</string>
+
+    <!-- Network & Authentication Errors (EM1001-EM1005) -->
+    <string name="error_network_connection">خطأ في الاتصال بالشبكة</string>
+    <string name="error_authentication_failed">فشلت المصادقة</string>
+    <string name="error_session_expired">انتهت صلاحية الجلسة</string>
+    <string name="error_server_timeout">انتهت مهلة الخادم</string>
+    <string name="error_data_parsing">خطأ في تحليل البيانات</string>
+
+    <!-- Database & Configuration Errors (EM1006-EM1009) -->
+    <string name="error_database">خطأ في قاعدة البيانات</string>
+    <string name="error_message_queue_processing">فشلت معالجة طابور الرسائل</string>
+    <string name="error_configuration">خطأ في الإعدادات</string>
+    <string name="error_api_request_failed">فشل طلب API</string>
+
+    <!-- Messaging Errors (EM1010-EM1014) -->
+    <string name="error_message_sending_failed">فشل إرسال الرسالة</string>
+    <string name="error_device_registration">خطأ في تسجيل الجهاز</string>
+    <string name="error_permission_denied">تم رفض الإذن</string>
+    <string name="error_service_unavailable">الخدمة غير متاحة</string>
+    <string name="error_invalid_request">طلب غير صالح</string>
+
+    <!-- USSD Errors (EM1015-EM1018) -->
+    <string name="error_ussd_request_failed">فشل طلب USSD</string>
+    <string name="error_ussd_timeout">انتهت مهلة طلب USSD</string>
+    <string name="error_ussd_permission_required">إذن USSD مطلوب</string>
+    <string name="error_ussd_processing">خطأ في معالجة USSD</string>
+
+    <!-- Campaign & Reporting Errors (EM1019-EM1020, EM10027) -->
+    <string name="error_campaign_processing">خطأ في معالجة الحملة</string>
+    <string name="error_firebase_messaging">خطأ في مراسلة Firebase</string>
+    <string name="error_report_generation">فشل إنشاء التقرير</string>
+
+    <!-- Generic Processing Errors -->
+    <string name="error_processing_occurred">حدث خطأ في المعالجة</string>
+    <string name="error_an_error_occurred">حدث خطأ</string>
+
+    <!-- SIM & Subscription Errors -->
+    <string name="error_sim_configuration">خطأ في إعداد بطاقة SIM</string>
+    <string name="error_sim_not_detected">لم يتم اكتشاف بطاقة SIM</string>
+
+    <!-- Permission Errors -->
+    <string name="error_phone_state_permission">إذن حالة الهاتف مطلوب</string>
+    <string name="error_call_permission_ussd">إذن الاتصال مطلوب لـ USSD</string>
+    <string name="error_sms_permission">إذن SMS مطلوب</string>
+    <string name="error_sms_receive_permission">إذن استقبال SMS مطلوب</string>
+
+    <!-- Broadcast Receiver Errors -->
+    <string name="error_no_cellular_service">لا توجد خدمة خلوية متاحة</string>
+    <string name="error_message_format">خطأ في تنسيق الرسالة</string>
+    <string name="error_cellular_radio_off">الراديو الخلوي مُطفأ</string>
+    <string name="error_sms_sending_failed">فشل إرسال SMS</string>
+    <string name="error_no_default_sms_app">لم يتم تعيين تطبيق SMS افتراضي</string>
+    <string name="error_airplane_mode_enabled">وضع الطيران مُفعّل</string>
+    <string name="error_mms_sending_failed">فشل إرسال MMS</string>
+
+    <!-- Database Specific Errors -->
+    <string name="error_database_busy">قاعدة البيانات مشغولة</string>
+    <string name="error_data_storage">خطأ في تخزين البيانات</string>
+    <string name="error_database_initialization">فشلت تهيئة قاعدة البيانات</string>
+
+    <!-- Network Connection Errors -->
+    <string name="error_connection_timeout">انتهت مهلة الاتصال</string>
+    <string name="error_server_unreachable">الخادم غير قابل للوصول</string>
+    <string name="error_unable_to_connect">تعذر الاتصال بالخادم</string>
+    <string name="error_secure_connection">خطأ في الاتصال الآمن</string>
+    <string name="error_network_configuration">خطأ في إعدادات الشبكة</string>
+
+    <!-- HTTP Status Errors -->
+    <string name="error_http_forbidden">الوصول محظور</string>
+    <string name="error_http_not_found">المورد غير موجود</string>
+    <string name="error_http_server_error">خطأ في الخادم</string>
+    <string name="error_http_service_unavailable">الخدمة غير متاحة مؤقتاً</string>
+
+    <!-- Firebase/FCM Errors -->
+    <string name="error_firebase_configuration">خطأ في إعدادات Firebase</string>
+    <string name="error_firebase_initialization">فشلت تهيئة Firebase</string>
+
+    <!-- USSD Specific Errors -->
+    <string name="error_ussd_invalid_code">رمز USSD غير صالح</string>
+
+    <!-- Incoming SMS Handler Errors -->
+    <string name="error_failed_to_store_sms">فشل حفظ SMS في قاعدة البيانات</string>
+    <string name="error_processing_sms">خطأ في معالجة SMS: %s</string>
+    <string name="error_cannot_sync_missing_credentials">لا يمكن مزامنة SMS المستلمة: بيانات الاعتماد مفقودة</string>
+    <string name="error_syncing_received_messages">خطأ في مزامنة الرسائل المستلمة: %s</string>
+    <string name="error_scheduling_sms_sync">خطأ في جدولة مزامنة SMS: %s</string>
+
+    <!-- ======================================================================================== -->
+    <!-- USER-FACING LOG MESSAGES (Info/Warning logs shown in UI terminal) -->
+    <!-- ======================================================================================== -->
+
+    <!-- APP Logs -->
+    <string name="log_build_number">رقم البناء: %s</string>
+    <string name="log_device_id">معرف الجهاز: %s…</string>
+
+    <!-- AUTH Logs -->
+    <string name="log_user_session_terminated">تم بدء إنهاء جلسة المستخدم</string>
+
+    <!-- SMS Logs -->
+    <string name="log_sms_bg_service_activated">تم تفعيل خدمة المعالجة في الخلفية</string>
+    <string name="log_sms_bg_service_deactivated">تم إلغاء تفعيل خدمة المعالجة في الخلفية</string>
+    <string name="log_sms_service_disabled_locally">تم تعطيل الخدمة محلياً</string>
+    <string name="log_sms_blocked_by_server">محظور بواسطة إعدادات الخادم</string>
+    <string name="log_sms_processing_incoming">جارٍ معالجة SMS الواردة</string>
+    <string name="log_sms_stored_in_db">تم حفظ SMS في قاعدة البيانات (المعرف: %s)</string>
+    <string name="log_sms_syncing_to_server">جارٍ المزامنة مع الخادم</string>
+    <string name="log_sms_already_synced">الرسالة تمت مزامنتها بالفعل أو غير موجودة</string>
+    <string name="log_sms_manually_syncing">جارٍ مزامنة الرسائل المستلمة يدوياً…</string>
+    <string name="log_sms_cleared_old_messages">تم مسح الرسائل القديمة المُزامنة</string>
+    <string name="log_sms_deprecated_function">isMessageQueueServiceRunning() مُستبعدة. استخدم isServiceActuallyRunning() بدلاً منها.</string>
+    <string name="log_sms_no_phone_state_permission">لم يتم منح إذن READ_PHONE_STATE، سيتم استخدام الاشتراك الافتراضي</string>
+    <string name="log_sms_error_unregistering_receiver">خطأ في إلغاء تسجيل المستقبل: %s</string>
+    <string name="log_sms_broadcast_timeout">تم الوصول إلى مهلة بث SMS، جارٍ التحقق من التسليم عبر قاعدة بيانات SMS</string>
+    <string name="log_sms_error_unregistering_on_timeout">خطأ في إلغاء تسجيل المستقبل عند انتهاء المهلة: %s</string>
+    <string name="log_sms_delivery_verified">تم التحقق من تسليم SMS عبر قاعدة البيانات - تم إرسال الرسالة بنجاح</string>
+    <string name="log_sms_cannot_verify_delivery">لا يمكن التحقق من تسليم SMS - لم يتم منح إذن READ_SMS</string>
+    <string name="log_sms_sending_via_sender">جارٍ إرسال SMS عبر SmsSender</string>
+    <string name="log_sms_sent_successfully">تم إرسال SMS بنجاح!</string>
+    <string name="log_sms_fetching_queue">جارٍ جلب الرسائل من الطابور</string>
+    <string name="log_sms_found_messages" tools:ignore="PluralsCandidate">تم العثور على %d رسالة للمعالجة</string>
+    <string name="log_sms_processing_priority" tools:ignore="PluralsCandidate">جارٍ معالجة %d رسالة ذات أولوية</string>
+    <string name="log_sms_processing_standard" tools:ignore="PluralsCandidate">جارٍ معالجة %d رسالة قياسية</string>
+    <string name="log_campaigns_queued">الحملات في الطابور: أولوية %1$s، قياسية %2$s</string>
+    <string name="log_switching_campaign">تبديل الحملة: #%1$d ← #%2$d</string>
+    <string name="log_completed_campaign">اكتملت الحملة #%d</string>
+    <string name="log_sms_feature_disabled">ميزة SMS مُعطّلة، إيقاف الخدمة</string>
+    <string name="log_message_removed" tools:ignore="PluralsCandidate">تمت إزالة الرسالة #%d، جارٍ التخطي</string>
+    <string name="log_message_already_processed" tools:ignore="PluralsCandidate">تمت معالجة الرسالة #%d بالفعل، جارٍ التخطي</string>
+    <string name="log_processing_message">جارٍ معالجة الرسالة #%d</string>
+    <string name="log_processed_message">تمت معالجة الرسالة #%d</string>
+    <string name="log_waiting_before_next">انتظار %ds قبل الرسالة التالية</string>
+    <string name="log_scheduled_retry">تمت جدولة إعادة المحاولة للرسالة #%1$d (المحاولة %2$d)</string>
+    <string name="log_message_sent_after_retry" tools:ignore="PluralsCandidate">تم إرسال الرسالة #%1$d بنجاح (المحاولة %2$d)</string>
+    <string name="log_retry_attempt_failed" tools:ignore="PluralsCandidate">فشلت المحاولة %1$d للرسالة #%2$d: %3$s</string>
+    <string name="log_retrying_message">إعادة محاولة الرسالة #%1$d في %2$ds</string>
+    <string name="log_message_failed_all_retries" tools:ignore="PluralsCandidate">فشلت الرسالة #%1$d بعد %2$d محاولة</string>
+    <string name="log_report_synced">تمت مزامنة التقرير بنجاح للرسالة #%d</string>
+    <string name="log_message_sync_failed">فشلت مزامنة الرسالة، ستتم إعادة المحاولة: %1$s - %2$s</string>
+    <string name="log_could_not_determine_sim_slot">تعذر تحديد فتحة SIM للاشتراك %1$d: %2$s</string>
+    <string name="log_could_not_check_default_sms">تعذر التحقق من حالة تطبيق SMS الافتراضي: %s</string>
+    <string name="log_could_not_write_sms_db">تعذرت كتابة SMS إلى قاعدة بيانات النظام: %s</string>
+    <string name="log_sms_sending_failed">فشل إرسال SMS برمز النتيجة: %d</string>
+    <string name="log_sms_delivery_failed">فشل تسليم SMS برمز النتيجة: %d</string>
+    <string name="log_message_status_sync_failed">فشلت مزامنة حالة الرسالة، ستتم إعادة المحاولة: %1$s - %2$s</string>
+
+    <!-- MMS Logs -->
+    <string name="log_mms_starting_send">بدء إرسال MMS إلى %s</string>
+    <string name="log_mms_sent_successfully">تم إرسال MMS بنجاح</string>
+    <string name="log_mms_error_unregistering_receiver">خطأ في إلغاء تسجيل مستقبل MMS</string>
+    <string name="log_mms_send_initiated">تم بدء إرسال MMS بنجاح</string>
+    <string name="log_mms_send_timeout">انتهت مهلة إرسال MMS</string>
+    <string name="log_mms_building">بناء MMS: نص + مرفق</string>
+    <string name="log_mms_built_pdu" tools:ignore="PluralsCandidate">تم بناء PDU: %d بايت</string>
+    <string name="log_mms_queued_for_sending">تم إدراج MMS للإرسال</string>
+    <string name="log_mms_sending_with_attachment">إرسال MMS مع نص + مرفق</string>
+    <string name="log_mms_queued_awaiting_confirm">MMS في الطابور، بانتظار تأكيد الإرسال</string>
+    <string name="log_mms_built_pdu_total" tools:ignore="PluralsCandidate">تم بناء PDU: %d بايت إجمالي</string>
+    <string name="log_mms_unknown_mime_type">نوع MIME غير معروف في SMIL: %s</string>
+    <string name="log_mms_no_read_phone_numbers">لم يتم منح إذن READ_PHONE_NUMBERS</string>
+    <string name="log_mms_downloaded" tools:ignore="PluralsCandidate">تم التنزيل: %1$d بايت من %2$s</string>
+    <string name="log_mms_could_not_detect_mime">تعذر اكتشاف نوع MIME لـ: %s، استخدام الافتراضي</string>
+    <string name="log_mms_sent_with_ids">تم إرسال MMS بنجاح (uid=%1$d, mid=%2$d)</string>
+
+    <!-- USSD Logs -->
+    <string name="log_ussd_fetching_queue">جارٍ جلب طلبات USSD من الطابور</string>
+    <string name="log_ussd_found_requests">تم العثور على %d طلب USSD للمعالجة</string>
+    <string name="log_ussd_processing_priority" tools:ignore="PluralsCandidate">جارٍ معالجة %d طلب USSD ذي أولوية</string>
+    <string name="log_ussd_processing_standard" tools:ignore="PluralsCandidate">جارٍ معالجة %d طلب USSD قياسي</string>
+    <string name="log_ussd_feature_disabled">ميزة USSD مُعطّلة، إيقاف الخدمة</string>
+    <string name="log_ussd_request_removed" tools:ignore="PluralsCandidate">تمت إزالة USSD #%d، جارٍ التخطي</string>
+    <string name="log_ussd_missing_permission">إذن CALL_PHONE مفقود لـ USSD #%d</string>
+    <string name="log_ussd_request_timed_out" tools:ignore="PluralsCandidate">انتهت مهلة طلب USSD #%d</string>
+    <string name="log_ussd_waiting_next_request">انتظار 1.5 ثانية قبل طلب USSD التالي…</string>
+    <string name="log_ussd_response_sent">تم إرسال استجابة USSD إلى الخادم لـ #%1$d (الحالة: %2$d)</string>
+    <string name="log_ussd_sending_request">إرسال طلب USSD #%1$d: %2$s</string>
+    <string name="log_ussd_cancelling_pending" tools:ignore="PluralsCandidate">إلغاء USSD #%d المعلق بسبب تدمير الخدمة</string>
+
+    <!-- FCM/Firebase Logs -->
+    <string name="log_fcm_fetching_messages">جارٍ جلب الرسائل من الخادم…</string>
+    <string name="log_fcm_deleting_message">حذف الرسالة #%d…</string>
+    <string name="log_fcm_deleted_message">تم حذف الرسالة #%d…</string>
+    <string name="log_device_settings_updated">تم تحديث إعدادات الجهاز بنجاح!</string>
+    <string name="log_device_deleted">تم حذف الجهاز من الخادم…</string>
+    <string name="log_deleting_device">جارٍ حذف الجهاز…</string>
+    <string name="log_campaign_updated" tools:ignore="PluralsCandidate">تم تحديث الحملة #%d!</string>
+    <string name="log_campaign_deleted">تم حذف الحملة من الخادم…</string>
+    <string name="log_deleting_campaign" tools:ignore="PluralsCandidate">حذف الحملة #%d والرسائل المرتبطة…</string>
+    <string name="log_campaign_messages_deleted" tools:ignore="PluralsCandidate">تم حذف الحملة #%1$d و%2$d رسالة بنجاح</string>
+    <string name="log_fcm_fetching_ussd">جارٍ جلب أكواد USSD من الخادم…</string>
+    <string name="log_fcm_deleting_ussd">حذف USSD #%d…</string>
+    <string name="log_fcm_deleted_ussd">تم حذف USSD #%d…</string>
+    <string name="log_fcm_fetching_count" tools:ignore="PluralsCandidate">جلب %1$d رسالة للوصول إلى الحد الأقصى %2$d</string>
+    <string name="log_fcm_fetched_messages" tools:ignore="PluralsCandidate">تم جلب %d رسالة من الخادم…</string>
+    <string name="log_fcm_skipping_message">تخطي الرسالة %d - موجودة بالفعل</string>
+    <string name="log_fcm_fetched_ussd">تم جلب %d كود USSD من الخادم…</string>
+    <string name="log_fcm_skipping_ussd">تخطي USSD #%d - موجود بالفعل</string>
+    <string name="log_fcm_stored_ussd">تم حفظ USSD #%d جديد…</string>
+    <string name="log_fcm_token_sync_failed">فشلت مزامنة الرمز، ستتم إعادة المحاولة: %1$s - %2$s</string>
+
+    <!-- SYS/System Logs -->
+    <string name="log_battery_optimization_enabled">تحسين البطارية لا يزال مُفعّلاً - قد لا يعمل التطبيق بشكل موثوق</string>
+    <string name="log_battery_optimization_disabled">تحسين البطارية مُعطّل - يمكن للتطبيق العمل في الخلفية</string>
+
+    <!-- Login Logs -->
+    <string name="log_android_version_check">checkAndroidVersion: الجهاز يعمل بنظام Android %1$s (API %2$d)، الحد الأدنى المطلوب هو API %3$d</string>
+
+    <!-- Report Logs -->
+    <string name="log_delivery_report_scheduled">تمت جدولة تقرير التسليم للرسالة #%d</string>
+
+    <!-- Unified Message Processing Logs -->
+    <string name="log_msg_queued" tools:ignore="PluralsCandidate">في الطابور: %1$d أولوية، %2$d عنصر قياسي</string>
+    <string name="log_msg_processing_failed" tools:ignore="PluralsCandidate">فشلت معالجة عنصر %1$s #%2$d</string>
+
+    <!-- Permission Logs -->
+    <string name="log_eventbus_not_registered">EventBus غير مسجل، تخطي إلغاء التسجيل</string>
+    <string name="log_eventbus_already_registered">EventBus مسجل بالفعل، تخطي التسجيل المكرر</string>
+    <string name="log_contacts_permission_denied">تم رفض إذن جهات الاتصال - لن يتم عرض أسماء جهات الاتصال</string>
+    <string name="log_notification_permission_denied">تم رفض إذن الإشعارات - ستظل خدمات المقدمة تعمل</string>
+
+    <!-- ======================================================================================== -->
+    <!-- ADDITIONAL UI TERMINAL LOGS (Previously Hardcoded) -->
+    <!-- ======================================================================================== -->
+
+    <!-- Language/UI Logs -->
+    <string name="log_language_changed_to">تم تغيير اللغة إلى: %s</string>
+
+    <!-- Service Status Logs -->
+    <string name="log_services_both_running">كلا خدمتي SMS وUSSD تعملان</string>
+    <string name="log_services_sms_running">خدمة SMS تعمل</string>
+    <string name="log_services_ussd_running">خدمة USSD تعمل</string>
+    <string name="log_services_all_stopped">جميع الخدمات متوقفة</string>
+
+    <!-- Firebase/FCM Logs -->
+    <string name="log_fcm_device_updated">تم تحديث إعدادات الجهاز بنجاح!</string>
+    <string name="log_fcm_device_deleted">تم حذف الجهاز من الخادم…</string>
+    <string name="log_fcm_deleting_device">جارٍ حذف الجهاز…</string>
+    <string name="log_fcm_campaign_updated">تم تحديث الحملة #%s!</string>
+    <string name="log_fcm_campaign_deleted">تم حذف الحملة من الخادم…</string>
+    <string name="log_fcm_deleting_campaign">حذف الحملة #%1$d والرسائل المرتبطة…</string>
+    <string name="log_fcm_campaign_delete_success">تم حذف الحملة #%1$d و%2$d رسالة بنجاح</string>
+    <string name="log_fcm_fetching_ussd_codes">جارٍ جلب أكواد USSD من الخادم…</string>
+    <string name="log_fcm_ussd_deleted">تم حذف USSD #%d…</string>
+    <string name="log_fcm_fetching_messages_to_max">جلب %1$d رسالة للوصول إلى الحد الأقصى %2$d</string>
+    <string name="log_fcm_messages_fetched" tools:ignore="PluralsCandidate">تم جلب %d رسالة من الخادم…</string>
+    <string name="log_fcm_message_skipped_exists">تخطي الرسالة %d - موجودة بالفعل</string>
+    <string name="log_fcm_ussd_codes_fetched" tools:ignore="PluralsCandidate">تم جلب %d كود USSD من الخادم…</string>
+    <string name="log_fcm_ussd_skipped_exists">تخطي USSD #%d - موجود بالفعل</string>
+    <string name="log_fcm_ussd_stored_new">تم حفظ USSD #%d جديد…</string>
+
+    <!-- Worker Sync Logs (Warnings) -->
+    <string name="log_worker_message_sync_failed">فشلت مزامنة الرسالة، ستتم إعادة المحاولة: %1$d - %2$s</string>
+    <string name="log_worker_status_sync_failed">فشلت مزامنة حالة الرسالة، ستتم إعادة المحاولة: %1$d - %2$s</string>
+    <string name="log_worker_token_sync_failed">فشلت مزامنة الرمز، ستتم إعادة المحاولة: %1$d - %2$s</string>
+    <string name="log_worker_ussd_response_retry">خطأ في الخادم عند إرسال استجابة USSD: %d، ستتم إعادة المحاولة</string>
+
+    <!-- Network Connectivity Logs -->
+    <string name="log_network_internet_available">اتصال الإنترنت متاح - استئناف عمليات API</string>
+    <string name="log_network_internet_lost">فُقد اتصال الإنترنت - إيقاف عمليات API مؤقتاً</string>
+    <string name="log_network_restored">تمت استعادة الشبكة - سيقوم WorkManager بمعالجة طلبات API المعلقة</string>
+    <string name="log_network_lost">فُقدت الشبكة - سيتم إدراج عمليات API في الطابور حتى تتم استعادتها</string>
+
+    <!-- ======================================================================================== -->
+    <!-- LANGUAGE SWITCHER -->
+    <!-- ======================================================================================== -->
+    <string name="change_language">تغيير اللغة</string>
+    <string name="select_language">اختر اللغة</string>
+    <string name="language_changed">تم تغيير اللغة. جارٍ إعادة تشغيل التطبيق…</string>
+    <string name="english">English</string>
+    <string name="japanese">日本語 (يابانية)</string>
+    <string name="arabic">العربية (عربي)</string>
+    <string name="chinese">简体中文 (صينية)</string>
+
+    <!-- ======================================================================================== -->
+    <!-- FCM TOKEN MANAGEMENT (User-Facing Logs) -->
+    <!-- ======================================================================================== -->
+    <string name="log_fcm_token_refreshed">تم تحديث رمز FCM بنجاح</string>
+    <string name="log_fcm_token_refresh_failed">فشل تحديث رمز FCM</string>
+    <string name="log_fcm_token_syncing_boot">جارٍ مزامنة رمز FCM بعد إعادة تشغيل الجهاز…</string>
+    <string name="log_fcm_connection_issue">تم اكتشاف مشكلة في اتصال FCM، جارٍ محاولة الاستعادة…</string>
+    <string name="log_fcm_token_sync_scheduled">تمت جدولة مزامنة رمز FCM</string>
+
+    <string name="pair_title">اقتران هذا الجهاز</string>
+    <string name="pair_instructions">من لوحة التحكم، افتح الأجهزة ثم اختر \u0022إضافة جهاز\u0022. امسح رمز QR الظاهر هناك لربط هذا الهاتف.</string>
+    <string name="pair_scan_button">مسح رمز QR</string>
+    <string name="pair_or_sign_in">أو سجّل الدخول بحسابك</string>
+    <string name="pair_invalid_qr">رمز QR هذا ليس رمز اقتران أجهزة. افتح الأجهزة \u2190 إضافة جهاز من لوحة التحكم وامسح الرمز الظاهر هناك.</string>
+    <string name="pair_failed">فشل الاقتران. قد تكون صلاحية الرمز قد انتهت \u2014 أعد فتح \u0022إضافة جهاز\u0022 من لوحة التحكم للحصول على رمز جديد.</string>
+    <string name="pair_unreachable">تعذّر الوصول إلى %1$s. تأكد من صحة العنوان ومن اتصال الجهاز بالإنترنت.</string>
+    <string name="pair_no_push_title">لم يتم إعداد الإشعارات الفورية</string>
+    <string name="pair_no_push_message">تم اقتران هذا الجهاز بنجاح، لكن الخادم لا يحتوي على إعدادات Firebase، لذا لا يمكن إعلامه بوجود رسائل جديدة.\n\nاطلب من المسؤول رفع ملف google-services.json من النظرة العامة \u2190 الإعدادات، ثم أعد فتح هذا التطبيق.</string>
+    <string name="pair_confirm_title">الاتصال بهذا الخادم؟</string>
+    <string name="pair_confirm_message">سيقوم هذا الجهاز بإرسال واستقبال الرسائل النصية لحساب:\n\n%1$s\n\nتابع فقط إذا كان هذا خادمك أنت.</string>
+    <string name="pair_confirm_insecure">\n\nتحذير: هذا العنوان غير محمي بـ HTTPS، لذا قد يتمكن الآخرون على نفس الشبكة من قراءة الرسائل.</string>
+    <string name="pair_confirm_continue">اتصال</string>
+    <string name="pair_wrong_server">هذا الرمز يخص خادمًا آخر. هذا التطبيق مُعد لتثبيت واحد محدد.</string>
+</resources>

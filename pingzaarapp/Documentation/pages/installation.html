@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Installation — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Getting started</h6>
+                        <h1 class="header-title"><i class="la la-download la-lg"></i> Installation</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Zender ships with a guided web installer. This page walks through the whole
+       process in order — from getting the files onto your server to your first
+       successful login.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/installer.png" target="_blank" rel="noopener"><img src="../assets/screenshots/installer.png" alt="The guided installer, shown the first time you open your site" loading="lazy"></a>
+  <figcaption>The guided installer, shown the first time you open your site</figcaption>
+</figure>
+
+
+    <h2>1. Get the files onto your server</h2>
+    <p>Upload the contents of the install package to your web server, using FTP, your
+       host's file manager, or however you normally move files onto it. Zender can live
+       at your domain's root or inside a subdirectory — it detects which one it's
+       running from automatically, so either works.</p>
+    <p>If your server runs Apache, the bundled <code>.htaccess</code> file handles the
+       rewrite rules Zender needs on its own, as long as <code>mod_rewrite</code> is
+       enabled. If it runs nginx, include the bundled <code>.nginx.conf</code> file from
+       your server block. If it runs LiteSpeed, translate the same rewrite logic into
+       your LiteSpeed rewrite rules panel — LiteSpeed doesn't read Apache-style
+       <code>.htaccess</code> rewrites the same way.</p>
+
+    <h2>2. Set file and folder permissions</h2>
+    <p>Your web server user needs <strong>write access</strong> to the directory you
+       installed into — the installer has to create its configuration file and generate
+       the default theme's stylesheets before it finishes.</p>
+    <div class="doc-warn">
+      This matters more than it looks. If the configuration folder isn't writable, the
+      installer still finishes and reports success — and then deletes itself, since it
+      only runs once. Your database credentials never actually get saved, and there is
+      no way to run the installer a second time to fix it. Set permissions before you
+      start the installer, not after something goes wrong.
+    </div>
+    <div class="doc-note">
+      If only the theme's stylesheet folders aren't writable, that part fails more
+      gracefully: installation still completes and your configuration is saved
+      correctly, but the dashboard and public site may look unstyled until an
+      administrator opens the theme settings and saves once, which regenerates the CSS.
+    </div>
+
+    <h2>3. Create a database</h2>
+    <p>Create a MySQL or MariaDB database through your host's control panel (or the
+       command line, if you have shell access) before you open the installer — Zender
+       imports its schema into a database you already have; it does not create one for
+       you. Set its collation to a <code>utf8mb4</code> variant so it can store the full
+       range of characters Zender's schema expects, including emoji in messages. Note
+       the database's host, port, name, username, and password — you'll need all five on
+       the next page.</p>
+
+    <h2>4. Browse to your site</h2>
+    <p>Open your site's URL in a browser. Since no configuration file exists yet, Zender
+       shows you the installer form instead of the normal application.</p>
+
+    <h2>5. Fill in the installer form</h2>
+    <p>Every one of the following fields is required, or the installer rejects the
+       submission with <em>"Some fields are empty!"</em>:</p>
+    <table class="doc-table">
+      <thead><tr><th>Field</th><th>What it's for</th></tr></thead>
+      <tbody>
+        <tr><td>Site name</td><td>Your site's name, shown across the dashboard and
+            public pages.</td></tr>
+        <tr><td>Protocol</td><td>HTTP or HTTPS — set this to match how your site is
+            actually served.</td></tr>
+        <tr><td>Site description</td><td>A short description used in a few places on the
+            public site.</td></tr>
+        <tr><td>Purchase code</td><td>Your license/purchase code.</td></tr>
+        <tr><td>Database host, port, name, user, password</td><td>Used to import the
+            schema into your database and connect to it afterward.</td></tr>
+        <tr><td>Admin name, email, password</td><td>Used to create your first user
+            account.</td></tr>
+        <tr><td>Timezone</td><td>Applied to the new admin account.</td></tr>
+        <tr><td>Country</td><td>Applied to the new admin account.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="doc-note">
+      The account you create here becomes your first user, with full administrative
+      access — and it can never be deleted from the system afterward, even by another
+      admin.
+    </div>
+
+    <h3>Validation rules</h3>
+    <ul>
+      <li>The admin name must meet a minimum length, or the installer responds
+          <em>"Name is too short!"</em>.</li>
+      <li>The email address must be a valid format, or the installer responds
+          <em>"Invalid email address!"</em>.</li>
+      <li>The admin password must be at least <strong>5 characters</strong>, or the
+          installer responds <em>"Password is too short!"</em>.</li>
+      <li>The timezone must be one of the values offered in the dropdown — anything else
+          is rejected as <em>"Invalid Request!"</em>.</li>
+      <li>The country must be one of the values offered in the dropdown — anything else
+          is also rejected as <em>"Invalid Request!"</em>.</li>
+    </ul>
+    <p>Because the timezone and country fields are populated as dropdowns, you'll only
+       hit these last two errors if the form is submitted with a value that didn't come
+       from the page itself.</p>
+
+    <div class="doc-warn">
+      If the installer responds <em>"Invalid Database Credentials!"</em>, the problem is
+      almost always privileges, not the host or port: the database user needs the
+      privileges to create tables and insert data into an <strong>existing, empty</strong>
+      database. The installer imports its schema into the database you name — it does
+      <strong>not</strong> create the database for you, so it must already exist before
+      you submit the form.
+    </div>
+
+    <h2>6. What happens when it succeeds</h2>
+    <p>Once every field validates and the database import succeeds, the installer:</p>
+    <ul>
+      <li>Imports the full database schema into your database.</li>
+      <li>Generates a random security token and writes it, together with your database
+          credentials, to its configuration file.</li>
+      <li>Creates your admin account from the name, email, password, timezone, and
+          country you supplied.</li>
+      <li>Saves your site name, description, purchase code, and protocol as system
+          settings.</li>
+      <li>Compiles the default theme's stylesheets so the dashboard and public site have
+          working styles immediately.</li>
+      <li>Removes itself — the installer form, its script, and the raw schema file are
+          all deleted once installation completes, so the form cannot be run a second
+          time.</li>
+    </ul>
+    <p>After this, reload your site and you should see the normal login page. Continue to
+       Configuration for what to check next.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

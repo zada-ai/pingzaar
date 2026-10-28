@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- ======================================================================================== -->
+    <!-- APP IDENTIFICATION -->
+    <!-- ======================================================================================== -->
+    <string name="app_launcher_name">短信网关</string>
+
+    <!-- ======================================================================================== -->
+    <!-- COMMON ACTIONS -->
+    <!-- ======================================================================================== -->
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
+    <string name="continue_button">继续</string>
+    <string name="exit">退出</string>
+    <string name="grant">授予</string>
+    <string name="configure">配置</string>
+    <string name="update">更新</string>
+    <string name="enabled">已启用</string>
+    <string name="disabled">已禁用</string>
+
+    <!-- ======================================================================================== -->
+    <!-- LOGIN SCREEN -->
+    <!-- ======================================================================================== -->
+    <string name="email">电子邮箱</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="login_with_qr">使用二维码登录</string>
+    <string name="logo_description">短信网关标志</string>
+
+    <!-- Login Errors -->
+    <string name="unsupported_device">不支持的设备</string>
+    <string name="unsupported_device_message">此应用需要 Android 8.0 或更高版本。您的设备运行的是 Android %s！</string>
+    <string name="invalid_qr_format">二维码格式无效！</string>
+    <string name="qr_scan_cancelled">二维码扫描已取消！</string>
+    <string name="qr_scan_error">二维码扫描错误！</string>
+    <string name="please_enter_credentials">请输入电子邮箱和密码！</string>
+    <string name="unable_to_get_device_id">无法获取设备 ID。请重试！</string>
+    <string name="unable_to_login_em2001">无法登录：EM2001</string>
+    <string name="unable_to_login_em2002">无法登录：EM2002</string>
+    <string name="unable_to_login_em2003">无法登录：EM2003</string>
+    <string name="unable_to_login_em2004">无法登录：EM2004</string>
+    <string name="unable_to_login_em2005">无法登录：EM2005</string>
+    <string name="unable_to_login_em2006">无法登录：EM2006</string>
+    <string name="unable_to_login_em2007">无法登录：EM2007</string>
+    <string name="unable_to_login_em2008">无法登录：EM2008</string>
+    <string name="unable_to_login_em2009">无法登录：EM2009</string>
+    <string name="unable_to_login_em2010">无法登录：EM2010</string>
+    <string name="unable_to_login_em2011">无法登录：EM2011</string>
+
+    <!-- ======================================================================================== -->
+    <!-- GATEWAY SCREEN -->
+    <!-- ======================================================================================== -->
+    <string name="logout">退出登录</string>
+    <string name="logout_confirmation">确定要退出登录吗？这将重置应用，您需要重新登录！</string>
+    <string name="sms_status_changed">SMS %s！</string>
+    <string name="ussd_status_changed">USSD %s！</string>
+
+    <!-- Default SMS App -->
+    <string name="make_default">设为默认</string>
+    <string name="make_default_sms_app">设为默认短信应用</string>
+    <string name="make_default_sms_message">将此应用设为默认短信应用将会：\n\n• 替换您当前的短信应用（Google Messages 等）\n• 所有 SMS/MMS 将由此网关处理\n\n此应用已经可以接收短信和投递报告，无需设为默认。仅在这是专用网关设备时才设为默认。</string>
+    <string name="app_set_as_default">应用已设为默认短信应用！</string>
+    <string name="failed_to_set_default">设为默认短信应用失败！</string>
+    <string name="already_default_sms">应用已经是默认短信应用！</string>
+    <string name="sms_role_unavailable">此设备不支持短信角色！</string>
+
+    <!-- Device Information -->
+    <string name="device_info">设备信息</string>
+    <string name="device_information">设备信息</string>
+    <string name="device_manufacturer">设备制造商：%s</string>
+    <string name="device_name">设备名称：%s</string>
+    <string name="device_id">设备 ID：%s</string>
+    <string name="device_model">设备型号：%s</string>
+    <string name="device_os">操作系统：Android %s</string>
+    <string name="build_number">版本号：%s</string>
+
+    <!-- ======================================================================================== -->
+    <!-- QR SCANNER -->
+    <!-- ======================================================================================== -->
+    <string name="point_camera_at_qr">将相机对准二维码</string>
+    <string name="camera_permission_required">需要相机权限</string>
+
+    <!-- ======================================================================================== -->
+    <!-- PERMISSIONS -->
+    <!-- ======================================================================================== -->
+    <string name="permission_required">需要权限</string>
+    <string name="permission_required_message">应用需要此权限才能正常运行。</string>
+    <string name="contacts_permission_denied">联系人权限被拒绝 - 将不会显示联系人姓名</string>
+    <string name="notification_permission_denied">通知权限被拒绝 - 前台服务仍将正常工作</string>
+
+    <!-- ======================================================================================== -->
+    <!-- BATTERY OPTIMIZATION -->
+    <!-- ======================================================================================== -->
+    <string name="exclusion_required">需要排除</string>
+    <string name="battery_exclusion_required">需要排除</string>
+    <string name="battery_exclusion_message">必须将应用从电池优化中排除，以确保消息可靠投递。</string>
+    <string name="battery_optimization_message">必须将应用从电池优化中排除，以确保消息可靠投递。</string>
+    <string name="battery_optimization_error">无法请求电池优化权限。</string>
+    <string name="battery_optimization_enabled">电池优化仍处于启用状态 - 应用可能无法可靠运行</string>
+    <string name="battery_optimization_disabled">电池优化已禁用 - 应用可以在后台运行</string>
+
+    <!-- ======================================================================================== -->
+    <!-- APP UPDATES -->
+    <!-- ======================================================================================== -->
+    <string name="update_required">需要更新</string>
+    <string name="update_required_message">有新版本 (%s) 可用。请更新到最新版本。</string>
+    <string name="update_available_message">有新版本 (%s) 可用。请更新到最新版本。</string>
+    <string name="error">错误</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION CHANNELS -->
+    <!-- ======================================================================================== -->
+    <string name="channel_sms_sending">SMS 发送</string>
+    <string name="channel_sms_sending_desc">SMS 发送进度通知</string>
+    <string name="channel_ussd_sending">USSD 发送</string>
+    <string name="channel_ussd_sending_desc">USSD 发送进度通知</string>
+    <string name="channel_message_processing">消息处理</string>
+    <string name="channel_message_processing_desc">所有消息处理活动的统一通知</string>
+    <string name="channel_sms_processing">SMS 处理</string>
+    <string name="channel_sms_processing_desc">显示 SMS 消息处理进度</string>
+    <string name="channel_ussd_processing">USSD 处理</string>
+    <string name="channel_ussd_processing_desc">显示 USSD 请求处理进度</string>
+    <string name="channel_unified_processing">统一处理</string>
+    <string name="channel_unified_processing_desc">显示 SMS 和 USSD 的合并处理进度</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION SERVICE NAMES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_sms_service">SMS 服务</string>
+    <string name="notification_ussd_service">USSD 服务</string>
+    <string name="notification_message_service">消息服务</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION TITLES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_initializing">%s - 正在初始化</string>
+    <string name="notification_queuing">%s - 正在排队</string>
+    <string name="notification_priority_queue">%s - 优先队列</string>
+    <string name="notification_standard_queue">%s - 标准队列</string>
+    <string name="notification_processing">%s - 正在处理</string>
+    <string name="notification_completing">%s - 正在完成</string>
+    <string name="notification_error">%s - 错误</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION MESSAGES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_starting_up">正在启动并检查队列…</string>
+    <string name="notification_organizing" tools:ignore="PluralsCandidate">正在按优先级组织 %d 个项目…</string>
+    <string name="notification_processing_priority_progress">正在处理优先项目… %1$d%% (%2$d/%3$d)</string>
+    <string name="notification_processing_priority">正在处理优先项目…</string>
+    <string name="notification_processing_standard_progress">正在处理标准项目… %1$d%% (%2$d/%3$d)</string>
+    <string name="notification_processing_standard">正在处理标准项目…</string>
+    <string name="notification_processing_ussd">正在处理 USSD 请求…</string>
+    <string name="notification_finishing">正在完成并清理资源…</string>
+    <string name="notification_error_occurred">处理过程中发生错误</string>
+    <string name="notification_processing_messages">正在处理消息…</string>
+    <string name="notification_fetching_database">正在从数据库获取消息…</string>
+    <string name="notification_waiting_next">在下一条消息之前等待 %1$ds (%2$d/%3$d)</string>
+    <string name="notification_processing_completed">处理成功完成</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION EXPANDED TEXT -->
+    <!-- ======================================================================================== -->
+    <string name="notification_progress">进度：%1$d/%2$d (%3$d%%)</string>
+    <string name="notification_queue_status">队列状态：</string>
+    <string name="notification_priority_count">  • 优先：%d</string>
+    <string name="notification_standard_count">  • 标准：%d</string>
+    <string name="notification_processing_count">  • 处理中：%d</string>
+    <string name="notification_completed_count">  • 已完成：%d</string>
+    <string name="notification_failed_count">  • 已失败：%d</string>
+    <string name="notification_performance">性能：</string>
+    <string name="notification_rate">  • 速率：%.1f 项/分钟</string>
+    <string name="notification_time_remaining">  • 预计剩余时间：%s</string>
+    <string name="notification_last_processed">上次处理：%s</string>
+    <string name="notification_errors_encountered">遇到的错误：%d</string>
+    <string name="notification_queue_subtext" tools:ignore="PluralsCandidate">队列：%1$d 待处理，%2$d 已处理</string>
+
+    <!-- Network & Authentication Errors (EM1001-EM1005) -->
+    <string name="error_network_connection">网络连接错误</string>
+    <string name="error_authentication_failed">身份验证失败</string>
+    <string name="error_session_expired">会话已过期</string>
+    <string name="error_server_timeout">服务器超时</string>
+    <string name="error_data_parsing">数据解析错误</string>
+
+    <!-- Database & Configuration Errors (EM1006-EM1009) -->
+    <string name="error_database">数据库错误</string>
+    <string name="error_message_queue_processing">消息队列处理失败</string>
+    <string name="error_configuration">配置错误</string>
+    <string name="error_api_request_failed">API 请求失败</string>
+
+    <!-- Messaging Errors (EM1010-EM1014) -->
+    <string name="error_message_sending_failed">消息发送失败</string>
+    <string name="error_device_registration">设备注册错误</string>
+    <string name="error_permission_denied">权限被拒绝</string>
+    <string name="error_service_unavailable">服务不可用</string>
+    <string name="error_invalid_request">无效请求</string>
+
+    <!-- USSD Errors (EM1015-EM1018) -->
+    <string name="error_ussd_request_failed">USSD 请求失败</string>
+    <string name="error_ussd_timeout">USSD 请求超时</string>
+    <string name="error_ussd_permission_required">需要 USSD 权限</string>
+    <string name="error_ussd_processing">USSD 处理错误</string>
+
+    <!-- Campaign & Reporting Errors (EM1019-EM1020, EM10027) -->
+    <string name="error_campaign_processing">活动处理错误</string>
+    <string name="error_firebase_messaging">Firebase 消息错误</string>
+    <string name="error_report_generation">报告生成失败</string>
+
+    <!-- Generic Processing Errors -->
+    <string name="error_processing_occurred">发生处理错误</string>
+    <string name="error_an_error_occurred">发生错误</string>
+
+    <!-- SIM & Subscription Errors -->
+    <string name="error_sim_configuration">SIM 卡配置错误</string>
+    <string name="error_sim_not_detected">未检测到 SIM 卡</string>
+
+    <!-- Permission Errors -->
+    <string name="error_phone_state_permission">需要电话状态权限</string>
+    <string name="error_call_permission_ussd">USSD 需要通话权限</string>
+    <string name="error_sms_permission">需要 SMS 权限</string>
+    <string name="error_sms_receive_permission">需要 SMS 接收权限</string>
+
+    <!-- Broadcast Receiver Errors -->
+    <string name="error_no_cellular_service">没有可用的蜂窝服务</string>
+    <string name="error_message_format">消息格式错误</string>
+    <string name="error_cellular_radio_off">蜂窝无线电已关闭</string>
+    <string name="error_sms_sending_failed">SMS 发送失败</string>
+    <string name="error_no_default_sms_app">未配置默认短信应用</string>
+    <string name="error_airplane_mode_enabled">飞行模式已启用</string>
+    <string name="error_mms_sending_failed">MMS 发送失败</string>
+
+    <!-- Database Specific Errors -->
+    <string name="error_database_busy">数据库繁忙</string>
+    <string name="error_data_storage">数据存储错误</string>
+    <string name="error_database_initialization">数据库初始化失败</string>
+
+    <!-- Network Connection Errors -->
+    <string name="error_connection_timeout">连接超时</string>
+    <string name="error_server_unreachable">无法访问服务器</string>
+    <string name="error_unable_to_connect">无法连接到服务器</string>
+    <string name="error_secure_connection">安全连接错误</string>
+    <string name="error_network_configuration">网络配置错误</string>
+
+    <!-- HTTP Status Errors -->
+    <string name="error_http_forbidden">访问被禁止</string>
+    <string name="error_http_not_found">未找到资源</string>
+    <string name="error_http_server_error">服务器错误</string>
+    <string name="error_http_service_unavailable">服务暂时不可用</string>
+
+    <!-- Firebase/FCM Errors -->
+    <string name="error_firebase_configuration">Firebase 配置错误</string>
+    <string name="error_firebase_initialization">Firebase 初始化失败</string>
+
+    <!-- USSD Specific Errors -->
+    <string name="error_ussd_invalid_code">无效的 USSD 代码</string>
+
+    <!-- Incoming SMS Handler Errors -->
+    <string name="error_failed_to_store_sms">SMS 存储到数据库失败</string>
+    <string name="error_processing_sms">SMS 处理错误：%s</string>
+    <string name="error_cannot_sync_missing_credentials">无法同步接收的 SMS：凭据缺失</string>
+    <string name="error_syncing_received_messages">同步接收消息时出错：%s</string>
+    <string name="error_scheduling_sms_sync">调度 SMS 同步时出错：%s</string>
+
+    <!-- ======================================================================================== -->
+    <!-- USER-FACING LOG MESSAGES (Info/Warning logs shown in UI terminal) -->
+    <!-- ======================================================================================== -->
+
+    <!-- APP Logs -->
+    <string name="log_build_number">版本号：%s</string>
+    <string name="log_device_id">设备 ID：%s…</string>
+
+    <!-- AUTH Logs -->
+    <string name="log_user_session_terminated">用户会话终止已启动</string>
+
+    <!-- SMS Logs -->
+    <string name="log_sms_bg_service_activated">后台处理服务已激活</string>
+    <string name="log_sms_bg_service_deactivated">后台处理服务已停用</string>
+    <string name="log_sms_service_disabled_locally">服务已在本地禁用</string>
+    <string name="log_sms_blocked_by_server">被服务器配置阻止</string>
+    <string name="log_sms_processing_incoming">正在处理传入的 SMS</string>
+    <string name="log_sms_stored_in_db">SMS 已存储到数据库（ID：%s）</string>
+    <string name="log_sms_syncing_to_server">正在同步到服务器</string>
+    <string name="log_sms_already_synced">消息已同步或不存在</string>
+    <string name="log_sms_manually_syncing">正在手动同步接收的消息…</string>
+    <string name="log_sms_cleared_old_messages">已清除旧的已同步消息</string>
+    <string name="log_sms_deprecated_function">isMessageQueueServiceRunning() 已弃用。请改用 isServiceActuallyRunning()。</string>
+    <string name="log_sms_no_phone_state_permission">未授予 READ_PHONE_STATE 权限，将使用默认订阅</string>
+    <string name="log_sms_error_unregistering_receiver">取消注册接收器时出错：%s</string>
+    <string name="log_sms_broadcast_timeout">SMS 广播超时，通过 SMS 数据库验证投递</string>
+    <string name="log_sms_error_unregistering_on_timeout">超时时取消注册接收器出错：%s</string>
+    <string name="log_sms_delivery_verified">通过数据库验证 SMS 投递 - 消息发送成功</string>
+    <string name="log_sms_cannot_verify_delivery">无法验证 SMS 投递 - 未授予 READ_SMS 权限</string>
+    <string name="log_sms_sending_via_sender">通过 SmsSender 发送 SMS</string>
+    <string name="log_sms_sent_successfully">SMS 发送成功！</string>
+    <string name="log_sms_fetching_queue">正在从队列获取消息</string>
+    <string name="log_sms_found_messages" tools:ignore="PluralsCandidate">找到 %d 条待处理消息</string>
+    <string name="log_sms_processing_priority" tools:ignore="PluralsCandidate">正在处理 %d 条优先消息</string>
+    <string name="log_sms_processing_standard" tools:ignore="PluralsCandidate">正在处理 %d 条标准消息</string>
+    <string name="log_campaigns_queued">活动已排队：优先 %1$s，标准 %2$s</string>
+    <string name="log_switching_campaign">切换活动：#%1$d → #%2$d</string>
+    <string name="log_completed_campaign">活动 #%d 已完成</string>
+    <string name="log_sms_feature_disabled">SMS 功能已禁用，正在停止服务</string>
+    <string name="log_message_removed" tools:ignore="PluralsCandidate">消息 #%d 已被移除，正在跳过</string>
+    <string name="log_message_already_processed" tools:ignore="PluralsCandidate">消息 #%d 已处理，正在跳过</string>
+    <string name="log_processing_message">正在处理消息 #%d</string>
+    <string name="log_processed_message">已处理消息 #%d</string>
+    <string name="log_waiting_before_next">在下一条消息之前等待 %ds</string>
+    <string name="log_scheduled_retry">已为消息 #%1$d 调度重试（尝试 %2$d）</string>
+    <string name="log_message_sent_after_retry" tools:ignore="PluralsCandidate">消息 #%1$d 发送成功（尝试 %2$d）</string>
+    <string name="log_retry_attempt_failed" tools:ignore="PluralsCandidate">消息 #%2$d 的尝试 %1$d 失败：%3$s</string>
+    <string name="log_retrying_message">将在 %2$ds 后重试消息 #%1$d</string>
+    <string name="log_message_failed_all_retries" tools:ignore="PluralsCandidate">消息 #%1$d 在 %2$d 次尝试后失败</string>
+    <string name="log_report_synced">消息 #%d 的报告同步成功</string>
+    <string name="log_message_sync_failed">消息同步失败，将重试：%1$s - %2$s</string>
+    <string name="log_could_not_determine_sim_slot">无法确定订阅 %1$d 的 SIM 卡槽：%2$s</string>
+    <string name="log_could_not_check_default_sms">无法检查默认短信应用状态：%s</string>
+    <string name="log_could_not_write_sms_db">无法将 SMS 写入系统数据库：%s</string>
+    <string name="log_sms_sending_failed">SMS 发送失败，结果代码：%d</string>
+    <string name="log_sms_delivery_failed">SMS 投递失败，结果代码：%d</string>
+    <string name="log_message_status_sync_failed">消息状态同步失败，将重试：%1$s - %2$s</string>
+
+    <!-- MMS Logs -->
+    <string name="log_mms_starting_send">开始向 %s 发送 MMS</string>
+    <string name="log_mms_sent_successfully">MMS 发送成功</string>
+    <string name="log_mms_error_unregistering_receiver">取消注册 MMS 接收器时出错</string>
+    <string name="log_mms_send_initiated">MMS 发送已成功启动</string>
+    <string name="log_mms_send_timeout">MMS 发送超时</string>
+    <string name="log_mms_building">构建 MMS：文本 + 附件</string>
+    <string name="log_mms_built_pdu" tools:ignore="PluralsCandidate">已构建 PDU：%d 字节</string>
+    <string name="log_mms_queued_for_sending">MMS 已加入发送队列</string>
+    <string name="log_mms_sending_with_attachment">发送带有文本 + 附件的 MMS</string>
+    <string name="log_mms_queued_awaiting_confirm">MMS 已排队，等待发送确认</string>
+    <string name="log_mms_built_pdu_total" tools:ignore="PluralsCandidate">已构建 PDU：总共 %d 字节</string>
+    <string name="log_mms_unknown_mime_type">SMIL 中的未知 MIME 类型：%s</string>
+    <string name="log_mms_no_read_phone_numbers">未授予 READ_PHONE_NUMBERS 权限</string>
+    <string name="log_mms_downloaded" tools:ignore="PluralsCandidate">已下载：从 %2$s 下载 %1$d 字节</string>
+    <string name="log_mms_could_not_detect_mime">无法检测 %s 的 MIME 类型，使用默认值</string>
+    <string name="log_mms_sent_with_ids">MMS 发送成功（uid=%1$d，mid=%2$d）</string>
+
+    <!-- USSD Logs -->
+    <string name="log_ussd_fetching_queue">正在从队列获取 USSD 请求</string>
+    <string name="log_ussd_found_requests">找到 %d 个待处理 USSD 请求</string>
+    <string name="log_ussd_processing_priority" tools:ignore="PluralsCandidate">正在处理 %d 个优先 USSD 请求</string>
+    <string name="log_ussd_processing_standard" tools:ignore="PluralsCandidate">正在处理 %d 个标准 USSD 请求</string>
+    <string name="log_ussd_feature_disabled">USSD 功能已禁用，正在停止服务</string>
+    <string name="log_ussd_request_removed" tools:ignore="PluralsCandidate">USSD #%d 已被移除，正在跳过</string>
+    <string name="log_ussd_missing_permission">USSD #%d 缺少 CALL_PHONE 权限</string>
+    <string name="log_ussd_request_timed_out" tools:ignore="PluralsCandidate">USSD 请求 #%d 已超时</string>
+    <string name="log_ussd_waiting_next_request">在下一个 USSD 请求之前等待 1.5 秒…</string>
+    <string name="log_ussd_response_sent">已将 USSD 响应发送到服务器（#%1$d，状态：%2$d）</string>
+    <string name="log_ussd_sending_request">正在发送 USSD 请求 #%1$d：%2$s</string>
+    <string name="log_ussd_cancelling_pending" tools:ignore="PluralsCandidate">由于服务销毁，正在取消待处理的 USSD #%d</string>
+
+    <!-- FCM/Firebase Logs -->
+    <string name="log_fcm_fetching_messages">正在从服务器获取消息…</string>
+    <string name="log_fcm_deleting_message">正在删除消息 #%d…</string>
+    <string name="log_fcm_deleted_message">已删除消息 #%d…</string>
+    <string name="log_device_settings_updated">设备设置更新成功！</string>
+    <string name="log_device_deleted">设备已从服务器删除…</string>
+    <string name="log_deleting_device">正在删除设备…</string>
+    <string name="log_campaign_updated" tools:ignore="PluralsCandidate">活动 #%d 已更新！</string>
+    <string name="log_campaign_deleted">活动已从服务器删除…</string>
+    <string name="log_deleting_campaign" tools:ignore="PluralsCandidate">正在删除活动 #%d 及相关消息…</string>
+    <string name="log_campaign_messages_deleted" tools:ignore="PluralsCandidate">活动 #%1$d 和 %2$d 条消息已成功删除</string>
+    <string name="log_fcm_fetching_ussd">正在从服务器获取 USSD 代码…</string>
+    <string name="log_fcm_deleting_ussd">正在删除 USSD #%d…</string>
+    <string name="log_fcm_deleted_ussd">已删除 USSD #%d…</string>
+    <string name="log_fcm_fetching_count" tools:ignore="PluralsCandidate">正在获取 %1$d 条消息以达到最大值 %2$d</string>
+    <string name="log_fcm_fetched_messages" tools:ignore="PluralsCandidate">已从服务器获取 %d 条消息…</string>
+    <string name="log_fcm_skipping_message">跳过消息 %d - 已存在</string>
+    <string name="log_fcm_fetched_ussd">已从服务器获取 %d 个 USSD 代码…</string>
+    <string name="log_fcm_skipping_ussd">跳过 USSD #%d - 已存在</string>
+    <string name="log_fcm_stored_ussd">已存储新 USSD #%d…</string>
+    <string name="log_fcm_token_sync_failed">令牌同步失败，将重试：%1$s - %2$s</string>
+
+    <!-- SYS/System Logs -->
+    <string name="log_battery_optimization_enabled">电池优化仍处于启用状态 - 应用可能无法可靠运行</string>
+    <string name="log_battery_optimization_disabled">电池优化已禁用 - 应用可以在后台运行</string>
+
+    <!-- Login Logs -->
+    <string name="log_android_version_check">checkAndroidVersion：设备运行 Android %1$s（API %2$d），所需最低版本为 API %3$d</string>
+
+    <!-- Report Logs -->
+    <string name="log_delivery_report_scheduled">已为消息 #%d 调度投递报告</string>
+
+    <!-- Unified Message Processing Logs -->
+    <string name="log_msg_queued" tools:ignore="PluralsCandidate">已排队：%1$d 个优先项目，%2$d 个标准项目</string>
+    <string name="log_msg_processing_failed" tools:ignore="PluralsCandidate">%1$s 项目 #%2$d 处理失败</string>
+
+    <!-- Permission Logs -->
+    <string name="log_eventbus_not_registered">EventBus 未注册，跳过取消注册</string>
+    <string name="log_eventbus_already_registered">EventBus 已注册，跳过重复注册</string>
+    <string name="log_contacts_permission_denied">联系人权限被拒绝 - 将不会显示联系人姓名</string>
+    <string name="log_notification_permission_denied">通知权限被拒绝 - 前台服务仍将正常工作</string>
+
+    <!-- ======================================================================================== -->
+    <!-- ADDITIONAL UI TERMINAL LOGS (Previously Hardcoded) -->
+    <!-- ======================================================================================== -->
+
+    <!-- Language/UI Logs -->
+    <string name="log_language_changed_to">语言已更改为：%s</string>
+
+    <!-- Service Status Logs -->
+    <string name="log_services_both_running">SMS 和 USSD 服务均在运行</string>
+    <string name="log_services_sms_running">SMS 服务正在运行</string>
+    <string name="log_services_ussd_running">USSD 服务正在运行</string>
+    <string name="log_services_all_stopped">所有服务已停止</string>
+
+    <!-- Firebase/FCM Logs -->
+    <string name="log_fcm_device_updated">设备设置更新成功！</string>
+    <string name="log_fcm_device_deleted">设备已从服务器删除…</string>
+    <string name="log_fcm_deleting_device">正在删除设备…</string>
+    <string name="log_fcm_campaign_updated">活动 #%s 已更新！</string>
+    <string name="log_fcm_campaign_deleted">活动已从服务器删除…</string>
+    <string name="log_fcm_deleting_campaign">正在删除活动 #%1$d 及相关消息…</string>
+    <string name="log_fcm_campaign_delete_success">活动 #%1$d 和 %2$d 条消息已成功删除</string>
+    <string name="log_fcm_fetching_ussd_codes">正在从服务器获取 USSD 代码…</string>
+    <string name="log_fcm_ussd_deleted">已删除 USSD #%d…</string>
+    <string name="log_fcm_fetching_messages_to_max">正在获取 %1$d 条消息以达到最大值 %2$d</string>
+    <string name="log_fcm_messages_fetched" tools:ignore="PluralsCandidate">已从服务器获取 %d 条消息…</string>
+    <string name="log_fcm_message_skipped_exists">跳过消息 %d - 已存在</string>
+    <string name="log_fcm_ussd_codes_fetched" tools:ignore="PluralsCandidate">已从服务器获取 %d 个 USSD 代码…</string>
+    <string name="log_fcm_ussd_skipped_exists">跳过 USSD #%d - 已存在</string>
+    <string name="log_fcm_ussd_stored_new">已存储新 USSD #%d…</string>
+
+    <!-- Worker Sync Logs (Warnings) -->
+    <string name="log_worker_message_sync_failed">消息同步失败，将重试：%1$d - %2$s</string>
+    <string name="log_worker_status_sync_failed">消息状态同步失败，将重试：%1$d - %2$s</string>
+    <string name="log_worker_token_sync_failed">令牌同步失败，将重试：%1$d - %2$s</string>
+    <string name="log_worker_ussd_response_retry">发送 USSD 响应时服务器错误：%d，将重试</string>
+
+    <!-- Network Connectivity Logs -->
+    <string name="log_network_internet_available">互联网连接可用 - 恢复 API 操作</string>
+    <string name="log_network_internet_lost">互联网连接丢失 - 暂停 API 操作</string>
+    <string name="log_network_restored">网络已恢复 - WorkManager 将处理待处理的 API 请求</string>
+    <string name="log_network_lost">网络丢失 - API 操作将排队直至恢复</string>
+
+    <!-- ======================================================================================== -->
+    <!-- LANGUAGE SWITCHER -->
+    <!-- ======================================================================================== -->
+    <string name="change_language">更改语言</string>
+    <string name="select_language">选择语言</string>
+    <string name="language_changed">语言已更改。正在重启应用…</string>
+    <string name="english">English</string>
+    <string name="japanese">日本語（日语）</string>
+    <string name="arabic">العربية（阿拉伯语）</string>
+    <string name="chinese">简体中文（中文）</string>
+
+    <!-- ======================================================================================== -->
+    <!-- FCM TOKEN MANAGEMENT (User-Facing Logs) -->
+    <!-- ======================================================================================== -->
+    <string name="log_fcm_token_refreshed">FCM 令牌刷新成功</string>
+    <string name="log_fcm_token_refresh_failed">FCM 令牌刷新失败</string>
+    <string name="log_fcm_token_syncing_boot">设备重启后正在同步 FCM 令牌…</string>
+    <string name="log_fcm_connection_issue">检测到 FCM 连接问题，正在尝试恢复…</string>
+    <string name="log_fcm_token_sync_scheduled">已调度 FCM 令牌同步</string>
+
+    <string name="pair_title">配对此设备</string>
+    <string name="pair_instructions">在控制台中打开“设备”并选择“添加设备”。扫描那里显示的二维码即可连接这台手机。</string>
+    <string name="pair_scan_button">扫描二维码</string>
+    <string name="pair_or_sign_in">或使用您的账户登录</string>
+    <string name="pair_invalid_qr">该二维码不是设备配对码。请在控制台中打开“设备 \u2192 添加设备”，扫描那里显示的二维码。</string>
+    <string name="pair_failed">配对失败。配对码可能已过期 \u2014 请在控制台中重新打开“添加设备”以获取新的配对码。</string>
+    <string name="pair_unreachable">无法连接到 %1$s。请检查地址是否正确，以及设备是否已联网。</string>
+    <string name="pair_no_push_title">尚未设置推送通知</string>
+    <string name="pair_no_push_message">此设备已成功配对，但服务器没有 Firebase 配置，因此无法在有新消息时通知它。\n\n请让管理员在“概览 \u2192 设置”中上传 google-services.json，然后重新打开本应用。</string>
+    <string name="pair_confirm_title">要连接到该服务器吗？</string>
+    <string name="pair_confirm_message">此设备将为以下服务器收发短信：\n\n%1$s\n\n仅当这是您自己的服务器时才继续。</string>
+    <string name="pair_confirm_insecure">\n\n警告：该地址未使用 HTTPS 加密，同一网络中的其他人可能读取消息内容。</string>
+    <string name="pair_confirm_continue">连接</string>
+    <string name="pair_wrong_server">该二维码属于其他服务器。本应用仅为某一特定安装配置。</string>
+</resources>

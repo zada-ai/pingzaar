@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contacts — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Messaging</h6>
+                        <h1 class="header-title"><i class="la la-address-book la-lg"></i> Contacts</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Manage the people you message: save individual contacts, organize them into
+       groups you can target with a single click, and keep your unsubscribed list so you
+       don't message someone who has opted out.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/contacts.png" target="_blank" rel="noopener"><img src="../assets/screenshots/contacts.png" alt="Saved contacts" loading="lazy"></a>
+  <figcaption>Saved contacts</figcaption>
+</figure>
+
+<figure class="doc-shot">
+  <a href="../assets/screenshots/contact-groups.png" target="_blank" rel="noopener"><img src="../assets/screenshots/contact-groups.png" alt="Contact groups, used as campaign targets" loading="lazy"></a>
+  <figcaption>Contact groups, used as campaign targets</figcaption>
+</figure>
+
+    <p>Contacts live under their own section of the dashboard sidebar, available
+       regardless of your subscription: <em>Saved</em>, <em>Groups</em>, and
+       <em>Unsubscribed</em>.</p>
+
+    <h2>Creating contact groups</h2>
+    <p>Groups are created from <em>Contacts &rarr; Groups</em> with the <strong>Add
+       group</strong> button — a group is nothing more than a name; there's no separate
+       configuration on it. Groups exist to be assigned to contacts and targeted by bulk
+       sends (see below); a contact can belong to more than one group at once.</p>
+
+    <div class="doc-warn">
+      Create the group before you try to add contacts to it. The single-contact form
+      lets you pick from your existing groups directly, but the spreadsheet importer's
+      groups column takes numeric group IDs, not names (see Importing contacts from a
+      spreadsheet below) — an ID that doesn't already belong to one of your groups gets
+      the whole row rejected rather than creating a group for you.
+    </div>
+
+    <h2>Adding a contact</h2>
+    <p>The Saved page's <strong>Add contact</strong> button takes a name, a phone
+       number, and one or more existing groups. The number is parsed and normalized the
+       same way SMS recipients are; a number already saved for your account is rejected
+       as a duplicate, and how many contacts you can save in total is governed by your
+       subscription's contact limit.</p>
+
+    <h2>Importing contacts from a spreadsheet</h2>
+    <p>The Saved page's <strong>Import</strong> button uploads an <code>.xlsx</code>
+       file. A ready-to-fill template is linked directly from the upload form.</p>
+    <p>Your header row needs three columns, by name: <code>phone</code>,
+       <code>groups</code>, and <code>name</code>. For each data row:</p>
+    <ul>
+      <li><strong>phone</strong> must parse as a valid mobile number — the same
+          mobile-only check the unsubscribe page uses — or the row is skipped.</li>
+      <li><strong>groups</strong> is a comma-separated list of numeric group IDs, not
+          group names. Every ID listed must already belong to an existing group on your
+          account, or the row is skipped — the importer matches strictly by ID and never
+          looks a group up by name.</li>
+      <li><strong>name</strong> is optional; if it's blank, the phone number is used as
+          the contact's name.</li>
+    </ul>
+    <p>Rows that fail validation are silently skipped rather than aborting the whole
+       import — the rows that pass are still saved.</p>
+
+    <h2>Using groups as campaign targets</h2>
+    <p>Every bulk send form on the SMS and WhatsApp pages — bulk paste and spreadsheet
+       upload alike — offers a <strong>Groups</strong> selector alongside the pasted
+       numbers box. Selecting one or more groups expands to every contact currently in
+       them at send time, merged with whatever numbers you pasted directly, then
+       deduplicated and split across your chosen devices, gateways, or WhatsApp
+       accounts. There's no separate "campaign target" concept beyond this — a group is
+       just a saved, reusable recipient list.</p>
+
+    <h2>Unsubscribes</h2>
+    <p>The Unsubscribed page lists numbers that have opted out of receiving further
+       messages from your account. A number lands there through the public unsubscribe
+       link, which every bulk message can include as a shortcode or a keyword-based
+       alternative. Visiting that link validates the number, and — only if it parses as
+       a valid mobile number — adds it to your account's unsubscribed list; anything
+       else is silently ignored rather than recorded.</p>
+    <p>Bulk paste, spreadsheet upload, and scheduled sends all consult this list and
+       silently skip any recipient already on it.</p>
+    <div class="doc-warn">
+      <strong>Quick send is the exception.</strong> Sending directly to a single number
+      from the Quick send form — SMS or WhatsApp — reaches it even if that number has
+      already opted out.
+    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

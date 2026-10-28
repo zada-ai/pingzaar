@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- ======================================================================================== -->
+    <!-- APP IDENTIFICATION -->
+    <!-- ======================================================================================== -->
+    <string name="app_launcher_name">SMSゲートウェイ</string>
+
+    <!-- ======================================================================================== -->
+    <!-- COMMON ACTIONS -->
+    <!-- ======================================================================================== -->
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+    <string name="confirm">確認</string>
+    <string name="continue_button">続行</string>
+    <string name="exit">終了</string>
+    <string name="grant">許可</string>
+    <string name="configure">設定</string>
+    <string name="update">更新</string>
+    <string name="enabled">有効</string>
+    <string name="disabled">無効</string>
+
+    <!-- ======================================================================================== -->
+    <!-- LOGIN SCREEN -->
+    <!-- ======================================================================================== -->
+    <string name="email">メールアドレス</string>
+    <string name="password">パスワード</string>
+    <string name="login">ログイン</string>
+    <string name="login_with_qr">QRコードでログイン</string>
+    <string name="logo_description">SMSゲートウェイのロゴ</string>
+
+    <!-- Login Errors -->
+    <string name="unsupported_device">サポート対象外のデバイス</string>
+    <string name="unsupported_device_message">このアプリはAndroid 8.0以降が必要です。お使いのデバイスはAndroid %sです。</string>
+    <string name="invalid_qr_format">QRコードの形式が無効です。</string>
+    <string name="qr_scan_cancelled">QRコードのスキャンがキャンセルされました。</string>
+    <string name="qr_scan_error">QRコードのスキャンエラーが発生しました。</string>
+    <string name="please_enter_credentials">メールアドレスとパスワードの両方を入力してください。</string>
+    <string name="unable_to_get_device_id">デバイスIDを取得できません。もう一度お試しください。</string>
+    <string name="unable_to_login_em2001">ログインできません: EM2001</string>
+    <string name="unable_to_login_em2002">ログインできません: EM2002</string>
+    <string name="unable_to_login_em2003">ログインできません: EM2003</string>
+    <string name="unable_to_login_em2004">ログインできません: EM2004</string>
+    <string name="unable_to_login_em2005">ログインできません: EM2005</string>
+    <string name="unable_to_login_em2006">ログインできません: EM2006</string>
+    <string name="unable_to_login_em2007">ログインできません: EM2007</string>
+    <string name="unable_to_login_em2008">ログインできません: EM2008</string>
+    <string name="unable_to_login_em2009">ログインできません: EM2009</string>
+    <string name="unable_to_login_em2010">ログインできません: EM2010</string>
+    <string name="unable_to_login_em2011">ログインできません: EM2011</string>
+
+    <!-- ======================================================================================== -->
+    <!-- GATEWAY SCREEN -->
+    <!-- ======================================================================================== -->
+    <string name="logout">ログアウト</string>
+    <string name="logout_confirmation">ログアウトしてもよろしいですか?アプリがリセットされ、再度ログインが必要になります。</string>
+    <string name="sms_status_changed">SMS %s!</string>
+    <string name="ussd_status_changed">USSD %s!</string>
+
+    <!-- Default SMS App -->
+    <string name="make_default">デフォルトに設定</string>
+    <string name="make_default_sms_app">デフォルトのSMSアプリに設定</string>
+    <string name="make_default_sms_message">このアプリをデフォルトのSMSアプリに設定すると:\n\n• 現在のメッセージアプリ(Google Messagesなど)が置き換えられます\n• すべてのSMS/MMSはこのゲートウェイで処理されます\n\nこのアプリはデフォルトでなくてもSMSと配信レポートを受信できます。専用のゲートウェイデバイスの場合のみデフォルトに設定してください。</string>
+    <string name="app_set_as_default">デフォルトのSMSアプリに設定されました。</string>
+    <string name="failed_to_set_default">デフォルトのSMSアプリに設定できませんでした。</string>
+    <string name="already_default_sms">既にデフォルトのSMSアプリです。</string>
+    <string name="sms_role_unavailable">このデバイスではSMS機能を利用できません。</string>
+
+    <!-- Device Information -->
+    <string name="device_info">デバイス情報</string>
+    <string name="device_information">デバイス情報</string>
+    <string name="device_manufacturer">製造元: %s</string>
+    <string name="device_name">デバイス名: %s</string>
+    <string name="device_id">デバイスID: %s</string>
+    <string name="device_model">機種: %s</string>
+    <string name="device_os">OS: Android %s</string>
+    <string name="build_number">ビルド番号: %s</string>
+
+    <!-- ======================================================================================== -->
+    <!-- QR SCANNER -->
+    <!-- ======================================================================================== -->
+    <string name="point_camera_at_qr">QRコードにカメラを向けてください</string>
+    <string name="camera_permission_required">カメラの権限が必要です</string>
+
+    <!-- ======================================================================================== -->
+    <!-- PERMISSIONS -->
+    <!-- ======================================================================================== -->
+    <string name="permission_required">権限が必要です</string>
+    <string name="permission_required_message">この権限はアプリが正常に動作するために必要です。</string>
+    <string name="contacts_permission_denied">連絡先の権限が拒否されました - 連絡先名は表示されません</string>
+    <string name="notification_permission_denied">通知の権限が拒否されました - フォアグラウンドサービスは引き続き機能します</string>
+
+    <!-- ======================================================================================== -->
+    <!-- BATTERY OPTIMIZATION -->
+    <!-- ======================================================================================== -->
+    <string name="exclusion_required">除外が必要です</string>
+    <string name="battery_exclusion_required">除外が必要です</string>
+    <string name="battery_exclusion_message">確実なメッセージ配信を保証するため、アプリをバッテリー最適化から除外する必要があります。</string>
+    <string name="battery_optimization_message">確実なメッセージ配信を保証するため、アプリをバッテリー最適化から除外する必要があります。</string>
+    <string name="battery_optimization_error">バッテリー最適化の権限をリクエストできませんでした。</string>
+    <string name="battery_optimization_enabled">バッテリー最適化が有効です - アプリが正常に動作しない可能性があります</string>
+    <string name="battery_optimization_disabled">バッテリー最適化が無効です - アプリはバックグラウンドで実行できます</string>
+
+    <!-- ======================================================================================== -->
+    <!-- APP UPDATES -->
+    <!-- ======================================================================================== -->
+    <string name="update_required">更新が必要です</string>
+    <string name="update_required_message">新しいバージョン(%s)が利用可能です。最新バージョンに更新してください。</string>
+    <string name="update_available_message">新しいバージョン(%s)が利用可能です。最新バージョンに更新してください。</string>
+    <string name="error">エラー</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION CHANNELS -->
+    <!-- ======================================================================================== -->
+    <string name="channel_sms_sending">SMS送信</string>
+    <string name="channel_sms_sending_desc">SMS送信の進捗通知</string>
+    <string name="channel_ussd_sending">USSD送信</string>
+    <string name="channel_ussd_sending_desc">USSD送信の進捗通知</string>
+    <string name="channel_message_processing">メッセージ処理</string>
+    <string name="channel_message_processing_desc">すべてのメッセージ処理アクティビティの統合通知</string>
+    <string name="channel_sms_processing">SMS処理</string>
+    <string name="channel_sms_processing_desc">SMSメッセージ処理の進捗を表示</string>
+    <string name="channel_ussd_processing">USSD処理</string>
+    <string name="channel_ussd_processing_desc">USSDリクエスト処理の進捗を表示</string>
+    <string name="channel_unified_processing">統合処理</string>
+    <string name="channel_unified_processing_desc">SMSとUSSD処理の統合進捗を表示</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION SERVICE NAMES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_sms_service">SMSサービス</string>
+    <string name="notification_ussd_service">USSDサービス</string>
+    <string name="notification_message_service">メッセージサービス</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION TITLES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_initializing">%s - 初期化中</string>
+    <string name="notification_queuing">%s - キュー登録中</string>
+    <string name="notification_priority_queue">%s - 優先キュー</string>
+    <string name="notification_standard_queue">%s - 標準キュー</string>
+    <string name="notification_processing">%s - 処理中</string>
+    <string name="notification_completing">%s - 完了処理中</string>
+    <string name="notification_error">%s - エラー</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION MESSAGES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_starting_up">起動中、キューを確認しています…</string>
+    <string name="notification_organizing" tools:ignore="PluralsCandidate">%d件を優先度順に整理しています…</string>
+    <string name="notification_processing_priority_progress">優先アイテムを処理中… %1$d%% (%2$d/%3$d)</string>
+    <string name="notification_processing_priority">優先アイテムを処理中…</string>
+    <string name="notification_processing_standard_progress">標準アイテムを処理中… %1$d%% (%2$d/%3$d)</string>
+    <string name="notification_processing_standard">標準アイテムを処理中…</string>
+    <string name="notification_processing_ussd">USSDリクエストを処理中…</string>
+    <string name="notification_finishing">完了処理とリソースのクリーンアップを実行中…</string>
+    <string name="notification_error_occurred">処理中にエラーが発生しました</string>
+    <string name="notification_processing_messages">メッセージを処理中…</string>
+    <string name="notification_fetching_database">データベースからメッセージを取得中…</string>
+    <string name="notification_waiting_next">次のメッセージまで%1$d秒待機中 (%2$d/%3$d)</string>
+    <string name="notification_processing_completed">処理が正常に完了しました</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION EXPANDED TEXT -->
+    <!-- ======================================================================================== -->
+    <string name="notification_progress">進捗: %1$d/%2$d (%3$d%%)</string>
+    <string name="notification_queue_status">キュー状態:</string>
+    <string name="notification_priority_count">  • 優先: %d</string>
+    <string name="notification_standard_count">  • 標準: %d</string>
+    <string name="notification_processing_count">  • 処理中: %d</string>
+    <string name="notification_completed_count">  • 完了: %d</string>
+    <string name="notification_failed_count">  • 失敗: %d</string>
+    <string name="notification_performance">パフォーマンス:</string>
+    <string name="notification_rate">  • 速度: %.1f件/分</string>
+    <string name="notification_time_remaining">  • 推定残り時間: %s</string>
+    <string name="notification_last_processed">最終処理: %s</string>
+    <string name="notification_errors_encountered">発生したエラー: %d</string>
+    <string name="notification_queue_subtext" tools:ignore="PluralsCandidate">キュー: %1$d件保留中、%2$d件処理済み</string>
+
+    <!-- Network & Authentication Errors (EM1001-EM1005) -->
+    <string name="error_network_connection">ネットワーク接続エラー</string>
+    <string name="error_authentication_failed">認証に失敗しました</string>
+    <string name="error_session_expired">セッションの有効期限が切れました</string>
+    <string name="error_server_timeout">サーバータイムアウト</string>
+    <string name="error_data_parsing">データ解析エラー</string>
+
+    <!-- Database & Configuration Errors (EM1006-EM1009) -->
+    <string name="error_database">データベースエラー</string>
+    <string name="error_message_queue_processing">メッセージキューの処理に失敗しました</string>
+    <string name="error_configuration">設定エラー</string>
+    <string name="error_api_request_failed">APIリクエストに失敗しました</string>
+
+    <!-- Messaging Errors (EM1010-EM1014) -->
+    <string name="error_message_sending_failed">メッセージの送信に失敗しました</string>
+    <string name="error_device_registration">デバイス登録エラー</string>
+    <string name="error_permission_denied">権限が拒否されました</string>
+    <string name="error_service_unavailable">サービスが利用できません</string>
+    <string name="error_invalid_request">無効なリクエスト</string>
+
+    <!-- USSD Errors (EM1015-EM1018) -->
+    <string name="error_ussd_request_failed">USSDリクエストに失敗しました</string>
+    <string name="error_ussd_timeout">USSDリクエストがタイムアウトしました</string>
+    <string name="error_ussd_permission_required">USSD権限が必要です</string>
+    <string name="error_ussd_processing">USSD処理エラー</string>
+
+    <!-- Campaign & Reporting Errors (EM1019-EM1020, EM10027) -->
+    <string name="error_campaign_processing">キャンペーン処理エラー</string>
+    <string name="error_firebase_messaging">Firebaseメッセージングエラー</string>
+    <string name="error_report_generation">レポート生成に失敗しました</string>
+
+    <!-- Generic Processing Errors -->
+    <string name="error_processing_occurred">処理エラーが発生しました</string>
+    <string name="error_an_error_occurred">エラーが発生しました</string>
+
+    <!-- SIM & Subscription Errors -->
+    <string name="error_sim_configuration">SIMカード設定エラー</string>
+    <string name="error_sim_not_detected">SIMカードが検出されません</string>
+
+    <!-- Permission Errors -->
+    <string name="error_phone_state_permission">電話状態の権限が必要です</string>
+    <string name="error_call_permission_ussd">USSDに通話権限が必要です</string>
+    <string name="error_sms_permission">SMS権限が必要です</string>
+    <string name="error_sms_receive_permission">SMS受信権限が必要です</string>
+
+    <!-- Broadcast Receiver Errors -->
+    <string name="error_no_cellular_service">モバイルネットワークサービスが利用できません</string>
+    <string name="error_message_format">メッセージ形式エラー</string>
+    <string name="error_cellular_radio_off">モバイルネットワークがオフになっています</string>
+    <string name="error_sms_sending_failed">SMS送信に失敗しました</string>
+    <string name="error_no_default_sms_app">デフォルトのSMSアプリが設定されていません</string>
+    <string name="error_airplane_mode_enabled">機内モードが有効になっています</string>
+    <string name="error_mms_sending_failed">MMS送信に失敗しました</string>
+
+    <!-- Database Specific Errors -->
+    <string name="error_database_busy">データベースがビジー状態です</string>
+    <string name="error_data_storage">データストレージエラー</string>
+    <string name="error_database_initialization">データベースの初期化に失敗しました</string>
+
+    <!-- Network Connection Errors -->
+    <string name="error_connection_timeout">接続タイムアウト</string>
+    <string name="error_server_unreachable">サーバーに到達できません</string>
+    <string name="error_unable_to_connect">サーバーに接続できません</string>
+    <string name="error_secure_connection">セキュア接続エラー</string>
+    <string name="error_network_configuration">ネットワーク設定エラー</string>
+
+    <!-- HTTP Status Errors -->
+    <string name="error_http_forbidden">アクセスが拒否されました</string>
+    <string name="error_http_not_found">リソースが見つかりません</string>
+    <string name="error_http_server_error">サーバーエラー</string>
+    <string name="error_http_service_unavailable">サービスが一時的に利用できません</string>
+
+    <!-- Firebase/FCM Errors -->
+    <string name="error_firebase_configuration">Firebase設定エラー</string>
+    <string name="error_firebase_initialization">Firebaseの初期化に失敗しました</string>
+
+    <!-- USSD Specific Errors -->
+    <string name="error_ussd_invalid_code">無効なUSSDコード</string>
+
+    <!-- Incoming SMS Handler Errors -->
+    <string name="error_failed_to_store_sms">データベースへのSMS保存に失敗しました</string>
+    <string name="error_processing_sms">SMS処理エラー: %s</string>
+    <string name="error_cannot_sync_missing_credentials">受信したSMSを同期できません: 認証情報が不足しています</string>
+    <string name="error_syncing_received_messages">受信メッセージの同期エラー: %s</string>
+    <string name="error_scheduling_sms_sync">SMS同期のスケジュール設定エラー: %s</string>
+
+    <!-- ======================================================================================== -->
+    <!-- USER-FACING LOG MESSAGES (Info/Warning logs shown in UI terminal) -->
+    <!-- ======================================================================================== -->
+
+    <!-- APP Logs -->
+    <string name="log_build_number">ビルド番号: %s</string>
+    <string name="log_device_id">デバイスID: %s…</string>
+
+    <!-- AUTH Logs -->
+    <string name="log_user_session_terminated">ユーザーセッションの終了を開始しました</string>
+
+    <!-- SMS Logs -->
+    <string name="log_sms_bg_service_activated">バックグラウンド処理サービスを起動しました</string>
+    <string name="log_sms_bg_service_deactivated">バックグラウンド処理サービスを停止しました</string>
+    <string name="log_sms_service_disabled_locally">ローカルでサービスが無効化されました</string>
+    <string name="log_sms_blocked_by_server">サーバー設定によりブロックされました</string>
+    <string name="log_sms_processing_incoming">受信SMSを処理中</string>
+    <string name="log_sms_stored_in_db">SMSをデータベースに保存しました (ID: %s)</string>
+    <string name="log_sms_syncing_to_server">サーバーに同期中</string>
+    <string name="log_sms_already_synced">メッセージは既に同期されているか、見つかりません</string>
+    <string name="log_sms_manually_syncing">受信メッセージを手動で同期中…</string>
+    <string name="log_sms_cleared_old_messages">古い同期済みメッセージをクリアしました</string>
+    <string name="log_sms_deprecated_function">isMessageQueueServiceRunning()は非推奨です。代わりにisServiceActuallyRunning()を使用してください。</string>
+    <string name="log_sms_no_phone_state_permission">READ_PHONE_STATE権限が許可されていないため、デフォルトのサブスクリプションを使用します</string>
+    <string name="log_sms_error_unregistering_receiver">レシーバーの登録解除エラー: %s</string>
+    <string name="log_sms_broadcast_timeout">SMSブロードキャストがタイムアウトしました。SMSデータベースで配信を確認しています</string>
+    <string name="log_sms_error_unregistering_on_timeout">タイムアウト時のレシーバー登録解除エラー: %s</string>
+    <string name="log_sms_delivery_verified">データベースでSMS配信を確認しました - メッセージは正常に送信されました</string>
+    <string name="log_sms_cannot_verify_delivery">SMS配信を確認できません - READ_SMS権限が許可されていません</string>
+    <string name="log_sms_sending_via_sender">SmsSender経由でSMSを送信中</string>
+    <string name="log_sms_sent_successfully">SMSを正常に送信しました!</string>
+    <string name="log_sms_fetching_queue">キューからメッセージを取得中</string>
+    <string name="log_sms_found_messages" tools:ignore="PluralsCandidate">処理する%d件のメッセージが見つかりました</string>
+    <string name="log_sms_processing_priority" tools:ignore="PluralsCandidate">%d件の優先メッセージを処理中</string>
+    <string name="log_sms_processing_standard" tools:ignore="PluralsCandidate">%d件の標準メッセージを処理中</string>
+    <string name="log_campaigns_queued">キャンペーンがキューに登録されました: 優先 %1$s、標準 %2$s</string>
+    <string name="log_switching_campaign">キャンペーンを切り替え中: #%1$d → #%2$d</string>
+    <string name="log_completed_campaign">キャンペーン #%d を完了しました</string>
+    <string name="log_sms_feature_disabled">SMS機能が無効になっているため、サービスを停止します</string>
+    <string name="log_message_removed" tools:ignore="PluralsCandidate">メッセージ #%d は削除されたため、スキップします</string>
+    <string name="log_message_already_processed" tools:ignore="PluralsCandidate">メッセージ #%d は既に処理済みのため、スキップします</string>
+    <string name="log_processing_message">メッセージ #%d を処理中</string>
+    <string name="log_processed_message">メッセージ #%d を処理しました</string>
+    <string name="log_waiting_before_next">次のメッセージまで%d秒待機中</string>
+    <string name="log_scheduled_retry">メッセージ #%1$d の再試行をスケジュールしました (試行回数 %2$d)</string>
+    <string name="log_message_sent_after_retry" tools:ignore="PluralsCandidate">メッセージ #%1$d を正常に送信しました (試行回数 %2$d)</string>
+    <string name="log_retry_attempt_failed" tools:ignore="PluralsCandidate">試行 %1$d がメッセージ #%2$d で失敗しました: %3$s</string>
+    <string name="log_retrying_message">メッセージ #%1$d を%2$d秒後に再試行します</string>
+    <string name="log_message_failed_all_retries" tools:ignore="PluralsCandidate">メッセージ #%1$d は%2$d回の試行後に失敗しました</string>
+    <string name="log_report_synced">メッセージ #%d のレポートを正常に同期しました</string>
+    <string name="log_message_sync_failed">メッセージ同期に失敗しました。再試行します: %1$s - %2$s</string>
+    <string name="log_could_not_determine_sim_slot">サブスクリプション %1$d のSIMスロットを判定できませんでした: %2$s</string>
+    <string name="log_could_not_check_default_sms">デフォルトSMSアプリの状態を確認できませんでした: %s</string>
+    <string name="log_could_not_write_sms_db">システムデータベースにSMSを書き込めませんでした: %s</string>
+    <string name="log_sms_sending_failed">SMS送信が失敗しました。結果コード: %d</string>
+    <string name="log_sms_delivery_failed">SMS配信が失敗しました。結果コード: %d</string>
+    <string name="log_message_status_sync_failed">メッセージステータス同期に失敗しました。再試行します: %1$s - %2$s</string>
+
+    <!-- MMS Logs -->
+    <string name="log_mms_starting_send">%s へのMMS送信を開始します</string>
+    <string name="log_mms_sent_successfully">MMSを正常に送信しました</string>
+    <string name="log_mms_error_unregistering_receiver">MMSレシーバーの登録解除エラー</string>
+    <string name="log_mms_send_initiated">MMS送信を正常に開始しました</string>
+    <string name="log_mms_send_timeout">MMS送信がタイムアウトしました</string>
+    <string name="log_mms_building">MMSを構築中: テキスト + 添付ファイル</string>
+    <string name="log_mms_built_pdu" tools:ignore="PluralsCandidate">PDUを構築しました: %dバイト</string>
+    <string name="log_mms_queued_for_sending">MMSを送信キューに登録しました</string>
+    <string name="log_mms_sending_with_attachment">テキスト + 添付ファイル付きMMSを送信中</string>
+    <string name="log_mms_queued_awaiting_confirm">MMSをキューに登録しました。送信確認を待機中</string>
+    <string name="log_mms_built_pdu_total" tools:ignore="PluralsCandidate">PDUを構築しました: 合計%dバイト</string>
+    <string name="log_mms_unknown_mime_type">SMILに不明なMIMEタイプがあります: %s</string>
+    <string name="log_mms_no_read_phone_numbers">READ_PHONE_NUMBERS権限が許可されていません</string>
+    <string name="log_mms_downloaded" tools:ignore="PluralsCandidate">ダウンロードしました: %1$dバイト (%2$s から)</string>
+    <string name="log_mms_could_not_detect_mime">%s のMIMEタイプを検出できませんでした。デフォルトを使用します</string>
+    <string name="log_mms_sent_with_ids">MMSを正常に送信しました (uid=%1$d, mid=%2$d)</string>
+
+    <!-- USSD Logs -->
+    <string name="log_ussd_fetching_queue">キューからUSSDリクエストを取得中</string>
+    <string name="log_ussd_found_requests">処理する%d件のUSSDリクエストが見つかりました</string>
+    <string name="log_ussd_processing_priority" tools:ignore="PluralsCandidate">%d件の優先USSDリクエストを処理中</string>
+    <string name="log_ussd_processing_standard" tools:ignore="PluralsCandidate">%d件の標準USSDリクエストを処理中</string>
+    <string name="log_ussd_feature_disabled">USSD機能が無効になっているため、サービスを停止します</string>
+    <string name="log_ussd_request_removed" tools:ignore="PluralsCandidate">USSD #%d は削除されたため、スキップします</string>
+    <string name="log_ussd_missing_permission">USSD #%d にCALL_PHONE権限がありません</string>
+    <string name="log_ussd_request_timed_out" tools:ignore="PluralsCandidate">USSDリクエスト #%d がタイムアウトしました</string>
+    <string name="log_ussd_waiting_next_request">次のUSSDリクエストまで1.5秒待機中…</string>
+    <string name="log_ussd_response_sent">USSD #%1$d のレスポンスをサーバーに送信しました (ステータス: %2$d)</string>
+    <string name="log_ussd_sending_request">USSDリクエスト #%1$d を送信中: %2$s</string>
+    <string name="log_ussd_cancelling_pending" tools:ignore="PluralsCandidate">サービス終了のため、保留中のUSSD #%d をキャンセル中</string>
+
+    <!-- FCM/Firebase Logs -->
+    <string name="log_fcm_fetching_messages">サーバーからメッセージを取得中…</string>
+    <string name="log_fcm_deleting_message">メッセージ #%d を削除中…</string>
+    <string name="log_fcm_deleted_message">メッセージ #%d を削除しました…</string>
+    <string name="log_device_settings_updated">デバイス設定を正常に更新しました!</string>
+    <string name="log_device_deleted">デバイスをサーバーから削除しました…</string>
+    <string name="log_deleting_device">デバイスを削除中…</string>
+    <string name="log_campaign_updated" tools:ignore="PluralsCandidate">キャンペーン #%d が更新されました!</string>
+    <string name="log_campaign_deleted">キャンペーンをサーバーから削除しました…</string>
+    <string name="log_deleting_campaign" tools:ignore="PluralsCandidate">キャンペーン #%d と関連メッセージを削除中…</string>
+    <string name="log_campaign_messages_deleted" tools:ignore="PluralsCandidate">キャンペーン #%1$d と%2$d件のメッセージを正常に削除しました</string>
+    <string name="log_fcm_fetching_ussd">サーバーからUSSDコードを取得中…</string>
+    <string name="log_fcm_deleting_ussd">USSD #%d を削除中…</string>
+    <string name="log_fcm_deleted_ussd">USSD #%d を削除しました…</string>
+    <string name="log_fcm_fetching_count" tools:ignore="PluralsCandidate">%1$d件のメッセージを取得中 (最大%2$d件)</string>
+    <string name="log_fcm_fetched_messages" tools:ignore="PluralsCandidate">サーバーから%d件のメッセージを取得しました…</string>
+    <string name="log_fcm_skipping_message">メッセージ %d をスキップします - 既に存在します</string>
+    <string name="log_fcm_fetched_ussd">サーバーから%d件のUSSDコードを取得しました…</string>
+    <string name="log_fcm_skipping_ussd">USSD #%d をスキップします - 既に存在します</string>
+    <string name="log_fcm_stored_ussd">新しいUSSD #%d を保存しました…</string>
+    <string name="log_fcm_token_sync_failed">トークン同期に失敗しました。再試行します: %1$s - %2$s</string>
+
+    <!-- SYS/System Logs -->
+    <string name="log_battery_optimization_enabled">バッテリー最適化が有効です - アプリが正常に動作しない可能性があります</string>
+    <string name="log_battery_optimization_disabled">バッテリー最適化が無効です - アプリはバックグラウンドで実行できます</string>
+
+    <!-- Login Logs -->
+    <string name="log_android_version_check">checkAndroidVersion: デバイスはAndroid %1$s (API %2$d)で動作しています。最小要件はAPI %3$dです</string>
+
+    <!-- Report Logs -->
+    <string name="log_delivery_report_scheduled">メッセージ #%d の配信レポートをスケジュールしました</string>
+
+    <!-- Unified Message Processing Logs -->
+    <string name="log_msg_queued" tools:ignore="PluralsCandidate">キューに登録: %1$d件の優先、%2$d件の標準アイテム</string>
+    <string name="log_msg_processing_failed" tools:ignore="PluralsCandidate">%1$s アイテム #%2$d の処理に失敗しました</string>
+
+    <!-- Permission Logs -->
+    <string name="log_eventbus_not_registered">EventBusがEventBusに登録されていないため、登録解除をスキップします</string>
+    <string name="log_eventbus_already_registered">EventBusは既に登録されているため、重複登録をスキップします</string>
+    <string name="log_contacts_permission_denied">連絡先の権限が拒否されました - 連絡先名は表示されません</string>
+    <string name="log_notification_permission_denied">通知の権限が拒否されました - フォアグラウンドサービスは引き続き機能します</string>
+
+    <!-- ======================================================================================== -->
+    <!-- ADDITIONAL UI TERMINAL LOGS (Previously Hardcoded) -->
+    <!-- ======================================================================================== -->
+
+    <!-- Language/UI Logs -->
+    <string name="log_language_changed_to">言語を変更しました: %s</string>
+
+    <!-- Service Status Logs -->
+    <string name="log_services_both_running">SMSとUSSDサービスの両方が実行中です</string>
+    <string name="log_services_sms_running">SMSサービスが実行中です</string>
+    <string name="log_services_ussd_running">USSDサービスが実行中です</string>
+    <string name="log_services_all_stopped">すべてのサービスが停止しました</string>
+
+    <!-- Firebase/FCM Logs -->
+    <string name="log_fcm_device_updated">デバイス設定が正常に更新されました！</string>
+    <string name="log_fcm_device_deleted">デバイスがサーバーから削除されました…</string>
+    <string name="log_fcm_deleting_device">デバイスを削除中…</string>
+    <string name="log_fcm_campaign_updated">キャンペーン #%s が更新されました！</string>
+    <string name="log_fcm_campaign_deleted">キャンペーンがサーバーから削除されました…</string>
+    <string name="log_fcm_deleting_campaign">キャンペーン #%1$d と関連メッセージを削除中…</string>
+    <string name="log_fcm_campaign_delete_success">キャンペーン #%1$d と %2$d 件のメッセージを正常に削除しました</string>
+    <string name="log_fcm_fetching_ussd_codes">サーバーからUSSDコードを取得中…</string>
+    <string name="log_fcm_ussd_deleted">USSD #%d を削除しました…</string>
+    <string name="log_fcm_fetching_messages_to_max">%1$d 件のメッセージを取得中 (最大 %2$d 件)</string>
+    <string name="log_fcm_messages_fetched" tools:ignore="PluralsCandidate">サーバーから %d 件のメッセージを取得しました…</string>
+    <string name="log_fcm_message_skipped_exists">メッセージ %d をスキップ - 既に存在します</string>
+    <string name="log_fcm_ussd_codes_fetched" tools:ignore="PluralsCandidate">サーバーから %d 件のUSSDコードを取得しました…</string>
+    <string name="log_fcm_ussd_skipped_exists">USSD #%d をスキップ - 既に存在します</string>
+    <string name="log_fcm_ussd_stored_new">新しいUSSD #%d を保存しました…</string>
+
+    <!-- Worker Sync Logs (Warnings) -->
+    <string name="log_worker_message_sync_failed">メッセージの同期に失敗しました。再試行します: %1$d - %2$s</string>
+    <string name="log_worker_status_sync_failed">メッセージステータスの同期に失敗しました。再試行します: %1$d - %2$s</string>
+    <string name="log_worker_token_sync_failed">トークンの同期に失敗しました。再試行します: %1$d - %2$s</string>
+    <string name="log_worker_ussd_response_retry">USSDレスポンスの送信中にサーバーエラーが発生しました: %d、再試行します</string>
+
+    <!-- Network Connectivity Logs -->
+    <string name="log_network_internet_available">インターネット接続が利用可能になりました - API操作を再開しています</string>
+    <string name="log_network_internet_lost">インターネット接続が切断されました - API操作を一時停止しています</string>
+    <string name="log_network_restored">ネットワークが復元されました - WorkManagerが保留中のAPIリクエストを処理します</string>
+    <string name="log_network_lost">ネットワークが切断されました - API操作は復元されるまでキューに入ります</string>
+
+    <!-- ======================================================================================== -->
+    <!-- LANGUAGE SWITCHER -->
+    <!-- ======================================================================================== -->
+    <string name="change_language">言語を変更</string>
+    <string name="select_language">言語を選択</string>
+    <string name="language_changed">言語が変更されました。アプリを再起動しています…</string>
+    <string name="english">English</string>
+    <string name="japanese">日本語</string>
+    <string name="arabic">العربية（アラビア語）</string>
+    <string name="chinese">简体中文（中国語）</string>
+
+    <!-- ======================================================================================== -->
+    <!-- FCM TOKEN MANAGEMENT (User-Facing Logs) -->
+    <!-- ======================================================================================== -->
+    <string name="log_fcm_token_refreshed">FCMトークンを正常に更新しました</string>
+    <string name="log_fcm_token_refresh_failed">FCMトークンの更新に失敗しました</string>
+    <string name="log_fcm_token_syncing_boot">デバイス再起動後にFCMトークンを同期中…</string>
+    <string name="log_fcm_connection_issue">FCM接続の問題を検出しました。復旧を試みています…</string>
+    <string name="log_fcm_token_sync_scheduled">FCMトークン同期をスケジュールしました</string>
+
+    <string name="pair_title">この端末をペアリング</string>
+    <string name="pair_instructions">ダッシュボードでデバイスを開き、「デバイスを追加」を選択してください。そこに表示される QR コードをスキャンすると、この端末が接続されます。</string>
+    <string name="pair_scan_button">QR コードをスキャン</string>
+    <string name="pair_or_sign_in">または、アカウントでサインイン</string>
+    <string name="pair_invalid_qr">この QR コードはデバイスのペアリング用ではありません。ダッシュボードでデバイス \u2192 デバイスを追加 を開き、表示されるコードをスキャンしてください。</string>
+    <string name="pair_failed">ペアリングに失敗しました。コードの有効期限が切れている可能性があります \u2014 ダッシュボードで「デバイスを追加」を開き直して新しいコードを取得してください。</string>
+    <string name="pair_unreachable">%1$s に接続できませんでした。アドレスが正しいこと、端末がインターネットに接続されていることを確認してください。</string>
+    <string name="pair_no_push_title">プッシュ通知が設定されていません</string>
+    <string name="pair_no_push_message">この端末のペアリングは完了しましたが、サーバーに Firebase の設定がないため、新しいメッセージを通知できません。\n\n管理者に、概要 \u2192 設定 から google-services.json をアップロードするよう依頼し、このアプリを開き直してください。</string>
+    <string name="pair_confirm_title">このサーバーに接続しますか?</string>
+    <string name="pair_confirm_message">この端末は次のサーバーのためにテキストメッセージを送受信します:\n\n%1$s\n\nご自身のサーバーである場合のみ続行してください。</string>
+    <string name="pair_confirm_insecure">\n\n警告: このアドレスは HTTPS で保護されていないため、同じネットワーク上の他者にメッセージを読み取られる可能性があります。</string>
+    <string name="pair_confirm_continue">接続</string>
+    <string name="pair_wrong_server">このコードは別のサーバー用です。このアプリは特定の環境専用に設定されています。</string>
+</resources>

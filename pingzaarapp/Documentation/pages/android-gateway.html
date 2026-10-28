@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Android gateway — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Servers & devices</h6>
+                        <h1 class="header-title"><i class="la la-android la-lg"></i> Android gateway</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Turn a spare Android phone into an SMS sender and receiver, pair it with your
+       account, and — if the platform grants you partner status — earn credits by letting
+       other users send through it too.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/hosts-android.png" target="_blank" rel="noopener"><img src="../assets/screenshots/hosts-android.png" alt="Android devices linked as SMS gateways" loading="lazy"></a>
+  <figcaption>Android devices linked as SMS gateways</figcaption>
+</figure>
+
+    <div class="doc-note">
+      <strong>This app is not designed to be published on Google Play, and never was.</strong>
+      It is installed directly onto phones you control — the APK ships in
+      <code>Gateway/prebuilt/</code> and you side-load it. That is deliberate, not a gap
+      waiting to be closed: a gateway exists to send and read SMS in bulk on the account
+      holder's behalf, and Play's SMS and Call Log permissions policy reserves those
+      permissions for apps whose core function requires them, which an app of this kind is not
+      granted. Do not plan a rollout around a Play Store listing, for this app or for a
+      rebuilt version of it. See
+      <a href="#build-verification">Android developer verification</a> for what this means if
+      you build your own.
+    </div>
+
+    <p>An Android device running the Zender gateway app turns its own SIM card into an SMS
+       sender and receiver that your Zender installation can queue messages against.
+       Devices are managed from <em>Hosts &rarr; Android</em>, and every SMS send form's
+       <strong>device mode</strong> (see the Sending SMS page) targets one of the devices
+       registered here.</p>
+
+    <h2 id="install">Installing the Android app</h2>
+    <p>The app ships with Zender, as <code>Gateway/prebuilt/sms-gateway.apk</code> inside
+       the release ZIP. Upload it under <em>Admin → Overview → Settings</em> on the Gateway card and it
+       becomes available to your users from <em>Hosts → Android → Add device</em>, which
+       offers a download link and a QR code pointing at it. There is no app-store listing —
+       the app is served from your own installation.</p>
+    <p>It is deliberately branded neutrally, as <strong>SMS Gateway</strong>, so it sits
+       comfortably alongside whatever you have named your own service.</p>
+
+    <div class="doc-warn">
+      <strong>Set up push before handing the app to anyone.</strong> The gateway is told
+      about new messages through Firebase Cloud Messaging. Without it a paired phone shows
+      an explanatory screen instead of working, so complete
+      <a href="#firebase">Connecting Firebase</a> first.
+    </div>
+
+    <h2 id="firebase">Connecting Firebase</h2>
+    <p>Two files are involved, and they are easy to confuse because they work in opposite
+       directions. Both are uploaded under <em>Admin → Overview → Settings</em> on the Gateway card,
+       which shows a badge beside each once it is stored.</p>
+
+    <table class="doc-table">
+      <tr><th>File</th><th>What it does</th><th>Where to get it</th></tr>
+      <tr>
+        <td><strong>Firebase Credentials</strong><br><code>firebase.json</code></td>
+        <td>Lets <em>your site</em> send notifications to phones.</td>
+        <td>Firebase console → Project settings → Service accounts →
+            <em>Generate new private key</em>.</td>
+      </tr>
+      <tr>
+        <td><strong>Google Services</strong><br><code>google-services.json</code></td>
+        <td>Lets <em>the app</em> register with Firebase and receive them.</td>
+        <td>Firebase console → Project settings → Your apps → the Android app you register
+            below.</td>
+      </tr>
+    </table>
+
+    <p>To produce the second file, add an Android app to your Firebase project using this
+       exact package name:</p>
+
+    <pre><code>dev.titansys.smsgateway</code></pre>
+
+    <p>It has to match exactly, or Firebase will not issue the app a token. No SHA-1
+       fingerprint is needed — that is for sign-in and dynamic links, not messaging.
+       Download the generated <code>google-services.json</code> and upload it unmodified.
+       Zender checks it carries the four values the app needs and refuses it otherwise,
+       so a wrong file is reported immediately rather than silently failing later.</p>
+
+    <div class="doc-note">
+      Shipping your own build instead of the supplied one? Register the package name you
+      chose for it, not the one above. See <a href="#customising">Building your own
+      version</a>.
+    </div>
+
+    <h2 id="pairing">Pairing a device</h2>
+    <p>Open <em>Hosts → Android → Add device</em>. The dialog shows a QR code carrying your
+       site's address and a single-use pairing code. Open the app on the phone and scan it.
+       That is the whole process, and it is why the app has no login screen to fill in.</p>
+    <p>The pairing code <strong>lasts ten minutes and works once</strong>. Closing and
+       reopening the dialog issues a fresh code and invalidates the previous one, so a
+       screenshot of an old code is worthless to anyone who finds it. To pair a second
+       phone, simply open the dialog again.</p>
+    <p>The app sends its device ID, model, version and manufacturer. Your subscription's
+       device limit is checked, and a phone already registered to your account refreshes
+       rather than duplicating. A phone already linked to a <strong>different</strong>
+       account is rejected outright.</p>
+
+    <h2 id="customising">Building your own version</h2>
+
+    <div class="doc-warn">
+      <strong>Builds you make yourself are not covered by support.</strong> The APK supplied
+      in <code>Gateway/prebuilt/</code> is the one that is tested and supported. The source
+      is provided so you can rebrand or adapt it, but once you modify and compile it, the
+      result is yours to maintain — a build we did not produce cannot be debugged or fixed
+      for you. If you hit a problem, reproduce it with the supplied APK before asking for
+      help.
+    </div>
+
+    <p>The complete Android Studio project ships in <code>Gateway/src/</code>. What follows
+       assumes you are comfortable with an Android build.</p>
+
+    <h3 id="build-prerequisites">What you need</h3>
+    <table class="doc-table">
+      <tr><th>Tool</th><th>Version</th></tr>
+      <tr><td>JDK</td><td><strong>17</strong> — the build targets Java 17 bytecode and will not run on an older JDK</td></tr>
+      <tr><td>Android SDK</td><td>Platform <strong>35</strong>, with build-tools installed</td></tr>
+      <tr><td>Gradle</td><td>Nothing to install — use the bundled wrapper (<code>./gradlew</code>), which fetches 8.11.1 itself</td></tr>
+      <tr><td>Kotlin / AGP</td><td>1.9.25 / 8.9.1, both pinned in <code>gradle/libs.versions.toml</code></td></tr>
+    </table>
+    <p>The app targets Android 15 (API 35) and runs on Android 8.0 (API 26) or newer.</p>
+
+    <h3 id="build-configure">Set your server address — this is required</h3>
+    <p>A build from source is made for <em>one</em> Zender, so its address is compiled in
+       rather than typed by whoever installs the app. Set it in
+       <code>gradle.properties</code>:</p>
+    <pre><code>defaultSiteUrl=https://sms.example.com/</code></pre>
+    <p>The build <strong>fails with an explanatory error if you leave it empty</strong>,
+       rather than producing an app that can never reach a server. If you would rather not
+       edit the file, pass it per build with <code>-PdefaultSiteUrl=…</code>.</p>
+
+    <div class="doc-note">
+      Because that address is fixed, a source build also <strong>refuses a pairing QR that
+      names a different server</strong> — it cannot be repointed after the fact. Sign-in
+      with email and password sits alongside the QR scanner, since you know your own
+      address. The supplied APK differs on both counts: it is scan-only, and it accepts
+      whatever server its QR names, because it belongs to nobody until then.
+    </div>
+
+    <h3 id="build-run">Building</h3>
+    <pre><code>cd Gateway/src
+echo "sdk.dir=$ANDROID_HOME" &gt; local.properties
+./gradlew assembleRelease</code></pre>
+    <p>The result lands in <code>app/build/outputs/apk/release/</code>. With no signing
+       configuration (below) it is named <code>app-release-unsigned.apk</code>, and Android
+       will refuse to install it.</p>
+
+    <h3 id="build-signing">Signing</h3>
+    <p>Create a keystore, then a <code>keystore.properties</code> file next to
+       <code>gradle.properties</code>:</p>
+    <pre><code>storeFile=/absolute/path/to/your.keystore
+storePassword=…
+keyAlias=…
+keyPassword=…</code></pre>
+    <p>The build uses it when present and ignores it when absent, so the project still
+       compiles for anyone without your key. <strong>Keep that file and the keystore out of
+       version control</strong> — together they are the only thing preventing someone else
+       from publishing updates to your app.</p>
+
+    <div class="doc-warn">
+      <strong>Your build cannot update over the supplied one.</strong> It is signed with a
+      different key, so Android treats it as a different app: the supplied version has to be
+      uninstalled first, and any device paired with it must be paired again. Decide which of
+      the two you are standing behind before rolling it out to phones.
+    </div>
+
+    <h3 id="build-verification">Android developer verification — required from September 2026</h3>
+    <p>Android is introducing a requirement that apps be registered by a <strong>verified
+       developer</strong> before they can be installed on certified Android devices.
+       Enforcement begins <strong>30 September 2026</strong>, initially for select regions. The
+       requirement follows the developer who signed the app, so it reaches apps distributed
+       outside the Play Store, not only apps published on it.</p>
+
+    <table class="doc-table">
+      <tr><th>Which build</th><th>What you have to do</th></tr>
+      <tr>
+        <td><strong>The supplied APK</strong><br><code>Gateway/prebuilt/sms-gateway.apk</code></td>
+        <td><strong>Nothing.</strong> It is signed with our key and registered under our
+            verified developer account. It installs and updates normally, and this deadline
+            does not affect you.</td>
+      </tr>
+      <tr>
+        <td><strong>Your own build</strong><br>from <code>Gateway/src/</code></td>
+        <td>Verify yourself as a developer and register this app's package name. Your build is
+            signed with <em>your</em> keystore, which belongs to no verified developer until
+            you do.</td>
+      </tr>
+    </table>
+
+    <div class="doc-warn">
+      <strong>This is the one thing that makes a source build harder than it looks.</strong>
+      Everything else on this page is a normal Android build. If you rebrand the app and skip
+      verification, then from the enforcement date the phones you hand to your own staff stop
+      installing it through the ordinary route — a power-user flow for sideloading unverified
+      apps is planned, but it is a deliberate obstacle, not something you can switch off from
+      inside the app. Budget for this before you commit to a rebrand.
+    </div>
+
+    <div class="doc-warn">
+      <strong>Distribute your build outside Google Play — it will not be accepted on the
+      store.</strong> A gateway's whole purpose is to send and read SMS on the account holder's
+      behalf in bulk, and Play's SMS and Call Log permissions policy restricts those permissions
+      to apps whose core function genuinely requires them, granted case by case. An app like
+      this does not qualify, and no amount of rewriting the store listing changes that. Plan on
+      handing the APK to your own devices directly.
+    </div>
+
+    <p>Distributing outside Play does <em>not</em> exempt you from verification — that is the
+       point of the change: it applies to how the app reaches the device, so a directly
+       installed APK is covered too. What it takes:</p>
+    <ol>
+      <li><strong>Verify your identity in the Android Developer Console.</strong> That is the
+          account intended for developers who publish only outside Google Play, which is where
+          you are. Expect to supply a legal name, address, email and phone number; organisations
+          are additionally asked for a D&#8209;U&#8209;N&#8209;S number and a verified website,
+          and a government ID may be requested. (Outside-Play apps can also be registered
+          through Play Console if you already run one for other apps — but you are not listing
+          this app on the store either way.)</li>
+      <li><strong>Register the package name and your signing certificate's
+          SHA&#8209;256 fingerprint.</strong> This is the route that applies to you: because
+          the app never goes near a store listing, the fingerprint is what connects your
+          signing key to your verified account. Take it from the keystore you created in the
+          previous section, using either command below — they print the same value.</li>
+    </ol>
+
+    <div class="doc-note">
+      There is a <strong>free tier</strong> intended for hobbyists and students, but it caps
+      installs at <strong>20 devices you explicitly authorise</strong>. A gateway fleet larger
+      than that needs the paid account with unlimited installs — worth checking against your
+      device count before you assume the free tier covers you.
+    </div>
+
+    <p>Read the fingerprint off your keystore — this asks for the store password:</p>
+    <pre><code>keytool -list -v -keystore your.keystore -alias youralias</code></pre>
+    <p>Or straight off an APK you have already built, which needs no password at all:</p>
+    <pre><code>apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk</code></pre>
+    <p>Both print a <code>SHA-256</code> line — a colon-separated string of 32 hex pairs. That
+       is the value to register. Register the fingerprint of the key you actually ship with: if
+       you build unsigned or with a debug key by mistake, you will be registering the wrong
+       certificate and installs will still be refused.</p>
+
+    <div class="doc-note">
+      Use the <strong>same keystore for every future update</strong>. Because Android identifies
+      an app by its signer, a new key is a new app: it has to be registered again, and every
+      phone has to uninstall and pair again. Back the keystore up somewhere durable and keep its
+      password in a password manager — lose either and you can never update your build, only
+      replace it.
+    </div>
+
+    <p>Google's own documentation is the authority here, and the detail is still moving:
+       <a href="https://developer.android.com/developer-verification">developer.android.com/developer-verification</a>.</p>
+
+    <h3 id="build-release">Release builds are minified</h3>
+    <p><code>assembleRelease</code> runs R8 with shrinking enabled. If you add code that
+       depends on reflection — another JSON model, for instance — add keep rules to
+       <code>app/proguard-rules.pro</code>, or it will work in a debug build and fail in
+       release. The rules already there cover the existing API models and are a good
+       template.</p>
+
+
+    <h3 id="rebranding">Renaming and rebranding</h3>
+    <p>Everything a rebrand touches sits in two files. Nothing in the Kotlin source needs
+       to change.</p>
+
+    <table class="doc-table">
+      <tr><th>To change</th><th>Edit</th></tr>
+      <tr>
+        <td>Package name — the app's identity on the device</td>
+        <td><code>gradle/libs.versions.toml</code> → <code>app-version-appId</code></td>
+      </tr>
+      <tr>
+        <td>The name shown under the icon</td>
+        <td><code>app/src/main/res/values/strings.xml</code> →
+            <code>app_launcher_name</code></td>
+      </tr>
+      <tr>
+        <td>Icon and logo</td>
+        <td><code>app/src/main/res/mipmap-*/</code> and
+            <code>app/src/main/res/drawable/logo.png</code></td>
+      </tr>
+      <tr>
+        <td>Prefill the site address on the sign-in screen</td>
+        <td><code>gradle.properties</code> → <code>defaultSiteUrl</code></td>
+      </tr>
+    </table>
+
+    <div class="doc-note">
+      <strong>The supplied app deliberately shows no logo.</strong> It carries only a
+      placeholder image, and shipping that &mdash; or anyone else's branding &mdash; would
+      be wrong for a product you resell under your own name. Replace
+      <code>drawable/logo.png</code> with your own and build from source; your logo then
+      appears on the pairing screen.
+    </div>
+
+    <p>Changing the package name is safe on its own: the code namespace is set separately
+       and does not follow it, so a rename cannot break the build.</p>
+
+    <div class="doc-warn">
+      <strong>A new package name needs a new Firebase registration.</strong> Add an Android
+      app with your chosen package name to your Firebase project, download the fresh
+      <code>google-services.json</code>, and upload that instead. The previous file will
+      not work for a differently-named app.
+    </div>
+
+    <p>Your own build is signed with your own key, so Android will not install it as an
+       update over the supplied app. Uninstall that first — and note a phone paired with it
+       has to be paired again afterwards.</p>
+
+
+    <h2>Choosing SIM slots</h2>
+    <p>SIM selection isn't a device setting — it's chosen per message. Every SMS send form
+       (Quick send, bulk, and the Excel upload's <code>sim</code> column) lets you pick
+       SIM 1 or SIM 2 for that specific send, and the value is always sanitized to one of
+       those two on the way in. A single-SIM device simply ignores a request for the slot
+       it doesn't have.</p>
+    <p>The one place SIM slots are configured on the device itself is for
+       <strong>partner-shared</strong> devices, covered next: in Edit device, a partner can
+       restrict a globally shared device to SIM 1, SIM 2, or both, which limits which slot
+       other users' sends are allowed to land on when they use that device through the
+       shared/global pool rather than their own.</p>
+
+    <h2>Sharing your device as a partner</h2>
+    <p>If the platform owner has given your account <strong>partner status</strong> (set
+       from <em>Admin &rarr; Users</em>, not something you can turn on yourself), Edit
+       device unlocks a set of sharing controls that an ordinary account's devices don't
+       have:</p>
+    <ul>
+      <li><strong>Global status</strong> — turns sharing on or off for this device. While
+          enabled, other users on the platform can send through it and pay for the
+          privilege out of their own credits; while disabled, it's yours alone again.</li>
+      <li><strong>Rate</strong> — what you charge per message sent through your device,
+          in your device's own currency.</li>
+      <li><strong>Global priority</strong> — whether shared sends through this device jump
+          the queue the same way a priority send would.</li>
+      <li><strong>Global slots</strong> — which SIM(s) are open to other users' sends;
+          you can keep one SIM for yourself while sharing the other.</li>
+    </ul>
+    <div class="doc-warn">
+      A device shared globally cannot receive messages, for security reasons — sharing and
+      receiving are mutually exclusive on the same device.
+    </div>
+    <p>Every message sent through your shared device deducts your rate from the sender's
+       credits and adds it to your <strong>earnings</strong> balance, minus the platform's
+       own commission. Once your earnings clear the platform's minimum payout threshold,
+       you can request a cash-out from your own dashboard; see the Billing page's Payouts
+       section for what happens to that request on the admin side.</p>
+
+    <h2>Battery and background limits</h2>
+    <div class="doc-warn">
+      Android's battery optimization is the single most common reason a device silently
+      stops sending or receiving. When the OS decides the gateway app is an idle background
+      app, it can suspend it entirely — the app keeps showing as paired in the dashboard,
+      but nothing actually happens on the phone. Exclude the gateway app from battery
+      optimization (sometimes labelled "unrestricted battery usage" or "allow background
+      activity," depending on the phone's Android skin) as a standard part of setup, not
+      just as a troubleshooting step after something breaks.
+    </div>
+    <p>Manufacturer-specific power management (common on Xiaomi, Huawei, Oppo, and similar
+       skins) is frequently more aggressive than stock Android and can override the
+       standard battery-optimization exclusion. If a device that's excluded from Android's
+       own battery optimization still drops offline, check the phone maker's own battery
+       or "auto-start" manager next.</p>
+
+    <h2>Delivery reports</h2>
+    <p>After the app sends an SMS, it reports the outcome back to Zender, which marks the
+       message sent or failed and stores the device's own delivery code alongside it. The
+       codes the app can report are <code>SMS_SENT</code>, <code>SMS_DELIVERED</code>,
+       <code>SMS_PENDING</code>, <code>DELIVERY_PENDING</code>, and <code>DELIVERY_FAILED</code>;
+       these drive both the live dashboard notification for that message and any webhook or
+       automated action tied to it. See the Sending SMS page for how these statuses appear
+       in the Queue, Sent, and Campaigns tables.</p>
+    <p>Receiving can be turned off per device from Edit device if a device is only ever
+       used for sending — doing so also disables receive-triggered features such as
+       webhooks and auto-reply for that device, since there's nothing left to trigger
+       them.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

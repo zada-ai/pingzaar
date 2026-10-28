@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Users & roles — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Administration</h6>
+                        <h1 class="header-title"><i class="la la-users la-lg"></i> Users &amp; roles</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Manage every account on your Zender install: add customers directly, control what
+       their role lets them do, adjust their credits, and suspend or remove them when you
+       need to.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/admin-users.png" target="_blank" rel="noopener"><img src="../assets/screenshots/admin-users.png" alt="Admin → Users" loading="lazy"></a>
+  <figcaption>Admin → Users</figcaption>
+</figure>
+
+    <p>Every account on a Zender install &mdash; including the super admin created during
+       setup &mdash; lives in the same accounts table. What separates the super admin from
+       an ordinary customer is simply being the original account created at install time;
+       that account passes every permission check unconditionally, everywhere in the app.
+       Everyone else is only as powerful as the <strong>role</strong> attached to their
+       account.</p>
+
+    <h2>Adding and managing user accounts</h2>
+    <p><em>Admin &rarr; Users</em> lists every account and lets you add one directly (name,
+       email, password, role, language, formatting, and a starting credits balance)
+       without the person registering themselves. Each row also carries impersonate, edit,
+       suspend, and delete buttons. Impersonate, suspend, and delete are disabled in that table for the super
+       admin's own row.</p>
+    <div class="doc-warn">
+      The disabled button only stops <strong>suspend</strong> and <strong>delete</strong>
+      on the super admin &mdash; both are also rejected on the server if you target that
+      account directly. <strong>Impersonate</strong> is different: nothing on the server
+      stops you from impersonating the super admin, it only requires that you're already an
+      admin with user-management permission. The greyed-out button on the super admin's row
+      is a table-rendering choice, not a guard; anyone who can already reach this screen
+      could impersonate the super admin by calling the underlying action directly with that
+      account's ID.
+    </div>
+    <div class="doc-warn">
+      Deleting a user is not just a row removal. It wipes every campaign, device, contact
+      and contact group, sent and received WhatsApp message, scheduled send, API
+      key, webhook, AI key and AI plugin, message template, USSD request, and log entry
+      that user ever owned, all in the same request. There's no confirmation beyond the
+      single delete prompt and no way to recover any of it afterwards. One exception is worth knowing if you are deleting an account to satisfy a data-erasure request: <strong>plain SMS messages are not removed</strong>. WhatsApp messages are deleted with the account, but the SMS sent and received history remains in the system, no longer attached to any account.
+    </div>
+
+    <h2>Defining roles and permissions</h2>
+    <p><em>Admin &rarr; Roles</em> is where you define what a non-super-admin account can
+       actually reach. A role is just a name plus a list of permissions; a user's effective
+       permissions come entirely from the role assigned to them in their account. Every
+       admin menu item in the sidebar, and every action behind it, is gated by exactly one
+       of these permissions.</p>
+    <p>A role can be given any combination of: Users, Roles, Packages, Vouchers,
+       Subscriptions, Transactions, Payouts, Widgets, Pages, Marketing, Languages,
+       Gateways, Shorteners, Plugins, Templates, and API management. A role needs at least
+       one of these checked to be created at all.</p>
+
+    <h2>Setting a customer's credits</h2>
+    <p>Credits are spent as customers send SMS and WhatsApp messages. There's no separate
+       admin "adjust credits" action: the <strong>Credits</strong> field in both the
+       add-user and edit-user forms (<em>Admin &rarr; Users</em>) <strong>sets</strong> the
+       account's balance to whatever value you type &mdash; it overwrites the current
+       balance rather than adding to it. Entering a lower number than the customer's
+       current balance reduces it, and leaving the field blank on edit resets it to
+       <code>0</code>.</p>
+    <p>This is separate from a customer topping up their <em>own</em> balance from the
+       dashboard (the <strong>Add credits</strong> button on their Overview page), which
+       goes through a payment provider and increments the balance instead of setting
+       it.</p>
+
+    <h2>Suspending an account</h2>
+    <p>The ban icon on each row in <em>Admin &rarr; Users</em> toggles the account's
+       suspended flag. This requires user-management permission and refuses to touch the
+       super admin's account. Suspending doesn't delete or hide anything the user has
+       already sent or stored.</p>
+    <p>What actually changes is who can get in. A suspended account is blocked at every
+       entry point that checks the flag: the normal login form, social login, and both the
+       Android gateway app's login and QR pairing endpoints. A suspended customer's
+       dashboard session, API keys, and already-linked Android devices and WhatsApp
+       accounts are otherwise left alone &mdash; they simply can't authenticate again once
+       logged out, and a device trying to log back in gets rejected the same way a browser
+       login would.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

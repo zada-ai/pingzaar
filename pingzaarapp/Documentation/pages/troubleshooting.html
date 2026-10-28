@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Troubleshooting — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Maintenance</h6>
+                        <h1 class="header-title"><i class="la la-life-ring la-lg"></i> Troubleshooting</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Common symptoms, why they happen, and where to fix them. Every row here traces back to
+       a real code path covered in more detail on the pages it links to &mdash; start there if
+       the short version below isn't enough.</p>
+
+    <table class="doc-table">
+      <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Site shows a maintenance page instead of the dashboard</td>
+          <td>A file named <code>updating.lock</code> exists at the install root. Zender
+              checks for it on every single request and, if it's there, serves a maintenance
+              page and stops &mdash; nothing else on the site runs while it's present.
+              Nothing in the automatic updater creates or removes this file for you (see
+              <a href="updating.html">Updating</a>); it's a switch you flip yourself for
+              manual maintenance work.</td>
+          <td>Delete <code>updating.lock</code> from the install root once you're done. If you
+              didn't create it yourself and don't know why it's there, check with whoever has
+              server access before deleting it &mdash; someone may be mid-update.</td>
+        </tr>
+        <tr>
+          <td>Blank page after installing</td>
+          <td>A fatal PHP error before anything renders. The two most common causes:
+              PHP older than 8.4 (bundled libraries require up to 8.4.1 &mdash; see
+              Requirements), or an incomplete <code>vendor/</code> upload, since Zender
+              can't start at all if that folder (or anything inside it) is missing.</td>
+          <td>Check your server's PHP error log for the actual fatal error, confirm your PHP
+              version is 8.4, and re-upload <code>vendor/</code> in full &mdash; it's a
+              large directory and partial uploads are the most common cause of this.</td>
+        </tr>
+        <tr>
+          <td>"Invalid Database Credentials!" during install</td>
+          <td>The installer throws this message for <em>any</em> connection failure, not
+              just a wrong host or port &mdash; in practice the usual cause is that the
+              database doesn't exist yet, or already has tables in it.</td>
+          <td>Create an <strong>empty</strong> database first, and make sure the database user
+              has <code>CREATE</code> and <code>INSERT</code> privileges on it. See
+              <a href="installation.html">Installation</a> for the full form walkthrough.</td>
+        </tr>
+        <tr>
+          <td>The API reference page (<em>Docs &rarr; API</em>) is blank</td>
+          <td>Fixed in 3.10.0 &mdash; earlier versions loaded the Redoc viewer from a CDN,
+              which fails outright with no internet access reaching that CDN.</td>
+          <td>Nothing to do on 3.10.0 and later: Redoc is now vendored locally and renders
+              offline (see <a href="api.html">REST API</a>). If you still see a blank page on
+              this version, it's a different fault &mdash; check the browser console rather
+              than assuming it's the CDN issue again.</td>
+        </tr>
+        <tr>
+          <td>Scheduled SMS/WhatsApp messages never send</td>
+          <td>Cron isn't configured. Without something calling the <code>sms.scheduled</code>
+              and <code>wa.scheduled</code> endpoints, due sends just sit queued
+              indefinitely &mdash; Zender has no background process of its own that
+              dispatches them.</td>
+          <td>Set up the crontab entries described on the <a href="cron.html">Cron jobs</a>
+              page, using your site's real <code>system_token</code>.</td>
+        </tr>
+        <tr>
+          <td>A WhatsApp account keeps unlinking</td>
+          <td>The WhatsApp server process died (crashed, was killed, or the host rebooted) and
+              didn't come back. The binary does not restart itself.</td>
+          <td>Run it under a process supervisor (systemd on Linux, launchd on macOS) instead of launching it
+              directly, so it's restarted automatically &mdash; see
+              <a href="whatsapp-server.html">WhatsApp server</a>.</td>
+        </tr>
+        <tr>
+          <td>Uploads fail (contacts, media, samples, imports&hellip;)</td>
+          <td>The web server user doesn't have write access to wherever Zender is trying to
+              save the file.</td>
+          <td>Make sure the uploads folder and the cache, compiled-template, and temporary
+              folders under system storage are all writable by the web server user
+              &mdash; see <a href="configuration.html">Configuration</a>.</td>
+        </tr>
+        <tr>
+          <td>An update "appears to do nothing"</td>
+          <td>The update handler reports zip-extraction and SQL-import failures to your
+              installation's error log &mdash; but stays silent on file-copy and cleanup
+              failures, and on a response that never made it back to your browser.</td>
+          <td>Check the error log first. If it's empty, see
+              <a href="updating.html">Updating</a> for exactly which failures are (and
+              aren't) logged, and what to check instead.</td>
+        </tr>
+      </tbody>
+    </table>
+  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

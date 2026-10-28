@@ -1,0 +1,316 @@
+/* Zender offline docs — styled as a page inside the real dashboard shell.
+   Bootstrap (light/dark) + the app's own component tweaks are @import'd as
+   the base layer. Pages use the dashboard's own markup verbatim:
+   navbar-vertical fixed-left sidebar, .main-content, .header/.header-title,
+   .card/.card-body -- so almost all of that chrome is already styled by
+   the vendored bootstrap.min.css with zero rules needed here. What's left
+   is purely docs-specific: the .doc-note/.doc-warn/.doc-table callouts
+   (the dashboard has no equivalent), the "On this page" TOC column, and the
+   light/dark toggle. Dark mode follows the system preference by default
+   (@import media condition below); docs.js adds an optional toggle that
+   overrides it via [data-theme] + force-linked stylesheets. Everything here
+   is a local, relative path -- no network. */
+
+@import url("vendor/css/libs/line-awesome.min.css");
+@import url("vendor/css/libs/bootstrap.min.css");
+@import url("vendor/css/style.min.css");
+@import url("vendor/css/libs/bootstrap.dark.min.css") (prefers-color-scheme: dark);
+
+:root{
+  --doc-muted:#6e84a3;
+  --doc-line:#edf2f9;
+  --doc-accent:#2c7be5;
+  --doc-code-bg:#edf2f9;
+  --doc-pre-bg:#f9fbfd;
+  --doc-pre-line:#d9e2ef;
+  --doc-pre-fg:#12263f;
+  --doc-inline-bg:#edf2f9;
+  --doc-inline-fg:#0b4f9e;
+  --doc-warn-bg:#fff8e6;
+  --doc-warn-line:#f6c343;
+  --doc-note-bg:#eaf2fe;
+  --doc-note-line:#2c7be5;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --doc-muted:#95aac9;
+    --doc-line:#1f3a5f;
+    --doc-accent:#589bff;
+    --doc-code-bg:#0e2038;
+    --doc-pre-bg:#0b1b2f;
+    --doc-pre-line:#23405f;
+    --doc-pre-fg:#d8e3f0;
+    --doc-inline-bg:#16304f;
+    --doc-inline-fg:#9ec5fe;
+    --doc-warn-bg:#3a2f10;
+    --doc-warn-line:#f6c343;
+    --doc-note-bg:#132743;
+    --doc-note-line:#589bff;
+  }
+}
+
+:root[data-theme="dark"]{
+  --doc-muted:#95aac9;
+  --doc-line:#1f3a5f;
+  --doc-accent:#589bff;
+  --doc-code-bg:#0e2038;
+  --doc-pre-bg:#0b1b2f;
+  --doc-pre-line:#23405f;
+  --doc-pre-fg:#d8e3f0;
+  --doc-inline-bg:#16304f;
+  --doc-inline-fg:#9ec5fe;
+  --doc-warn-bg:#3a2f10;
+  --doc-warn-line:#f6c343;
+  --doc-note-bg:#132743;
+  --doc-note-line:#589bff;
+}
+
+/* ---------- sidebar ---------- */
+
+.navbar-vertical.fixed-left {
+  /* Same treatment as the dashboard's own sidebar: a dark gradient laid over the
+     theme background image, so the docs read as part of the product rather than
+     a separate site. The image is copied into assets/ rather than referenced from
+     uploads/, because these docs open from disk with no server behind them. */
+  background-image:
+    linear-gradient(to right bottom, rgba(51, 51, 51, .4), rgba(51, 51, 51, .9)),
+    url("sidebar-bg.jpg") !important;
+  background-size: cover, cover !important;
+  background-position: center, center !important;
+  background-repeat: no-repeat, no-repeat !important;
+
+  /* The vendored stylesheet puts a 1px solid #fff right border here. The real
+     dashboard has no border at all, and in the docs' dark theme that white line
+     reads as a bright stripe down the middle of the page. Removed outright
+     rather than restyled -- the gradient already separates the columns. */
+  border-right: 0 !important;
+}
+
+/* ---------- sidebar search box ----------
+   The dashboard sidebar has no search input of its own; this is the one
+   bit of custom nav chrome the docs add. Sits inside the permanently-dark
+   navbar-vertical, so it's styled for a dark background regardless of the
+   main-content theme. */
+
+.doc-search-wrap{position:relative;margin:0 0 1rem}
+.doc-search-wrap .la-search{
+  position:absolute;
+  left:11px;
+  top:50%;
+  transform:translateY(-50%);
+  color:rgba(255,255,255,.4);
+  font-size:13px;
+  pointer-events:none;
+}
+#sidebar input[type="search"]{
+  width:100%;
+  padding:8px 10px 8px 32px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-size:13.5px;
+  font-family:inherit;
+}
+#sidebar input[type="search"]::placeholder{color:rgba(255,255,255,.4)}
+#sidebar input[type="search"]:focus{outline:2px solid var(--doc-accent);outline-offset:1px}
+#navlist .no-results{padding:.5rem 1.5rem;font-size:13px;color:rgba(255,255,255,.5)}
+
+/* ---------- light/dark toggle ----------
+   A plain header button (.btn.btn-white, same pattern the dashboard uses
+   for header actions) that swaps its icon based on the active theme. */
+
+.doc-theme-toggle .la-sun{display:none}
+:root[data-theme="dark"] .doc-theme-toggle .la-sun{display:inline-block}
+:root[data-theme="dark"] .doc-theme-toggle .la-moon{display:none}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .doc-theme-toggle .la-sun{display:inline-block}
+  :root:not([data-theme="light"]) .doc-theme-toggle .la-moon{display:none}
+}
+
+/* ---------- page content typography ----------
+   .doc-main wraps a page's actual content inside .card-body -- it's a
+   typography-only scope now (the card/grid handle layout), so this is just
+   heading rhythm, code, and the first paragraph acting as a lead-in. */
+
+.doc-main h2{
+  margin-top:2.5rem;
+  padding-bottom:.5rem;
+  border-bottom:1px solid var(--doc-line);
+  scroll-margin-top:24px;
+}
+.doc-main h3{margin-top:1.75rem;scroll-margin-top:24px}
+.doc-main > p:first-child{font-size:17px;color:var(--doc-muted)}
+
+/* These are scoped to .doc-main rather than written as bare `pre`/`code`
+   selectors. docs.js injects the theme's Bootstrap as a <link> after this
+   stylesheet, so a bare element selector loses to Bootstrap's own
+   `pre{font-size:87.5%;color:#283e59}` on source order no matter what this
+   file says. Every code block in both doc sets lives inside .doc-main, so
+   the extra class makes specificity decide instead.
+
+   Inline code reads as a chip inside a sentence, so it needs to sit on the
+   text baseline without inflating line height. The size is relative, not a
+   fixed 13px: inline code appears in the 17px lead paragraph, in 14.5px
+   callouts and in table cells, and a fixed size looked wrong in all three. */
+.doc-main code{
+  background:var(--doc-inline-bg);
+  color:var(--doc-inline-fg);
+  padding:.15em .4em;
+  border-radius:4px;
+  font-size:.875em;
+  font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  overflow-wrap:break-word;
+}
+
+/* Code blocks.
+
+   `color` is the important declaration here. Without it the block inherited
+   Bootstrap's `pre` colour -- a dark slate -- which was legible on the light
+   fill but sat at roughly 1.5:1 against the dark-mode fill, so every code
+   block in dark mode was very nearly invisible.
+
+   Lines wrap rather than hiding behind a horizontal scrollbar. That is safe
+   for this content: the only lines long enough to overflow are single-line
+   JSON responses and URLs, and no block relies on indentation past the wrap
+   point. overflow-x stays as a backstop for anything unbreakable. */
+.doc-main pre{
+  background:var(--doc-pre-bg);
+  color:var(--doc-pre-fg);
+  border:1px solid var(--doc-pre-line);
+  padding:16px 18px;
+  border-radius:8px;
+  margin:20px 0;
+  font-size:13.5px;
+  line-height:1.7;
+  tab-size:4;
+  white-space:pre-wrap;
+  overflow-wrap:break-word;
+  overflow-x:auto;
+}
+.doc-main pre code{
+  background:none;
+  color:inherit;
+  padding:0;
+  border-radius:0;
+  font-size:inherit;
+  overflow-wrap:inherit;
+}
+
+.doc-table{width:100%;border-collapse:collapse;margin:20px 0;display:block;overflow-x:auto;border-radius:10px}
+.doc-table th,.doc-table td{border:1px solid var(--doc-line);padding:9px 12px;text-align:left;font-size:14px;vertical-align:top}
+.doc-table th{background:var(--doc-code-bg);font-weight:600}
+
+.doc-note,.doc-warn{
+  padding:14px 18px;
+  border-radius:10px;
+  margin:20px 0;
+  font-size:14.5px;
+}
+.doc-note{background:var(--doc-note-bg);border-left:4px solid var(--doc-note-line)}
+.doc-warn{background:var(--doc-warn-bg);border-left:4px solid var(--doc-warn-line)}
+.doc-main .doc-note code,.doc-main .doc-warn code{background:rgba(127,127,127,.18);color:inherit}
+
+/* A block inside a callout keeps the callout's tint rather than punching a
+   differently-coloured panel through it. */
+.doc-main .doc-note pre,.doc-main .doc-warn pre{
+  background:rgba(127,127,127,.12);
+  border-color:rgba(127,127,127,.28);
+  color:inherit;
+  margin-bottom:0;
+}
+
+/* The rare block that still needs to scroll gets a scrollbar that does not
+   look like a rendering fault. */
+.doc-main pre::-webkit-scrollbar{height:8px}
+.doc-main pre::-webkit-scrollbar-track{background:transparent}
+.doc-main pre::-webkit-scrollbar-thumb{background:var(--doc-pre-line);border-radius:4px}
+
+/* ---------- "On this page" TOC (right column, injected by docs.js) ----------
+   The dashboard shell has no equivalent of this, so it's the one layout
+   piece that's fully custom rather than borrowed. */
+
+.doc-toc{
+  position:sticky;
+  top:1.5rem;
+  font-size:13px;
+}
+.doc-toc-title{
+  font-size:11px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  color:var(--doc-muted);
+  margin-bottom:10px;
+}
+.doc-toc ul{list-style:none;margin:0;padding:0;border-left:2px solid var(--doc-line)}
+.doc-toc li{margin:0}
+.doc-toc a{
+  display:block;
+  padding:5px 0 5px 14px;
+  margin-left:-2px;
+  border-left:2px solid transparent;
+  color:var(--doc-muted);
+  font-size:13px;
+}
+.doc-toc a:hover{color:inherit;text-decoration:none}
+.doc-toc a.active{color:var(--doc-accent);border-left-color:var(--doc-accent);font-weight:500}
+.doc-toc li.toc-h3 a{padding-left:26px;font-size:12.5px}
+
+@media (max-width:1199.98px){
+  .doc-toc{display:none}
+}
+/* Sidebar wordmark — these are Zender's own docs, not a branded customer install,
+   so there is no logo image to stand in for. */
+.navbar-brand{display:block;text-align:center;padding:1.1rem 0 .9rem;text-decoration:none}
+.docs-wordmark{display:block;font-size:1.35rem;font-weight:700;letter-spacing:.02em;color:#fff;line-height:1.1}
+.docs-wordmark-sub{display:block;font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:.2rem}
+
+/* ---------- sidebar colour pinning ----------
+   The two Bootstrap builds invert these class names: in bootstrap.min.css
+   .navbar-dark is #152e4d, but in bootstrap.dark.min.css .navbar-dark is #fff.
+   The sidebar hardcodes .navbar-dark to stay permanently dark like the real
+   dashboard, so under the dark stylesheet it rendered white-on-white and the
+   whole navigation disappeared. Pin it here so it no longer depends on which
+   Bootstrap variant happens to be loaded. */
+#sidebar{background-color:#152e4d !important}
+#sidebar .navbar-brand,
+#sidebar .docs-wordmark{color:#fff !important}
+#sidebar .docs-wordmark-sub{color:rgba(255,255,255,.55) !important}
+#sidebar .navbar-nav .nav-link{color:rgba(255,255,255,.72) !important}
+#sidebar .navbar-nav .nav-link:hover,
+#sidebar .navbar-nav .nav-link:focus{color:#fff !important}
+#sidebar .navbar-nav .nav-link.active{color:#fff !important}
+#sidebar .navbar-heading,
+#sidebar .doc-nav-group{color:rgba(255,255,255,.42) !important}
+#sidebar .navbar-toggler-icon{filter:none}
+
+/* ---------- skip link ----------
+   Without this, keyboard and screen-reader users tab through all 22 sidebar
+   links before reaching the content on every page. */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:2000;padding:.6rem 1rem;
+  background:var(--doc-accent,#2c7be5);color:#fff;text-decoration:none;border-radius:0 0 6px 0}
+.skip-link:focus{left:0}
+
+
+/* ---------- screenshots ----------
+   Dashboard captures are ~1100px of dense UI. Scaling them to fit a phone
+   renders them at ~27% and illegible, so below the layout breakpoint the
+   figure scrolls horizontally and the image keeps a readable minimum width.
+   Every shot also links to the full-size file so it can be opened directly. */
+.doc-shot{margin:1.4rem 0 1.6rem}
+.doc-shot a{display:block;text-decoration:none}
+.doc-shot img{display:block;width:100%;max-width:100%;height:auto;
+  border:1px solid var(--doc-border,#e3ebf6);border-radius:8px;
+  box-shadow:0 1px 3px rgba(18,38,63,.08)}
+.doc-shot figcaption{margin-top:.55rem;font-size:.82rem;color:var(--doc-muted,#6e84a3);text-align:center}
+:root[data-theme="dark"] .doc-shot img{border-color:#2c3a4f;box-shadow:none}
+
+@media (max-width:900px){
+  .doc-shot{overflow-x:auto;-webkit-overflow-scrolling:touch;
+    border-radius:8px;padding-bottom:.35rem}
+  .doc-shot img{width:auto;max-width:none;min-width:720px}
+  .doc-shot figcaption{position:sticky;left:0;text-align:left}
+  .doc-shot figcaption::after{content:" — scroll to see more";opacity:.7}
+}

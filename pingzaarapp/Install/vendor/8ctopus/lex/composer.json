@@ -1,0 +1,46 @@
+{
+    "name": "8ctopus/lex",
+    "type": "library",
+    "description": "A lightweight template parser.",
+    "keywords": ["template","parser"],
+    "homepage": "https://github.com/8ctopus/lex",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "8ctopus",
+            "email": "hello@octopuslabs.io"
+        },
+        {
+            "name": "Dan Horrigan",
+            "email": "dan@dhorrigan.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.9",
+        "phpmd/phpmd": "^2.13"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Lex\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --coverage-html=coverage",
+        "fix": "php-cs-fixer fix --verbose",
+        "fix-risky": "php-cs-fixer fix --allow-risky=yes --verbose",
+        "phpstan": "phpstan analyse --level 9 src",
+        "phpmd": "phpmd src ansi phpmd.xml"
+    },
+    "replace": {
+        "fuel/lex": "*",
+        "pyrocms/lex": "*"
+    }
+}

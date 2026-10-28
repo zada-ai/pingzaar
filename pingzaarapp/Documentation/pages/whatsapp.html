@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sending WhatsApp — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Messaging</h6>
+                        <h1 class="header-title"><i class="la la-whatsapp la-lg"></i> Sending WhatsApp</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Send and receive WhatsApp messages — text, media, documents, and group messages —
+       once you've linked a WhatsApp account to your installation.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/whatsapp-send.png" target="_blank" rel="noopener"><img src="../assets/screenshots/whatsapp-send.png" alt="Sent WhatsApp messages, with delivery status per message" loading="lazy"></a>
+  <figcaption>Sent WhatsApp messages, with delivery status per message</figcaption>
+</figure>
+
+    <p>WhatsApp lives under its own menu in the dashboard sidebar, visible to accounts
+       whose subscription includes WhatsApp: <em>Queue</em>, <em>Sent</em>,
+       <em>Received</em>, <em>Campaigns</em>, <em>Scheduled</em>, and <em>Groups</em>.</p>
+
+    <h2>Linking an account</h2>
+    <p>Before you can send anything, a WhatsApp account has to be linked under
+       <em>Hosts &rarr; WhatsApp</em> — see the WhatsApp server page under Servers &amp;
+       devices for how that connection works. Every send form on this page lets you pick
+       which linked account to send from; you can have more than one.</p>
+
+    <h2>The phone-number format the platform enforces</h2>
+    <p>WhatsApp recipients come in exactly two shapes, and the platform enforces this
+       strictly:</p>
+    <ul>
+      <li><strong>A direct message</strong> is bare international digits — 5 to 15 of
+          them, no spaces or dashes, with an optional leading <code>+</code>. Outbound
+          sends go through the same phone-number parsing the SMS side uses, so a locally
+          formatted number (in your own country's dialing convention) is normalized for
+          you before it's queued.</li>
+      <li><strong>A group message</strong> uses the full WhatsApp group identifier — a
+          numeric ID followed by <code>@g.us</code>. Group IDs aren't something you type
+          from memory; fetch them first (see Group messages below) and copy them from
+          there.</li>
+    </ul>
+    <div class="doc-warn">
+      These are the only two accepted shapes. A number with spaces, dashes, or the wrong
+      number of digits is rejected outright rather than guessed at.
+    </div>
+
+    <h2>Sending text</h2>
+    <p><strong>Quick send</strong> on the Queue page sends one message to one recipient
+       or group. Text messages go through the same length limits, translation, and
+       spintax described on the SMS page, and support the same shortener and
+       spintax-sample tools.</p>
+    <p>Every quick send also lets you mark the message <strong>priority</strong>: a
+       priority message is pushed to the WhatsApp server immediately, while a normal
+       message is added to that account's send queue instead.</p>
+
+    <h2>Sending media and documents</h2>
+    <p>Quick send and the bulk forms all offer a message-type switch — Text, Media, or
+       Document:</p>
+    <ul>
+      <li><strong>Media</strong> accepts image, video, and audio files (jpg, jpeg, png,
+          gif, mp4, mp3, or ogg). Images and video are sent with your message text as
+          the caption; audio is sent without a caption.</li>
+      <li><strong>Document</strong> accepts pdf, xml, xls, xlsx, doc, or docx files, sent
+          with their original filename preserved.</li>
+    </ul>
+    <p>Any other file type is rejected before the message is queued.</p>
+
+    <h2>Group messages</h2>
+    <p>The Groups page has a <strong>Fetch groups</strong> action that asks a linked
+       account's WhatsApp connection for the groups it currently belongs to and lists
+       them in the table — this is how you get the group identifiers used above. Once
+       fetched, a group behaves like any other recipient: paste its ID into the
+       phone/number field of quick send, bulk send, or the spreadsheet upload.</p>
+
+    <h2>Auto-reply</h2>
+    <p>Auto-reply isn't configured from the WhatsApp menu — it lives under
+       <em>Tools &rarr; Actions</em>, alongside webhook-triggered actions, via the
+       <strong>Add auto-reply</strong> button. For a WhatsApp auto-reply, you choose the
+       linked account it watches and a match type — exact match (case insensitive or
+       sensitive), keyword contains, a regular expression, an AI-driven match, or none
+       (meaning it replies to anything) — plus whether the reply should also fire on
+       group messages. The reply itself can be text, media, or a document, using the
+       same message-type switch as the send forms.</p>
+
+    <h2>Bulk sending</h2>
+    <p>From <em>WhatsApp &rarr; Campaigns</em>, <strong>Bulk send</strong> lets you paste
+       a mix of numbers and group IDs and/or pick contact groups; <strong>Send from
+       Excel</strong> reads an uploaded spreadsheet instead. Both let you select more
+       than one linked account, and name the send as a campaign the same way SMS bulk
+       sends do.</p>
+    <p>The spreadsheet must be an <code>.xlsx</code> file; a ready-to-fill template is
+       linked from the upload form. Your header row only needs one required column,
+       <code>phone</code> — every other column in your sheet is carried through per-row
+       and made available in the message as a custom shortcode.</p>
+
+    <div class="doc-note">
+      A campaign bulk send dispatches immediately, the same as Quick send — it doesn't
+      wait for anything in the background. It's only <em>Scheduled</em> WhatsApp
+      messages that wait on the background cron job to be dispatched at their scheduled
+      time. If a scheduled send never goes out, check that cron is configured — see
+      <a href="cron.html">Cron jobs</a>.
+    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

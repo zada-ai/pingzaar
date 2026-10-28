@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campaigns — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Messaging</h6>
+                        <h1 class="header-title"><i class="la la-bullhorn la-lg"></i> Campaigns</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>A campaign is a named, grouped bulk send — the record that lets you see, at a
+       glance, how a specific blast is doing and clean it up afterward. There's no
+       separate campaign-builder screen; you create one from the same forms used for
+       one-off bulk sending, on the SMS and WhatsApp Campaigns pages. This page covers
+       what's specific to campaigns — for the mechanics of composing and targeting a
+       send, see the SMS and WhatsApp pages.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/sms-campaigns.png" target="_blank" rel="noopener"><img src="../assets/screenshots/sms-campaigns.png" alt="Campaigns list, showing progress per campaign" loading="lazy"></a>
+  <figcaption>Campaigns list, showing progress per campaign</figcaption>
+</figure>
+
+
+    <h2>Creating a campaign</h2>
+    <p>Both <strong>Bulk send</strong> and <strong>Send from Excel</strong> — for SMS and
+       for WhatsApp — open with a required <strong>Campaign name</strong> field.
+       Submitting the form creates one campaign and one queued message per recipient
+       under it, whether those recipients came from pasted numbers, selected contact
+       groups, or an uploaded spreadsheet. Recipients are split evenly across whichever
+       devices, gateways, or WhatsApp accounts you selected for the send.</p>
+
+    <h2>Scheduling instead of sending immediately</h2>
+    <p>To send later instead of right away, use <strong>Schedule a message</strong> from
+       the Scheduled page rather than the Campaigns page. The form takes the same
+       recipients, message, and device/gateway or account fields as a bulk send, plus a
+       date and time and an optional repeat interval (in days) for a recurring
+       schedule.</p>
+    <div class="doc-note">
+      A campaign created from Bulk send or Send from Excel dispatches immediately, as
+      part of that same request — it doesn't wait on anything in the background. Only
+      entries created from the Scheduled page wait for the background cron job to pick
+      them up and send them at their scheduled time. If a scheduled send never goes out,
+      check that cron is configured correctly before assuming the message itself is at
+      fault. See <a href="cron.html">Cron jobs</a>.
+    </div>
+
+    <h2>Spintax for message variation</h2>
+    <p>Every bulk and scheduled send form supports spintax, so a campaign doesn't send
+       the exact same wording to every recipient. Wrap alternatives in curly braces
+       separated by pipes — <code>{good|bad}</code> — and one is picked at random per
+       message; groups can be nested inside each other.</p>
+
+    <h2>Shortening links</h2>
+    <p>Every send form — quick, bulk, and Excel alike — offers a <strong>Link
+       shortener</strong> dropdown. Selecting one runs every URL in your message through
+       it before sending, replacing the original link with the shortened one. Shorteners
+       aren't built in; an administrator installs them one at a time from
+       <em>Admin &rarr; Shorteners</em>, and once installed, a shortener becomes
+       selectable in every user's send forms.</p>
+    <div class="doc-warn">
+      If the Link shortener dropdown only shows "None," no shortener has been installed
+      on this server yet — that's an administrator task, not something you can do from
+      the SMS or WhatsApp pages yourself.
+    </div>
+
+    <h2>Monitoring progress</h2>
+    <p>The Campaigns table lists every campaign with its creation date, name, the
+       device/gateway or account it's sending from, the total recipient count, and a
+       live status column: <strong>Completed</strong> once nothing from the campaign is
+       left pending, or <strong>Processing (X of Y sent)</strong> while messages are
+       still queued.</p>
+    <div class="doc-warn">
+      Deleting a campaign permanently deletes its <strong>entire</strong> message
+      history — sent, failed, and pending alike, for both SMS and WhatsApp campaigns.
+      There's no status filter on the delete: everything tied to that campaign is
+      erased together, and this cannot be undone.
+    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

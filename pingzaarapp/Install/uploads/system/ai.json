@@ -1,0 +1,16 @@
+{
+    "name": "getTime",
+    "description": "Get the current time for a specified location",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "timezone": {
+                "type": "string",
+                "description": "The timezone identifier (e.g: `Europe\/Rome`). Infer this from the location."
+            }
+        },
+        "required": [
+            "timezone"
+        ]
+    }
+}

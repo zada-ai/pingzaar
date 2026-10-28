@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>System settings — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Administration</h6>
+                        <h1 class="header-title"><i class="la la-sliders-h la-lg"></i> System settings</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Configure the infrastructure and content your installation runs on: site identity
+       and branding, SMS gateways, link shorteners, languages, custom pages, marketing
+       broadcasts, and WhatsApp servers.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/admin.png" target="_blank" rel="noopener"><img src="../assets/screenshots/admin.png" alt="Admin overview" loading="lazy"></a>
+  <figcaption>Admin overview</figcaption>
+</figure>
+
+<figure class="doc-shot">
+  <a href="../assets/screenshots/admin-gateways.png" target="_blank" rel="noopener"><img src="../assets/screenshots/admin-gateways.png" alt="Admin → Gateways, where SMS provider controllers are installed" loading="lazy"></a>
+  <figcaption>Admin → Gateways, where SMS provider controllers are installed</figcaption>
+</figure>
+
+
+    <h2>Site settings</h2>
+    <p>The <strong>Settings</strong> button on <em>Admin &rarr; Overview</em>, visible only
+       to the super admin, opens the general configuration screen for the whole
+       installation: site name and description, purchase code, protocol, default language
+       and country, usage-reset cadence (daily or monthly &mdash; keep this in sync with
+       your cron schedule for the <code>quota</code> job, see Cron jobs), outgoing mail
+       (native PHP mail or your own SMTP server), payment settings (offline/bank-transfer
+       toggle, system currency, the bank-transfer instructions shown to customers), social
+       login, and a handful of security options (registration on/off, reCAPTCHA, AI content
+       moderation, minimum and maximum message length, the footer mark appended to
+       messages). It's also where you set the <strong>partner commission</strong> (the cut
+       the platform takes from every message sent through a shared device, 1&ndash;80%) and
+       the <strong>partner minimum payout</strong> (the earnings balance a partner needs
+       before they can request a cash-out) &mdash; see the Android gateway and Billing pages
+       for how those play out from the partner's and the admin's side. This same screen
+       also has the on/off switch and per-action toggles for the remote administration API
+       covered on the REST API page, and the button to regenerate its token.</p>
+
+    <h2>Theme settings and branding</h2>
+    <p>The <strong>Theme</strong> button next to Settings, also super-admin only, controls
+       how the dashboard looks for every user: the default light/dark scheme, your own
+       light-mode and dark-mode logo images, a favicon, a background image, and three
+       accent colors. Two free-form text boxes let you inject your own CSS and JavaScript
+       across the dashboard for further customization beyond what the color pickers cover.</p>
+
+    <h2>SMS gateways</h2>
+    <p><em>Admin &rarr; Gateways</em> registers the controllers that actually send SMS
+       through a given provider. A gateway isn't built into Zender's core &mdash; adding
+       one means uploading a single PHP file through <strong>Add gateway</strong> along
+       with a name, a pricing table (edited as JSON in the modal's code editor), and a
+       callback mode. This list ships empty; SMS gateway controllers are published
+       separately by Titan Systems as individual downloadable files, and you install one by
+       downloading it and uploading it here.</p>
+
+    <h2>Link shorteners</h2>
+    <p><em>Admin &rarr; Shorteners</em> works the same way as gateways: <strong>Add
+       shortener</strong> uploads a single PHP controller file. This list also ships empty,
+       and shortener controllers are published the same separate way as gateway
+       controllers.</p>
+
+    <h2>Managing languages</h2>
+    <p><em>Admin &rarr; Languages</em> manages the translation sets users can pick for
+       their account. Adding a language takes a name, an ISO country code (used for its
+       flag), a right-to-left flag, and a block of translation strings pasted directly into
+       a textarea &mdash; there's no file upload here, the translation content is submitted
+       as text. Deleting a language removes it and its compiled translation file; the
+       reserved default language can't be deleted. The sort button next to <strong>Add
+       language</strong> reorders the list; it doesn't change what's installed.</p>
+
+    <h3>Where to get translations</h3>
+    <p>Ready-made translations for <strong>31 languages</strong> are published at
+       <a href="https://github.com/titansys/zender-languages" target="_blank" rel="noopener noreferrer">github.com/titansys/zender-languages</a>.
+       Browse to the language you want, open its <code>.lang</code> file, copy the whole
+       contents, and paste it into the translation box on <strong>Add language</strong>.
+       That's the entire process &mdash; there's no file to download or upload.</p>
+    <p>The files there are kept in step with each Zender release, so pick the ones matching
+       the version you're running. The <code>changes/</code> folder lists exactly which
+       strings each version added &mdash; that's what you need if you've customised a
+       translation of your own and only want to top it up rather than replace it.</p>
+    <div class="doc-note">
+      A translation missing a few strings is not a problem: anything absent falls back to
+      English for that string only, rather than showing a placeholder or breaking the page.
+      You can add a language now and fill gaps later.
+    </div>
+    <p>GitHub is the only place these files are published &mdash; the release ZIP does not
+       carry them, because they'd go stale the moment a translation was improved. The one
+       exception is the update package, which includes a
+       <code>new-language-strings.lang</code> listing just the strings that release added.</p>
+
+    <h2>Creating custom pages</h2>
+    <p><em>Admin &rarr; Pages</em> creates standalone HTML pages served by Zender itself,
+       outside the messaging dashboard &mdash; think a terms-of-service or FAQ page hosted
+       on the same domain. Each page gets a name (its slug is auto-generated from the
+       name), an HTML body edited in a code editor, a set of roles allowed to see it, and a
+       <strong>require login</strong> toggle. A page created with login <em>not</em>
+       required is served publicly; one that requires login is only reachable through the
+       dashboard once signed in. The slug in the URL has to match exactly, or the visitor
+       is redirected to a not-found page.</p>
+
+    <h2>Broadcasting to customers with Marketing</h2>
+    <p><em>Admin &rarr; Marketing</em> sends one-off broadcasts to customers through three
+       channels, each its own dialog:</p>
+    <ul>
+      <li><strong>Push</strong> &mdash; an Android push notification (title, message, optional image) delivered
+          to every Android device belonging to the targeted users.</li>
+      <li><strong>Notify</strong> &mdash; a browser notification (title, message, colour, optional image) shown
+          to targeted users who have the dashboard open. This one needs
+          <a href="realtime.html">realtime notifications</a> configured; without a realtime provider the
+          broadcast is still recorded in the marketing log, but nobody's browser is told about it.</li>
+      <li><strong>Mailer</strong> &mdash; an HTML email (subject plus a rich-text body) sent to the targeted
+          users' account email addresses.</li>
+    </ul>
+    <p>All three target by a combination of specific users and/or specific roles (selecting a role expands to
+       every user currently holding it); at least one specific user or role has to be chosen &mdash; leaving
+       both pickers on their default "None" selection is rejected. There's no "send to everyone" shortcut
+       &mdash; broadcasting to the whole user base means selecting every role. The trash icon bulk-deletes
+       selected rows from the marketing log; it only removes the log entries, it doesn't recall a push, browser
+       notification, or email that already went out.</p>
+    <p>A <strong>Notify</strong> broadcast never sends its text over the realtime connection. Each browser is
+       told only that a broadcast exists, then asks the server for it over that user's own signed-in session,
+       and anyone who wasn't a recipient gets nothing back &mdash; so the message can't be read by people it
+       wasn't addressed to.</p>
+
+    <h2>Registering WhatsApp servers</h2>
+    <p><em>Admin &rarr; WA Servers</em> registers the standalone WhatsApp server processes
+       Zender talks to, and lets you cap how many accounts each one accepts and which
+       subscription packages may use it. This is registration only, not linking &mdash;
+       WhatsApp accounts themselves are linked from <em>Hosts &rarr; WhatsApp</em>, not from
+       here. See <a href="whatsapp-server.html">WhatsApp server</a> for the full setup,
+       including running the binary and linking an account.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

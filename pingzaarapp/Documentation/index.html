@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zender Documentation</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Getting started</h6>
+                        <h1 class="header-title"><i class="la la-book la-lg"></i> Overview</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Zender turns your server into a messaging business: a single platform for sending
+       and receiving SMS and WhatsApp messages, running Android phones as SMS gateways,
+       and — if your plan includes it — reselling all of that to your own customers. It
+       runs entirely on infrastructure you control; there is no hosted service you
+       depend on to keep it working.</p>
+<figure class="doc-shot">
+  <a href="assets/screenshots/dashboard.png" target="_blank" rel="noopener"><img src="assets/screenshots/dashboard.png" alt="The dashboard a user sees after signing in" loading="lazy"></a>
+  <figcaption>The dashboard a user sees after signing in</figcaption>
+</figure>
+
+
+    <h2>What you can do with it</h2>
+    <p>Once it's installed, everything happens from one dashboard. You can:</p>
+    <ul>
+      <li>Send and receive SMS through Android phones acting as gateways, or through
+          third-party SMS providers.</li>
+      <li>Send and receive WhatsApp messages, including media, documents, and group
+          messages.</li>
+      <li>Import and organize contacts, run bulk campaigns, and schedule messages ahead
+          of time.</li>
+      <li>Automate replies and actions with keyword triggers, webhooks, and a visual
+          workflow builder.</li>
+      <li>If you're running Zender as a business, sell subscription packages to your
+          users and let partners earn credits by sharing their own devices.</li>
+    </ul>
+
+    <h2>The three ways messages get sent</h2>
+    <p>Zender sends and receives messages through three kinds of channel, which you can
+       use independently or together depending on what your subscription enables:</p>
+    <ul>
+      <li><strong>Android devices</strong> acting as SMS gateways — a phone running the
+          Zender Android app registers with your installation and sends and receives SMS
+          through its own SIM card. Devices are managed under <em>Hosts &rarr; Android</em>.</li>
+      <li><strong>WhatsApp</strong>, sent and received through a companion WhatsApp
+          server that runs as its own process alongside Zender. Zender talks to it over
+          the network — it does not send WhatsApp messages by itself. Connections are
+          managed under <em>Hosts &rarr; WhatsApp</em>.</li>
+      <li><strong>Third-party SMS gateways</strong> — HTTP-based SMS providers your
+          administrator installs one at a time. None are installed out of the box, so a
+          fresh install won't show any gateway options until at least one has been added
+          under <em>Admin &rarr; Gateways</em>.</li>
+    </ul>
+
+    <div class="doc-note">
+      The WhatsApp server is a separate process you run next to Zender — it doesn't
+      start automatically when you open the site. See the WhatsApp server page under
+      Servers &amp; devices for how to run it.
+    </div>
+
+    <h2>How the pieces fit together</h2>
+    <p>At minimum you need: Zender itself, served by your web server, and a MySQL or
+       MariaDB database. If you use WhatsApp, you also need the WhatsApp server process
+       running alongside it. Android gateways and third-party SMS providers connect
+       straight to Zender over HTTP, so an SMS-only setup doesn't need anything extra
+       running.</p>
+    <p>Everything a signed-in user does is reachable from the dashboard sidebar. Here's
+       what each area is for:</p>
+
+    <table class="doc-table">
+      <thead>
+        <tr><th>Area</th><th>What it does</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SMS</td><td>Queue, sent, received, campaigns, scheduled messages, and
+            (for partner accounts) transactions — everything related to sending and
+            tracking SMS.</td></tr>
+        <tr><td>WhatsApp</td><td>The same message lifecycle as SMS (queue, sent, received,
+            campaigns, scheduled) plus WhatsApp-specific groups.</td></tr>
+        <tr><td>Contacts</td><td>Saved contacts, contact groups, and the unsubscribed list
+            used to suppress future sends to opted-out recipients.</td></tr>
+        <tr><td>Tools</td><td>API keys, webhooks, automated actions, message templates,
+            the Flow builder, and the event logger.</td></tr>
+        <tr><td>Hosts</td><td>Registering and managing the Android devices and the
+            WhatsApp server connection(s) that actually deliver messages.</td></tr>
+        <tr><td>AI</td><td>AI provider keys and AI plugin configuration used by automated
+            replies and actions.</td></tr>
+        <tr><td>Flow</td><td>The visual automation workflow builder (under Tools) for
+            building multi-step message sequences and triggers.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Where your data lives</h2>
+    <p>Everything persistent — users, messages, contacts, campaigns, flows, and settings
+       — lives in your own MySQL or MariaDB database. Local configuration, including
+       your database credentials and an internal security token, is stored in a
+       configuration file the installer writes for you; see Configuration for what's in
+       it. Uploaded files, generated assets, and caches live on the server's own
+       filesystem. Nothing is sent to or stored by any third party unless you configure
+       an integration — a payment gateway or an AI provider, for example — to do so.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Webhooks — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Automation & API</h6>
+                        <h1 class="header-title"><i class="la la-code-branch la-lg"></i> Webhooks</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Get notified the moment an SMS, WhatsApp message, or USSD response comes in, without
+       having to poll the API for it.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/tools-webhooks.png" target="_blank" rel="noopener"><img src="../assets/screenshots/tools-webhooks.png" alt="Webhooks, which receive incoming messages as they arrive" loading="lazy"></a>
+  <figcaption>Webhooks, which receive incoming messages as they arrive</figcaption>
+</figure>
+
+    <p>Webhooks push data <em>out</em> of Zender the moment something happens. They're
+       managed under <em>Tools &rarr; Webhooks</em> (visible when your subscription
+       includes them). <strong>Add webhook</strong> takes a name, a destination URL, and
+       which event(s) it should fire for; a secret is generated for you and shown from the
+       table's copy button, the same way API key secrets are (see the REST API page).</p>
+
+    <h2>The identity contract</h2>
+    <div class="doc-note">
+      Zender only ever delivers phone-number identities. For a direct message,
+      <code>phone</code> is bare international digits (5&ndash;15 characters). For a group,
+      <code>phone</code> is a full <code>&hellip;@g.us</code> identifier. Anything else is
+      rejected before it reaches your endpoint — there's no code path that hands your
+      webhook a phone number in any other shape.
+    </div>
+    <p>This is enforced before anything — webhooks, auto-replies, flows — gets a chance to
+       run on an inbound WhatsApp message: unless the sender's identity is either a group ID
+       ending in <code>@g.us</code> or a bare string of 5&ndash;15 digits, the message is
+       dropped before it reaches any of them.</p>
+    <p>What actually lands in your payload's <code>data.phone</code> is normalized right
+       after that check: a group ID is passed through as-is, and a direct number always gets
+       a leading <code>+</code> added if it doesn't already have one — so in practice every
+       direct-message <code>phone</code> you receive looks like <code>+639760713666</code>,
+       never a bare digit string with no <code>+</code>.</p>
+
+    <h2>Events and payloads</h2>
+    <p>Three events exist, each fired the moment the corresponding message is received and
+       logged. All three are POSTed as an HTML form body (<code>secret</code>,
+       <code>type</code>, and a nested <code>data</code> array) — not JSON.</p>
+
+    <h3><code>sms</code></h3>
+    <p>Fired right after an inbound SMS is saved:</p>
+    <pre><code>secret=WEBHOOK_SECRET
+type=sms
+data[id]=2
+data[rid]=10593
+data[sim]=1
+data[device]=00000000-0000-0000-d57d-f30cb6a89289
+data[phone]=+639760713666
+data[message]=Hello World!
+data[timestamp]=1645684231</code></pre>
+    <p><code>id</code> is the <code>received</code> row's ID, <code>rid</code> is the
+       Android device's own message ID, <code>device</code> is your device UUID, and
+       <code>timestamp</code> is a Unix timestamp of the receive time.</p>
+
+    <h3><code>whatsapp</code></h3>
+    <p>Fired right after an inbound chat is saved:</p>
+    <pre><code>secret=WEBHOOK_SECRET
+type=whatsapp
+data[id]=2
+data[wid]=+639760713666
+data[phone]=+639760666713
+data[message]=Hello World!
+data[attachment]=yoursite.com/uploads/whatsapp/received/.../file.jpg
+data[timestamp]=1645684231</code></pre>
+    <p><code>wid</code> is the receiving WhatsApp account's own number (with a leading
+       <code>+</code>); <code>phone</code> is the sender — a direct number or a
+       <code>&hellip;@g.us</code> group ID per the contract above. <code>attachment</code> is
+       <code>false</code> when the message had no media.</p>
+
+    <h3><code>ussd</code></h3>
+    <p>Fired once a USSD session response comes back from the device (see the REST API page
+       for how to send a USSD request in the first place):</p>
+    <pre><code>secret=WEBHOOK_SECRET
+type=ussd
+data[id]=98
+data[sim]=1
+data[device]=00000000-0000-0000-d57d-f30cb6a89289
+data[code]=*143#
+data[response]=Sorry! You are not allowed to use this service.
+data[timestamp]=1645684231</code></pre>
+
+    <h2>Testing a webhook</h2>
+    <p>Every row in the Webhooks table has a <strong>Simulate</strong> button next to its URL.
+       It prompts you to pick an event type (SMS, WhatsApp, or USSD) and POSTs a
+       realistic-but-fake payload — a sample local number, "Hello World!" as the message,
+       random IDs — to your configured URL using your webhook's real secret, exactly the shape
+       shown above. It's the fastest way to confirm your endpoint is reachable and checks the
+       secret correctly before waiting on a real message.</p>
+
+    <h2>Expected response</h2>
+    <p>Your endpoint must respond with HTTP <strong>200</strong>. Zender checks the
+       response status code from every call: on <code>200</code> it logs a "Webhook
+       Triggered!" entry; on anything else — including no response at all — it logs
+       "Webhook Failed!" instead, both visible from <em>Tools &rarr; Logger</em>. The
+       request itself uses a <strong>5-second</strong> connect and total timeout and does
+       not retry, so a slow endpoint is indistinguishable from a failed one, and a failed
+       delivery does not queue or resend later.</p>
+    <p>A minimal receiving endpoint, matching the one shown in the dashboard's own webhook
+       docs:</p>
+    <pre><code>&lt;?php
+
+$request = $_REQUEST;
+
+$secret = "WEBHOOK_SECRET"; // from Tools &rarr; Webhooks
+
+if (isset($request["secret"]) && $request["secret"] === $secret) {
+    $type = $request["type"];   // "sms" | "whatsapp" | "ussd"
+    $data = $request["data"];   // array, shape depends on $type
+
+    // ...handle it...
+
+    http_response_code(200);
+} else {
+    http_response_code(403);
+}</code></pre>
+  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Billing — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Administration</h6>
+                        <h1 class="header-title"><i class="la la-money-bill-wave la-lg"></i> Billing</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Configure what customers pay for, grant or revoke access by hand, and pay out
+       partners who share their devices.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/admin-packages.png" target="_blank" rel="noopener"><img src="../assets/screenshots/admin-packages.png" alt="Subscription packages" loading="lazy"></a>
+  <figcaption>Subscription packages</figcaption>
+</figure>
+
+    <p>Five screens under <em>Admin</em> move money or entitlements: <strong>Packages</strong>,
+       <strong>Subscriptions</strong>, <strong>Transactions</strong>, <strong>Payouts</strong>, and
+       <strong>Vouchers</strong>. Every claim below about what a button actually does comes from what the
+       platform actually does when you click it, not from the button's label.</p>
+
+    <h2>Defining subscription packages</h2>
+    <p><em>Admin &rarr; Packages</em> defines the plans customers subscribe to: a price, which services are
+       enabled (SMS, WhatsApp, Android USSD, API, webhooks, message templates, automated actions, flows, AI),
+       and a set of numeric limits &mdash; send/receive limits for SMS and WhatsApp, device count, contact
+       count, scheduled-message count, API key count, webhook count, and action count &mdash; so this is also
+       where you control per-package limits across the board. The default/free package is reserved and can't be
+       deleted. If <strong>free package auto-assignment</strong> is turned on (from the Settings screen under
+       <em>Admin &rarr; Overview</em>), every new registration is put on it automatically.</p>
+    <div class="doc-warn">
+      The default package being off-limits as a voucher or manual-subscription target is only enforced in one
+      of the two flows. Generating a voucher for it is rejected server-side. Granting it as a manual
+      subscription is <strong>not</strong> &mdash; the only server-side check is that the package exists at
+      all. The restriction you see in the dashboard &mdash; the package dropdown in <strong>Add
+      subscription</strong> only listing packages above the default one &mdash; is a dropdown filter, not a
+      server-side guard. Anyone with subscription-management permission calling the underlying action directly
+      can still grant the default package as a "manual subscription."
+    </div>
+    <div class="doc-note">
+      A subscription only stores a package reference and an expiry date &mdash; it doesn't snapshot the
+      package's limits at purchase time. That means editing a package's send limits, device caps, or enabled
+      services changes what <strong>every current subscriber on that package</strong> can do immediately, with
+      no separate action needed. Deleting a package, on the other hand, doesn't touch existing subscriptions
+      that reference it &mdash; they simply stop resolving to a package, and the admin subscriptions and
+      transactions tables fall back to showing "Removed" for it.
+    </div>
+
+    <h2>Granting a subscription manually</h2>
+    <p><em>Admin &rarr; Subscriptions</em> lets an admin manually put a customer on a package, with a chosen
+       duration in months, without them paying anything through a gateway. Doing this:</p>
+    <ul>
+      <li>Creates a transaction record at the package's list price marked as a manual grant &mdash; this is a
+          bookkeeping record only; no payment gateway is contacted and no money actually moves.</li>
+      <li>If the user already has a subscription that hasn't expired yet, the new expiry is calculated from
+          their <em>current</em> expiry date, not from now &mdash; so granting a subscription to someone with
+          time left extends it. If they have no subscription or it already expired, the new expiry counts
+          from the moment you submit the form.</li>
+      <li><strong>Removes whatever subscription the user currently has before adding the new one.</strong> A
+          user only ever has one active subscription; assigning a new package replaces it outright rather than
+          adding a second one.</li>
+    </ul>
+    <p>The only action on an existing subscription from this screen is delete &mdash; there's no admin "edit" or
+       "cancel" action here. Deleting it just removes that subscription; it doesn't refund the transaction it
+       was created from or touch the customer's credits.</p>
+    <p>Subscriptions don't expire on their own the moment the clock passes their date &mdash; that cleanup only
+       happens when the subscription cron job runs (email warning 5 days before expiry, then deletion once
+       actually expired). See the Cron jobs page for the full schedule; if cron isn't configured, expired
+       subscriptions simply stay in place.</p>
+
+    <h2>Reviewing transactions</h2>
+    <p><em>Admin &rarr; Transactions</em> is a read-only ledger: every completed purchase, manual grant, and
+       voucher redemption, with customer, item, amount, duration, and provider. There is no refund, void, or
+       edit action on this screen at all. Reversing a purchase means going to <strong>Subscriptions</strong>
+       and deleting the subscription it created, and/or adjusting the customer's credits from
+       <strong>Users</strong> by hand; neither of those touches the transaction record itself, which stays as a
+       permanent log of what was charged.</p>
+
+    <h2>Approving partner payouts</h2>
+    <p><em>Admin &rarr; Payouts</em> handles cash-out requests from partner accounts &mdash; see the Android
+       gateway page for how a partner earns credits by sharing a device in the first place. A partner requests
+       a payout from their own dashboard once their earnings clear the platform's minimum payout threshold; as
+       soon as that request is created, their earnings balance is <strong>decreased</strong> by the requested
+       amount &mdash; the money is already taken out of their visible balance before an admin does anything.
+       (The platform's own cut of every shared-device send &mdash; a percentage you set from the Settings
+       screen under <em>Admin &rarr; Overview</em> &mdash; is already deducted before it ever reaches the
+       partner's earnings.)</p>
+    <p>The two buttons on each row do not move any money themselves:</p>
+    <ul>
+      <li><strong>Approve</strong> emails the partner a "payout paid" notice and deletes the payout request row.
+          It does <strong>not</strong> call PayPal, Payoneer, or any other API &mdash; the assumption is that
+          the admin has already paid the partner manually, out of band, using the amount, provider, and address
+          shown on the row, and is only using this button to close out the request and notify them.</li>
+      <li><strong>Reject</strong> reverses the hold from the request step &mdash; it credits the partner's
+          earnings balance back, emails a rejection notice, and deletes the request row.</li>
+    </ul>
+    <div class="doc-warn">
+      Because approving a payout only deletes the request and sends an email, clicking <strong>Approve</strong>
+      before actually transferring the funds to the partner's PayPal/Payoneer address leaves no record inside
+      Zender that money is still owed &mdash; the request row, which was the only trace of the pending amount,
+      is gone. Pay the partner first, then approve.
+    </div>
+
+    <h2>Generating vouchers</h2>
+    <p><em>Admin &rarr; Vouchers</em> generates redeemable codes for a specific package and duration.
+       <strong>Add voucher</strong> can create up to 1,000 codes in one submission; each code is independent
+       and randomly generated, so generating a batch of 50 makes 50 separate one-time-use vouchers, not one
+       code good for 50 redemptions.</p>
+    <p>Redemption (available to any logged-in customer who enters a code) puts the redeeming user on the
+       voucher's package for the voucher's duration, using the same extend-if-still-active-else-start-now logic
+       as an admin-granted subscription, and then <strong>deletes the voucher</strong> &mdash; a code only
+       works once, and there's no way to see after the fact who redeemed a given code, since the record of it
+       is gone. The <strong>copy</strong> button on each row copies that voucher's code to the clipboard; the
+       trash icon in the page header does a bulk delete of whatever rows are checked and, like the per-row
+       delete, just removes the voucher &mdash; it has no effect on anyone who already redeemed it.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

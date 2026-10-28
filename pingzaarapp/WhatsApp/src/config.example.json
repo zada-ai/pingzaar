@@ -1,0 +1,21 @@
+{
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8899,
+    "secret": "",
+    "autoread": true
+  },
+  "proxy": {
+    "enabled": false,
+    "host": "",
+    "port": 0,
+    "protocol": "socks5",
+    "username": "",
+    "password": ""
+  },
+  "ngrok": {
+    "enabled": false,
+    "authtoken": "",
+    "sites": []
+  }
+}

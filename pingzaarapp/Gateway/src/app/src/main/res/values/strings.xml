@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- ======================================================================================== -->
+    <!-- APP IDENTIFICATION -->
+    <!-- ======================================================================================== -->
+    <string name="app_launcher_name">SMS Gateway</string>
+
+    <!-- ======================================================================================== -->
+    <!-- COMMON ACTIONS -->
+    <!-- ======================================================================================== -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="continue_button">Continue</string>
+    <string name="exit">Exit</string>
+    <string name="grant">Grant</string>
+    <string name="configure">Configure</string>
+    <string name="update">Update</string>
+    <string name="enabled">enabled</string>
+    <string name="disabled">disabled</string>
+
+    <!-- ======================================================================================== -->
+    <!-- LOGIN SCREEN -->
+    <!-- ======================================================================================== -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="login_with_qr">Login with QR Code</string>
+    <string name="logo_description">SMS Gateway logo</string>
+
+    <!-- Login Errors -->
+    <string name="unsupported_device">Unsupported Device</string>
+    <string name="unsupported_device_message">This app requires Android 8.0 or higher. Your device is running Android %s!</string>
+    <string name="invalid_qr_format">Invalid QR code format!</string>
+    <string name="qr_scan_cancelled">QR scan cancelled!</string>
+    <string name="qr_scan_error">QR scan error!</string>
+    <string name="please_enter_credentials">Please enter both email and password!</string>
+    <string name="unable_to_get_device_id">Unable to get device ID. Please try again!</string>
+    <string name="unable_to_login_em2001">Unable to login: EM2001</string>
+    <string name="unable_to_login_em2002">Unable to login: EM2002</string>
+    <string name="unable_to_login_em2003">Unable to login: EM2003</string>
+    <string name="unable_to_login_em2004">Unable to login: EM2004</string>
+    <string name="unable_to_login_em2005">Unable to login: EM2005</string>
+    <string name="unable_to_login_em2006">Unable to login: EM2006</string>
+    <string name="unable_to_login_em2007">Unable to login: EM2007</string>
+    <string name="unable_to_login_em2008">Unable to login: EM2008</string>
+    <string name="unable_to_login_em2009">Unable to login: EM2009</string>
+    <string name="unable_to_login_em2010">Unable to login: EM2010</string>
+    <string name="unable_to_login_em2011">Unable to login: EM2011</string>
+
+    <!-- ======================================================================================== -->
+    <!-- GATEWAY SCREEN -->
+    <!-- ======================================================================================== -->
+    <string name="logout">Logout</string>
+    <string name="logout_confirmation">Are you sure you want to logout? This will reset the app and you will need to login again!</string>
+    <string name="sms_status_changed">SMS %s!</string>
+    <string name="ussd_status_changed">USSD %s!</string>
+
+    <!-- Default SMS App -->
+    <string name="make_default">Make Default</string>
+    <string name="make_default_sms_app">Make Default SMS App</string>
+    <string name="make_default_sms_message">Making this app the default SMS app will:\n\n• Replace your current messaging app (Google Messages, etc.)\n• All SMS/MMS will be handled by this gateway\n\nThis app already receives SMS and delivery reports without being default. Only set as default if this is a dedicated gateway device.</string>
+    <string name="app_set_as_default">App set as default SMS app!</string>
+    <string name="failed_to_set_default">Failed to set as default SMS app!</string>
+    <string name="already_default_sms">App is already the default SMS app!</string>
+    <string name="sms_role_unavailable">SMS role not available on this device!</string>
+
+    <!-- Device Information -->
+    <string name="device_info">Device Info</string>
+    <string name="device_information">Device Information</string>
+    <string name="device_manufacturer">Device Manufacturer: %s</string>
+    <string name="device_name">Device Name: %s</string>
+    <string name="device_id">Device ID: %s</string>
+    <string name="device_model">Device Model: %s</string>
+    <string name="device_os">Device OS: Android %s</string>
+    <string name="build_number">Build Number: %s</string>
+
+    <!-- ======================================================================================== -->
+    <!-- QR SCANNER -->
+    <!-- ======================================================================================== -->
+    <string name="point_camera_at_qr">Point camera at QR code</string>
+    <string name="camera_permission_required">Camera permission required</string>
+
+    <!-- ======================================================================================== -->
+    <!-- PERMISSIONS -->
+    <!-- ======================================================================================== -->
+    <string name="permission_required">Permission Required</string>
+    <string name="permission_required_message">This permission is required for the app to function properly.</string>
+    <string name="contacts_permission_denied">Contacts permission denied - contact names won\'t be shown</string>
+    <string name="notification_permission_denied">Notification permission denied - foreground services will still work</string>
+
+    <!-- ======================================================================================== -->
+    <!-- BATTERY OPTIMIZATION -->
+    <!-- ======================================================================================== -->
+    <string name="exclusion_required">Exclusion Required</string>
+    <string name="battery_exclusion_required">Exclusion Required</string>
+    <string name="battery_exclusion_message">App must be excluded from battery optimization to ensure reliable message delivery.</string>
+    <string name="battery_optimization_message">App must be excluded from battery optimization to ensure reliable message delivery.</string>
+    <string name="battery_optimization_error">Could not request battery optimization permission.</string>
+    <string name="battery_optimization_enabled">Battery optimization still enabled - app may not work reliably</string>
+    <string name="battery_optimization_disabled">Battery optimization disabled - app can run in background</string>
+
+    <!-- ======================================================================================== -->
+    <!-- APP UPDATES -->
+    <!-- ======================================================================================== -->
+    <string name="update_required">Update Required</string>
+    <string name="update_required_message">A new version (%s) is available. Please update to the latest version.</string>
+    <string name="update_available_message">A new version (%s) is available. Please update to the latest version.</string>
+    <string name="error">Error</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION CHANNELS -->
+    <!-- ======================================================================================== -->
+    <string name="channel_sms_sending">SMS Sending</string>
+    <string name="channel_sms_sending_desc">Notifications for SMS sending progress</string>
+    <string name="channel_ussd_sending">USSD Sending</string>
+    <string name="channel_ussd_sending_desc">Notifications for USSD sending progress</string>
+    <string name="channel_message_processing">Message Processing</string>
+    <string name="channel_message_processing_desc">Unified notifications for all message processing activities</string>
+    <string name="channel_sms_processing">SMS Processing</string>
+    <string name="channel_sms_processing_desc">Shows SMS message processing progress</string>
+    <string name="channel_ussd_processing">USSD Processing</string>
+    <string name="channel_ussd_processing_desc">Shows USSD request processing progress</string>
+    <string name="channel_unified_processing">Unified Processing</string>
+    <string name="channel_unified_processing_desc">Shows combined SMS and USSD processing progress</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION SERVICE NAMES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_sms_service">SMS Service</string>
+    <string name="notification_ussd_service">USSD Service</string>
+    <string name="notification_message_service">Message Service</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION TITLES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_initializing">%s - Initializing</string>
+    <string name="notification_queuing">%s - Queuing</string>
+    <string name="notification_priority_queue">%s - Priority Queue</string>
+    <string name="notification_standard_queue">%s - Standard Queue</string>
+    <string name="notification_processing">%s - Processing</string>
+    <string name="notification_completing">%s - Completing</string>
+    <string name="notification_error">%s - Error</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION MESSAGES -->
+    <!-- ======================================================================================== -->
+    <string name="notification_starting_up">Starting up and checking queue…</string>
+    <string name="notification_organizing" tools:ignore="PluralsCandidate">Organizing %d items by priority…</string>
+    <string name="notification_processing_priority_progress">Processing priority items… %1$d%% (%2$d/%3$d)</string>
+    <string name="notification_processing_priority">Processing priority items…</string>
+    <string name="notification_processing_standard_progress">Processing standard items… %1$d%% (%2$d/%3$d)</string>
+    <string name="notification_processing_standard">Processing standard items…</string>
+    <string name="notification_processing_ussd">Processing USSD requests…</string>
+    <string name="notification_finishing">Finishing up and cleaning resources…</string>
+    <string name="notification_error_occurred">Error occurred during processing</string>
+    <string name="notification_processing_messages">Processing messages…</string>
+    <string name="notification_fetching_database">Fetching messages from database…</string>
+    <string name="notification_waiting_next">Waiting %1$ds before next message (%2$d/%3$d)</string>
+    <string name="notification_processing_completed">Processing completed successfully</string>
+
+    <!-- ======================================================================================== -->
+    <!-- NOTIFICATION EXPANDED TEXT -->
+    <!-- ======================================================================================== -->
+    <string name="notification_progress">Progress: %1$d/%2$d (%3$d%%)</string>
+    <string name="notification_queue_status">Queue Status:</string>
+    <string name="notification_priority_count">  • Priority: %d</string>
+    <string name="notification_standard_count">  • Standard: %d</string>
+    <string name="notification_processing_count">  • Processing: %d</string>
+    <string name="notification_completed_count">  • Completed: %d</string>
+    <string name="notification_failed_count">  • Failed: %d</string>
+    <string name="notification_performance">Performance:</string>
+    <string name="notification_rate">  • Rate: %.1f items/min</string>
+    <string name="notification_time_remaining">  • Est. time remaining: %s</string>
+    <string name="notification_last_processed">Last processed: %s</string>
+    <string name="notification_errors_encountered">Errors encountered: %d</string>
+    <string name="notification_queue_subtext" tools:ignore="PluralsCandidate">Queue: %1$d pending, %2$d processed</string>
+
+    <!-- Network & Authentication Errors (EM1001-EM1005) -->
+    <string name="error_network_connection">Network connection error</string>
+    <string name="error_authentication_failed">Authentication failed</string>
+    <string name="error_session_expired">Session expired</string>
+    <string name="error_server_timeout">Server timeout</string>
+    <string name="error_data_parsing">Data parsing error</string>
+
+    <!-- Database & Configuration Errors (EM1006-EM1009) -->
+    <string name="error_database">Database error</string>
+    <string name="error_message_queue_processing">Failed to process message queue</string>
+    <string name="error_configuration">Configuration error</string>
+    <string name="error_api_request_failed">API request failed</string>
+
+    <!-- Messaging Errors (EM1010-EM1014) -->
+    <string name="error_message_sending_failed">Message sending failed</string>
+    <string name="error_device_registration">Device registration error</string>
+    <string name="error_permission_denied">Permission denied</string>
+    <string name="error_service_unavailable">Service unavailable</string>
+    <string name="error_invalid_request">Invalid request</string>
+
+    <!-- USSD Errors (EM1015-EM1018) -->
+    <string name="error_ussd_request_failed">USSD request failed</string>
+    <string name="error_ussd_timeout">USSD request timeout</string>
+    <string name="error_ussd_permission_required">USSD permission required</string>
+    <string name="error_ussd_processing">USSD processing error</string>
+
+    <!-- Campaign & Reporting Errors (EM1019-EM1020, EM10027) -->
+    <string name="error_campaign_processing">Campaign processing error</string>
+    <string name="error_firebase_messaging">Firebase messaging error</string>
+    <string name="error_report_generation">Report generation failed</string>
+
+    <!-- Generic Processing Errors -->
+    <string name="error_processing_occurred">Processing error occurred</string>
+    <string name="error_an_error_occurred">An error occurred</string>
+
+    <!-- SIM & Subscription Errors -->
+    <string name="error_sim_configuration">SIM card configuration error</string>
+    <string name="error_sim_not_detected">SIM card not detected</string>
+
+    <!-- Permission Errors -->
+    <string name="error_phone_state_permission">Phone state permission required</string>
+    <string name="error_call_permission_ussd">Call permission required for USSD</string>
+    <string name="error_sms_permission">SMS permission required</string>
+    <string name="error_sms_receive_permission">SMS receive permission required</string>
+
+    <!-- Broadcast Receiver Errors -->
+    <string name="error_no_cellular_service">No cellular service available</string>
+    <string name="error_message_format">Message format error</string>
+    <string name="error_cellular_radio_off">Cellular radio is turned off</string>
+    <string name="error_sms_sending_failed">SMS sending failed</string>
+    <string name="error_no_default_sms_app">No default SMS app configured</string>
+    <string name="error_airplane_mode_enabled">Airplane mode is enabled</string>
+    <string name="error_mms_sending_failed">MMS sending failed</string>
+
+    <!-- Database Specific Errors -->
+    <string name="error_database_busy">Database is busy</string>
+    <string name="error_data_storage">Data storage error</string>
+    <string name="error_database_initialization">Database initialization failed</string>
+
+    <!-- Network Connection Errors -->
+    <string name="error_connection_timeout">Connection timeout</string>
+    <string name="error_server_unreachable">Server unreachable</string>
+    <string name="error_unable_to_connect">Unable to connect to server</string>
+    <string name="error_secure_connection">Secure connection error</string>
+    <string name="error_network_configuration">Network configuration error</string>
+
+    <!-- HTTP Status Errors -->
+    <string name="error_http_forbidden">Access forbidden</string>
+    <string name="error_http_not_found">Resource not found</string>
+    <string name="error_http_server_error">Server error</string>
+    <string name="error_http_service_unavailable">Service temporarily unavailable</string>
+
+    <!-- Firebase/FCM Errors -->
+    <string name="error_firebase_configuration">Firebase configuration error</string>
+    <string name="error_firebase_initialization">Firebase initialization failed</string>
+
+    <!-- USSD Specific Errors -->
+    <string name="error_ussd_invalid_code">Invalid USSD code</string>
+
+    <!-- Incoming SMS Handler Errors -->
+    <string name="error_failed_to_store_sms">Failed to store SMS in database</string>
+    <string name="error_processing_sms">Error processing SMS: %s</string>
+    <string name="error_cannot_sync_missing_credentials">Cannot sync received SMS: missing credentials</string>
+    <string name="error_syncing_received_messages">Error syncing received messages: %s</string>
+    <string name="error_scheduling_sms_sync">Error scheduling SMS sync: %s</string>
+
+    <!-- ======================================================================================== -->
+    <!-- USER-FACING LOG MESSAGES (Info/Warning logs shown in UI terminal) -->
+    <!-- ======================================================================================== -->
+
+    <!-- APP Logs -->
+    <string name="log_build_number">Build Number: %s</string>
+    <string name="log_device_id">Device ID: %s…</string>
+
+    <!-- AUTH Logs -->
+    <string name="log_user_session_terminated">User session termination initiated</string>
+
+    <!-- SMS Logs -->
+    <string name="log_sms_bg_service_activated">Background processing service activated</string>
+    <string name="log_sms_bg_service_deactivated">Background processing service deactivated</string>
+    <string name="log_sms_service_disabled_locally">Service disabled locally</string>
+    <string name="log_sms_blocked_by_server">Blocked by server configuration</string>
+    <string name="log_sms_processing_incoming">Processing incoming SMS</string>
+    <string name="log_sms_stored_in_db">SMS stored in database (ID: %s)</string>
+    <string name="log_sms_syncing_to_server">Syncing to server</string>
+    <string name="log_sms_already_synced">Message already synced or not found</string>
+    <string name="log_sms_manually_syncing">Manually syncing received messages…</string>
+    <string name="log_sms_cleared_old_messages">Cleared old synced messages</string>
+    <string name="log_sms_deprecated_function">isMessageQueueServiceRunning() is deprecated. Use isServiceActuallyRunning() instead.</string>
+    <string name="log_sms_no_phone_state_permission">READ_PHONE_STATE permission not granted, using default subscription</string>
+    <string name="log_sms_error_unregistering_receiver">Error unregistering receiver: %s</string>
+    <string name="log_sms_broadcast_timeout">SMS broadcast timeout reached, verifying delivery via SMS database</string>
+    <string name="log_sms_error_unregistering_on_timeout">Error unregistering receiver on timeout: %s</string>
+    <string name="log_sms_delivery_verified">SMS delivery verified via database - message was sent successfully</string>
+    <string name="log_sms_cannot_verify_delivery">Cannot verify SMS delivery - READ_SMS permission not granted</string>
+    <string name="log_sms_sending_via_sender">Sending SMS via SmsSender</string>
+    <string name="log_sms_sent_successfully">SMS sent successfully!</string>
+    <string name="log_sms_fetching_queue">Fetching messages from the queue</string>
+    <string name="log_sms_found_messages" tools:ignore="PluralsCandidate">Found %d messages to process</string>
+    <string name="log_sms_processing_priority" tools:ignore="PluralsCandidate">Processing %d priority messages</string>
+    <string name="log_sms_processing_standard" tools:ignore="PluralsCandidate">Processing %d standard messages</string>
+    <string name="log_campaigns_queued">Campaigns queued: Priority %1$s, Standard %2$s</string>
+    <string name="log_switching_campaign">Switching campaign: #%1$d → #%2$d</string>
+    <string name="log_completed_campaign">Completed campaign #%d</string>
+    <string name="log_sms_feature_disabled">SMS feature is disabled, stopping service</string>
+    <string name="log_message_removed" tools:ignore="PluralsCandidate">Message #%d was removed, skipping</string>
+    <string name="log_message_already_processed" tools:ignore="PluralsCandidate">Message #%d already processed, skipping</string>
+    <string name="log_processing_message">Processing message #%d</string>
+    <string name="log_processed_message">Processed message #%d</string>
+    <string name="log_waiting_before_next">Waiting %ds before next message</string>
+    <string name="log_scheduled_retry">Scheduled retry for message #%1$d (attempt %2$d)</string>
+    <string name="log_message_sent_after_retry" tools:ignore="PluralsCandidate">Message #%1$d sent successfully (attempt %2$d)</string>
+    <string name="log_retry_attempt_failed" tools:ignore="PluralsCandidate">Attempt %1$d failed for message #%2$d: %3$s</string>
+    <string name="log_retrying_message">Retrying message #%1$d in %2$ds</string>
+    <string name="log_message_failed_all_retries" tools:ignore="PluralsCandidate">Message #%1$d failed after %2$d attempts</string>
+    <string name="log_report_synced">Report synced successfully for message #%d</string>
+    <string name="log_message_sync_failed">Message sync failed, will retry: %1$s - %2$s</string>
+    <string name="log_could_not_determine_sim_slot">Could not determine SIM slot for subscription %1$d: %2$s</string>
+    <string name="log_could_not_check_default_sms">Could not check default SMS app status: %s</string>
+    <string name="log_could_not_write_sms_db">Could not write SMS to system database: %s</string>
+    <string name="log_sms_sending_failed">SMS sending failed with result code: %d</string>
+    <string name="log_sms_delivery_failed">SMS delivery failed with result code: %d</string>
+    <string name="log_message_status_sync_failed">Message status sync failed, will retry: %1$s - %2$s</string>
+
+    <!-- MMS Logs -->
+    <string name="log_mms_starting_send">Starting MMS send to %s</string>
+    <string name="log_mms_sent_successfully">MMS sent successfully</string>
+    <string name="log_mms_error_unregistering_receiver">Error unregistering MMS receiver</string>
+    <string name="log_mms_send_initiated">MMS send initiated successfully</string>
+    <string name="log_mms_send_timeout">MMS send timeout reached</string>
+    <string name="log_mms_building">Building MMS: text + attachment</string>
+    <string name="log_mms_built_pdu" tools:ignore="PluralsCandidate">Built PDU: %d bytes</string>
+    <string name="log_mms_queued_for_sending">MMS queued for sending</string>
+    <string name="log_mms_sending_with_attachment">Sending MMS with text + attachment</string>
+    <string name="log_mms_queued_awaiting_confirm">MMS queued, awaiting send confirmation</string>
+    <string name="log_mms_built_pdu_total" tools:ignore="PluralsCandidate">Built PDU: %d bytes total</string>
+    <string name="log_mms_unknown_mime_type">Unknown MIME type in SMIL: %s</string>
+    <string name="log_mms_no_read_phone_numbers">READ_PHONE_NUMBERS permission not granted</string>
+    <string name="log_mms_downloaded" tools:ignore="PluralsCandidate">Downloaded: %1$d bytes from %2$s</string>
+    <string name="log_mms_could_not_detect_mime">Could not detect MIME type for: %s, using default</string>
+    <string name="log_mms_sent_with_ids">MMS sent successfully (uid=%1$d, mid=%2$d)</string>
+
+    <!-- USSD Logs -->
+    <string name="log_ussd_fetching_queue">Fetching USSD requests from the queue</string>
+    <string name="log_ussd_found_requests">Found %d USSD requests to process</string>
+    <string name="log_ussd_processing_priority" tools:ignore="PluralsCandidate">Processing %d priority USSD requests</string>
+    <string name="log_ussd_processing_standard" tools:ignore="PluralsCandidate">Processing %d standard USSD requests</string>
+    <string name="log_ussd_feature_disabled">USSD feature is disabled, stopping service</string>
+    <string name="log_ussd_request_removed" tools:ignore="PluralsCandidate">USSD #%d was removed, skipping</string>
+    <string name="log_ussd_missing_permission">Missing CALL_PHONE permission for USSD #%d</string>
+    <string name="log_ussd_request_timed_out" tools:ignore="PluralsCandidate">USSD request #%d timed out</string>
+    <string name="log_ussd_waiting_next_request">Waiting 1.5 seconds before next USSD request…</string>
+    <string name="log_ussd_response_sent">USSD response sent to server for #%1$d (status: %2$d)</string>
+    <string name="log_ussd_sending_request">Sending USSD request #%1$d: %2$s</string>
+    <string name="log_ussd_cancelling_pending" tools:ignore="PluralsCandidate">Cancelling pending USSD #%d due to service destroy</string>
+
+    <!-- FCM/Firebase Logs -->
+    <string name="log_fcm_fetching_messages">Fetching messages from the server…</string>
+    <string name="log_fcm_deleting_message">Deleting message #%d…</string>
+    <string name="log_fcm_deleted_message">Deleted message #%d…</string>
+    <string name="log_device_settings_updated">Device settings updated successfully!</string>
+    <string name="log_device_deleted">Device deleted from the server…</string>
+    <string name="log_deleting_device">Deleting device…</string>
+    <string name="log_campaign_updated" tools:ignore="PluralsCandidate">Campaign #%d has been updated!</string>
+    <string name="log_campaign_deleted">Campaign deleted from the server…</string>
+    <string name="log_deleting_campaign" tools:ignore="PluralsCandidate">Deleting campaign #%d and associated messages…</string>
+    <string name="log_campaign_messages_deleted" tools:ignore="PluralsCandidate">Campaign #%1$d and %2$d messages deleted successfully</string>
+    <string name="log_fcm_fetching_ussd">Fetching USSD codes from the server…</string>
+    <string name="log_fcm_deleting_ussd">Deleting USSD #%d…</string>
+    <string name="log_fcm_deleted_ussd">Deleted USSD #%d…</string>
+    <string name="log_fcm_fetching_count" tools:ignore="PluralsCandidate">Fetching %1$d messages to reach maximum of %2$d</string>
+    <string name="log_fcm_fetched_messages" tools:ignore="PluralsCandidate">Fetched %d messages from the server…</string>
+    <string name="log_fcm_skipping_message">Skipping message %d - already exists</string>
+    <string name="log_fcm_fetched_ussd">Fetched %d USSD codes from the server…</string>
+    <string name="log_fcm_skipping_ussd">Skipping USSD #%d - already exists</string>
+    <string name="log_fcm_stored_ussd">Stored new USSD #%d…</string>
+    <string name="log_fcm_token_sync_failed">Token sync failed, will retry: %1$s - %2$s</string>
+
+    <!-- SYS/System Logs -->
+    <string name="log_battery_optimization_enabled">Battery optimization still enabled - app may not work reliably</string>
+    <string name="log_battery_optimization_disabled">Battery optimization disabled - app can run in background</string>
+
+    <!-- Login Logs -->
+    <string name="log_android_version_check">checkAndroidVersion: Device running on Android %1$s (API %2$d), minimum required is API %3$d</string>
+
+    <!-- Report Logs -->
+    <string name="log_delivery_report_scheduled">Delivery report scheduled for message #%d</string>
+
+    <!-- Unified Message Processing Logs -->
+    <string name="log_msg_queued" tools:ignore="PluralsCandidate">Queued: %1$d priority, %2$d standard items</string>
+    <string name="log_msg_processing_failed" tools:ignore="PluralsCandidate">%1$s item #%2$d processing failed</string>
+
+    <!-- Permission Logs -->
+    <string name="log_eventbus_not_registered">EventBus not registered in EventBus, skipping unregister</string>
+    <string name="log_eventbus_already_registered">EventBus already registered, skipping duplicate registration</string>
+    <string name="log_contacts_permission_denied">Contacts permission denied - contact names won\'t be shown</string>
+    <string name="log_notification_permission_denied">Notification permission denied - foreground services will still work</string>
+
+    <!-- ======================================================================================== -->
+    <!-- ADDITIONAL UI TERMINAL LOGS (Previously Hardcoded) -->
+    <!-- ======================================================================================== -->
+
+    <!-- Language/UI Logs -->
+    <string name="log_language_changed_to">Language changed to: %s</string>
+
+    <!-- Service Status Logs -->
+    <string name="log_services_both_running">Both SMS and USSD services running</string>
+    <string name="log_services_sms_running">SMS service running</string>
+    <string name="log_services_ussd_running">USSD service running</string>
+    <string name="log_services_all_stopped">All services stopped</string>
+
+    <!-- Firebase/FCM Logs -->
+    <string name="log_fcm_device_updated">Device settings updated successfully!</string>
+    <string name="log_fcm_device_deleted">Device deleted from the server…</string>
+    <string name="log_fcm_deleting_device">Deleting device…</string>
+    <string name="log_fcm_campaign_updated">Campaign #%s has been updated!</string>
+    <string name="log_fcm_campaign_deleted">Campaign deleted from the server…</string>
+    <string name="log_fcm_deleting_campaign">Deleting campaign #%1$d and associated messages…</string>
+    <string name="log_fcm_campaign_delete_success">Campaign #%1$d and %2$d messages deleted successfully</string>
+    <string name="log_fcm_fetching_ussd_codes">Fetching USSD codes from the server…</string>
+    <string name="log_fcm_ussd_deleted">Deleted USSD #%d…</string>
+    <string name="log_fcm_fetching_messages_to_max">Fetching %1$d messages to reach maximum of %2$d</string>
+    <string name="log_fcm_messages_fetched" tools:ignore="PluralsCandidate">Fetched %d messages from the server…</string>
+    <string name="log_fcm_message_skipped_exists">Skipping message %d - already exists</string>
+    <string name="log_fcm_ussd_codes_fetched" tools:ignore="PluralsCandidate">Fetched %d USSD codes from the server…</string>
+    <string name="log_fcm_ussd_skipped_exists">Skipping USSD #%d - already exists</string>
+    <string name="log_fcm_ussd_stored_new">Stored new USSD #%d…</string>
+
+    <!-- Worker Sync Logs (Warnings) -->
+    <string name="log_worker_message_sync_failed">Message sync failed, will retry: %1$d - %2$s</string>
+    <string name="log_worker_status_sync_failed">Message status sync failed, will retry: %1$d - %2$s</string>
+    <string name="log_worker_token_sync_failed">Token sync failed, will retry: %1$d - %2$s</string>
+    <string name="log_worker_ussd_response_retry">Server error sending USSD response: %d, will retry</string>
+
+    <!-- Network Connectivity Logs -->
+    <string name="log_network_internet_available">Internet connection available - resuming API operations</string>
+    <string name="log_network_internet_lost">Internet connection lost - pausing API operations</string>
+    <string name="log_network_restored">Network restored - WorkManager will process pending API requests</string>
+    <string name="log_network_lost">Network lost - API operations will queue until restored</string>
+
+    <!-- ======================================================================================== -->
+    <!-- LANGUAGE SWITCHER -->
+    <!-- ======================================================================================== -->
+    <string name="change_language">Change Language</string>
+    <string name="select_language">Select Language</string>
+    <string name="language_changed">Language changed. Restarting app…</string>
+    <string name="english">English</string>
+    <string name="japanese">日本語 (Japanese)</string>
+    <string name="arabic">العربية (Arabic)</string>
+    <string name="chinese">简体中文 (Chinese)</string>
+
+    <!-- ======================================================================================== -->
+    <!-- FCM TOKEN MANAGEMENT (User-Facing Logs) -->
+    <!-- ======================================================================================== -->
+    <string name="log_fcm_token_refreshed">FCM token refreshed successfully</string>
+    <string name="log_fcm_token_refresh_failed">FCM token refresh failed</string>
+    <string name="log_fcm_token_syncing_boot">Syncing FCM token after device restart…</string>
+    <string name="log_fcm_connection_issue">FCM connection issue detected, attempting recovery…</string>
+    <string name="log_fcm_token_sync_scheduled">FCM token sync scheduled</string>
+
+
+    <!-- Pairing. The app is not built per-site, so the QR supplies both the site
+         URL and a one-time token; there are no credential fields. -->
+    <string name="pair_title">Pair this device</string>
+    <string name="pair_instructions">In your dashboard, open Devices and choose Add Device. Scan the QR code shown there to connect this phone.</string>
+    <string name="pair_scan_button">Scan QR code</string>
+    <string name="pair_confirm_title">Connect to this server?</string>
+    <string name="pair_confirm_message">This device will send and receive text messages for:\n\n%1$s\n\nOnly continue if this is your own server.</string>
+    <string name="pair_confirm_insecure">\n\nWarning: this address is not secured with HTTPS, so messages could be read by others on the same network.</string>
+    <string name="pair_confirm_continue">Connect</string>
+    <string name="pair_or_sign_in">Or sign in with your account</string>
+    <string name="pair_invalid_qr">That QR code is not a device pairing code. Open Devices \u2192 Add Device in your dashboard and scan the code shown there.</string>
+    <string name="pair_failed">Pairing failed. The code may have expired \u2014 reopen Add Device in your dashboard for a fresh one.</string>
+    <string name="pair_unreachable">Could not reach %1$s. Check the address is correct and the device has internet access.</string>
+    <string name="pair_no_push_title">Push notifications are not set up</string>
+    <string name="pair_no_push_message">This device paired successfully, but the server has no Firebase configuration, so it cannot be told when new messages are waiting.\n\nAsk the administrator to upload google-services.json under Admin \u2192 Overview \u2192 Settings, then reopen this app.</string>
+    <string name="pair_wrong_server">That code is for a different server. This app is set up for one specific installation.</string>
+</resources>

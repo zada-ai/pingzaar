@@ -1,0 +1,12 @@
+build/
+dist/
+storage/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+coverage.out
+coverage.html
+.DS_Store
+internal/api/handlers/sessions/
+config.json

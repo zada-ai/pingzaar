@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REST API — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Automation & API</h6>
+                        <h1 class="header-title"><i class="la la-code la-lg"></i> REST API</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Integrate Zender into your own software: send SMS and WhatsApp, check message
+       status, and read back your subscription's usage from outside the dashboard.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/tools-keys.png" target="_blank" rel="noopener"><img src="../assets/screenshots/tools-keys.png" alt="API keys, created per project with their own permissions" loading="lazy"></a>
+  <figcaption>API keys, created per project with their own permissions</figcaption>
+</figure>
+
+<figure class="doc-shot">
+  <a href="../assets/screenshots/docs-api.png" target="_blank" rel="noopener"><img src="../assets/screenshots/docs-api.png" alt="The interactive API reference built into the dashboard" loading="lazy"></a>
+  <figcaption>The interactive API reference built into the dashboard</figcaption>
+</figure>
+
+    <p>Every example below uses <code>yourdomain.com</code> as a placeholder for your own
+       site domain — prefixed with whichever scheme (<code>http</code> or <code>https</code>)
+       your site actually runs under — and <code>zk_9f2a...c81b</code> as a placeholder API
+       secret; replace both before running anything. The dashboard also renders this same
+       reference interactively under <em>Docs &rarr; API</em>, served from a locally
+       vendored copy of Redoc rather than a CDN, so it works even without internet access.</p>
+
+    <h2>Getting your API key</h2>
+    <p>From <em>Tools &rarr; API Keys</em> (visible when your subscription includes the
+       API), <strong>Add API key</strong> takes a name and a multi-select list of
+       <strong>permissions</strong> — every endpoint below is gated on one, and a key with
+       none checked is rejected at creation. The secret itself is a 40-character random
+       string generated for you, and is <strong>never shown in the table as plain
+       text</strong> — click the copy button on the key's row to copy it to your clipboard.
+       How many keys you're allowed depends on your subscription's key limit.</p>
+
+    <h2>Authentication</h2>
+    <p>There's no <code>Authorization</code> header. Every call takes your secret as a
+       request parameter named <code>secret</code> — so it works equally as a query string
+       parameter on a GET or a form field on a POST. A missing or unrecognized secret gets a
+       <code>400</code> or <code>401</code> before your call reaches any endpoint logic.</p>
+    <p>Endpoints are grouped under six URL prefixes: <code>/api/send/{service}</code>,
+       <code>/api/get/{service}</code>, <code>/api/create/{service}</code>,
+       <code>/api/delete/{service}</code>, <code>/api/validate/{service}</code>, and
+       <code>/api/remote/{service}</code>. This page covers the ones named in its headings;
+       the interactive reference under <em>Docs &rarr; API</em> covers the rest (contacts,
+       groups, devices, WhatsApp account management, scheduled-campaign start/stop, and
+       more).</p>
+    <div class="doc-warn">
+      <p>Zender's API responses are always transport-level HTTP <strong>200</strong>,
+      regardless of whether the call succeeded. <code>curl -i</code> against any endpoint
+      below, including a rejected one, shows <code>HTTP/1.1 200 OK</code>. You must branch
+      on the JSON body's <code>status</code> field, not the HTTP status line:</p>
+      <pre><code>{"status": 403, "message": "This API key doesn't have permission to use this endpoint!", "data": false}</code></pre>
+    </div>
+
+    <h2>Sending SMS</h2>
+    <p><code>POST /api/send/sms</code> — requires the <code>sms_send</code> permission and
+       the <code>sms</code> subscription service. <code>mode</code> is either
+       <code>devices</code> (send from one of your Android gateway devices — needs
+       <code>device</code>, and optionally <code>sim</code>: <code>1</code> or <code>2</code>)
+       or <code>credits</code> (send through a gateway or a shared device, deducted from your
+       balance — needs <code>gateway</code>, either a gateway ID or a global device ID).
+       <code>message</code> must clear the site's minimum length; an optional
+       <code>shortener</code> ID link-shortens any URLs in the message first.</p>
+    <pre><code>curl -X POST "yourdomain.com/api/send/sms" \
+  -d "secret=zk_9f2a...c81b" \
+  -d "mode=devices" \
+  -d "phone=+15551234567" \
+  -d "device=00000000-0000-0000-d57d-f30cb6a89289" \
+  -d "sim=1" \
+  -d "priority=2" \
+  -d "message=Hello from the API!"</code></pre>
+    <p>Success: <code>{"status":200,"message":"Message has been queued for sending!","data":{"messageId":123}}</code>.</p>
+    <p><code>POST /api/send/sms.bulk</code> (permission <code>sms_send_bulk</code>) is the
+       same idea for many recipients at once: instead of <code>phone</code> it takes
+       <code>campaign</code> (a name for the send) plus <code>numbers</code> (comma-separated
+       phone numbers) and/or <code>groups</code> (comma-separated contact group IDs) — at
+       least one of the two is required.</p>
+
+    <h2>Sending WhatsApp</h2>
+    <p><code>POST /api/send/whatsapp</code> — requires the <code>wa_send</code> permission
+       and the <code>whatsapp</code> subscription service. Note the recipient parameter is
+       <strong><code>recipient</code></strong>, not <code>phone</code>. <code>account</code>
+       is the <code>unique</code> ID of one of your linked WhatsApp accounts (visible from
+       <em>WhatsApp &rarr; Queue</em> in the dashboard, or <code>/api/get/wa.accounts</code>).
+       <code>recipient</code> is either a phone number or a full <code>&hellip;@g.us</code>
+       group ID, following the same identity contract described on the Webhooks page.
+       <code>type</code> defaults to <code>text</code>; an unrecognized value is silently
+       treated as <code>text</code> rather than rejected.</p>
+    <pre><code>curl -X POST "yourdomain.com/api/send/whatsapp" \
+  -d "secret=zk_9f2a...c81b" \
+  -d "account=6f1a9c...unique" \
+  -d "recipient=+15551234567" \
+  -d "type=text" \
+  -d "message=Hello from the API!"</code></pre>
+    <p>Success (default priority, queued rather than sent immediately):
+       <code>{"status":200,"message":"WhatsApp chat has been queued for sending!","data":{"messageId":456}}</code>.
+       Pass <code>priority=1</code> to send immediately instead of queuing (message:
+       "WhatsApp chat has been sent!").</p>
+    <p>For <code>type=media</code>, send either a <code>media_url</code> (with
+       <code>media_type</code>: <code>image</code>, <code>audio</code>, or <code>video</code>)
+       or a multipart <code>media_file</code> upload (<code>jpg</code>/<code>jpeg</code>/<code>png</code>/<code>gif</code>/<code>mp4</code>/<code>mp3</code>/<code>ogg</code>).
+       For <code>type=document</code>, send either a <code>document_url</code> (with
+       <code>document_type</code>: <code>pdf</code>/<code>xml</code>/<code>xls</code>/<code>xlsx</code>/<code>doc</code>/<code>docx</code>,
+       and optionally <code>document_name</code>) or a multipart <code>document_file</code>
+       upload.</p>
+    <p><code>POST /api/send/whatsapp.bulk</code> (permission <code>wa_send_bulk</code>) takes
+       <code>account</code>, <code>campaign</code>, <code>message</code>, and
+       <code>recipients</code> (comma-separated numbers and/or <code>&hellip;@g.us</code> IDs)
+       and/or <code>groups</code>, the same pattern as <code>sms.bulk</code>.</p>
+
+    <h2>Checking status</h2>
+    <p><code>GET /api/get/sms.message</code> and <code>GET /api/get/wa.message</code> look up
+       one message by ID: pass <code>id</code> and <code>type</code> (<code>sent</code> or
+       <code>received</code>). Looking up a sent message needs <code>get_sms_sent</code> /
+       <code>get_wa_sent</code>; a received one needs <code>get_sms_received</code> /
+       <code>get_wa_received</code> — <code>sms.message</code> additionally always requires a
+       base <code>get_message</code> permission.</p>
+    <pre><code>curl -G "yourdomain.com/api/get/sms.message" \
+  -d "secret=zk_9f2a...c81b" \
+  -d "id=123" \
+  -d "type=sent"</code></pre>
+    <p>Response <code>data</code> for a sent SMS includes <code>status</code> as one of
+       <code>queued</code>, <code>pending</code>, <code>sent</code>, or <code>failed</code>
+       (see the Sending SMS page for what each means), plus <code>sender</code>,
+       <code>sender_type</code>, <code>recipient</code>, <code>message</code>, and
+       <code>created</code> (Unix timestamp). A WhatsApp chat's status is one of
+       <code>pending</code>, <code>queued</code>, <code>sent</code>, or <code>failed</code>,
+       plus an <code>attachment</code> download link when there was media.</p>
+    <p>For an account-wide picture rather than one message, <code>GET /api/get/credits</code>
+       (permission <code>get_credits</code>) returns your remaining credit balance, and
+       <code>GET /api/get/subscription</code> (permission <code>get_subscription</code>)
+       returns your whole package as <code>used</code>/<code>limit</code> pairs — e.g.
+       <code>usage.sms_send</code>, <code>usage.wa_send</code>, <code>usage.apikeys</code> —
+       which doubles as the definitive way to check how close you are to any of the limits in
+       the next section.</p>
+    <pre><code>curl -G "yourdomain.com/api/get/subscription" \
+  -d "secret=zk_9f2a...c81b"</code></pre>
+
+    <h2>Sending a USSD request</h2>
+    <p><code>POST /api/send/ussd</code> — requires the <code>ussd</code> permission and
+       the Android USSD subscription service, and needs a device running Android 8 or
+       later. Pass <code>device</code> (one of your Android device IDs), <code>sim</code>
+       (<code>1</code> or <code>2</code>), and <code>code</code> (the USSD string to dial,
+       e.g. a balance-check code from your carrier). The request is queued against the
+       device, not answered inline — the device's response comes back asynchronously as a
+       <code>ussd</code> webhook event (see the Webhooks page), so set one up before you
+       rely on this.</p>
+    <p><code>GET /api/get/ussd</code> (permission <code>get_ussd</code>) lists your past
+       requests and their status (<code>pending</code>, <code>queued</code>, or
+       <code>completed</code>), each with its device, SIM, code, and response once one has
+       come back. <code>DELETE /api/delete/ussd</code> (permission <code>delete_ussd</code>)
+       removes a request record.</p>
+
+    <h2>Remote administration (SaaS API)</h2>
+    <p>Separate from the per-account API keys above, Zender has a second, admin-level API
+       for platforms that want to provision or manage the installation itself from their
+       own software rather than through the dashboard — creating users, granting packages,
+       generating vouchers, and so on, without a human clicking through <em>Admin</em>.</p>
+    <p>It's authenticated with its own <strong>Admin API token</strong>, separate from both
+       your regular API key secrets and the site's system token, and it's <strong>off by
+       default</strong>. A super admin turns it on and chooses exactly which actions are
+       allowed — get/create/edit/delete for users, roles, packages, vouchers,
+       subscriptions, transactions, languages, and API keys — from the Settings screen
+       under <em>Admin &rarr; Overview</em> (see the System settings page), where the
+       token itself can also be regenerated. Anything not explicitly enabled there is
+       rejected, even with a valid token.</p>
+
+    <h2>Rate limits and errors</h2>
+    <p>There's no per-request throttle — what looks like a rate limit is really your
+       subscription package's <strong>usage quota</strong>. Each send-type endpoint checks
+       your usage against counters like <code>send_limit</code> / <code>wa_send_limit</code>;
+       a limit of <code>0</code> or less means unlimited. Once you hit it, sends fail
+       with:</p>
+    <pre><code>{"status":403,"message":"Maximum allowed number of sent messages has been reached!","data":false}</code></pre>
+    <p>Quotas reset on whichever cadence your package uses (daily or monthly — see the Cron
+       jobs page's note on the <code>quota</code> job) rather than on a rolling window, so
+       there's no "retry after N seconds" — check <code>/api/get/subscription</code> to see
+       when you're close.</p>
+    <table class="doc-table">
+      <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>200</code></td><td>Success.</td></tr>
+        <tr><td><code>400</code></td><td>Missing/invalid parameters — e.g. an unparsable
+            phone number, a message shorter than the site minimum, or an unrecognized media
+            type.</td></tr>
+        <tr><td><code>401</code></td><td>The <code>secret</code> doesn't match any API
+            key.</td></tr>
+        <tr><td><code>403</code></td><td>Recognized secret, but not allowed to do this — a
+            missing permission on the key itself, a subscription that doesn't include the
+            service, or a quota/limit reached.</td></tr>
+        <tr><td><code>404</code></td><td>A referenced device, gateway, WhatsApp account, or
+            message ID doesn't belong to this key's account.</td></tr>
+        <tr><td><code>500</code></td><td>Something failed on Zender's or a downstream
+            service's side — a disconnected WhatsApp server, a gateway that rejected the
+            send, etc. Usually safe to retry later; not a problem with your request
+            shape.</td></tr>
+      </tbody>
+    </table>
+    <p>If the site has AI moderation turned on (from the Settings screen under
+       <em>Admin &rarr; Overview</em>), every SMS and WhatsApp text send is screened before
+       it's queued; flagged content is rejected with <code>400</code> and logged to
+       <em>Tools &rarr; Logger</em> rather than being sent.</p>
+  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Requirements — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Getting started</h6>
+                        <h1 class="header-title"><i class="la la-list-ul la-lg"></i> Requirements</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>What your server needs before you unpack Zender onto it.</p>
+
+    <h2>Server requirements</h2>
+    <p>You need <strong>PHP 8.4.1 or newer</strong>. Zender's own code contains no version
+       check, but the bundled dependency set declares that minimum, and Composer's generated
+       platform guard enforces it.</p>
+
+    <div class="doc-warn">
+      <strong>An older PHP stops the site dead, immediately.</strong> That guard runs from
+      the autoloader on every single request, so PHP 8.4.0 or anything older gives you a
+      blank page or a 500 on <em>every</em> URL &mdash; including the installer. You will not
+      get a partly-working site that fails later; you will get a site that never starts.
+      Check <code>php -v</code> before uploading anything.
+    </div>
+
+    <div class="doc-note">
+      If your host offers a choice of PHP versions, pick the newest 8.x available rather
+      than the oldest one that still qualifies — Zender is tested against current PHP,
+      not old PHP.
+    </div>
+
+    <h2>PHP extensions</h2>
+    <p>Your PHP install needs at least:</p>
+    <ul>
+      <li><strong>PDO with the MySQL driver</strong> — how Zender talks to the database
+          in normal operation.</li>
+      <li><strong>mysqli</strong> — used by the installer and the updater to import SQL
+          files. A host with PDO but no mysqli fails at install.</li>
+      <li><strong>zip, gd, mbstring, openssl, dom, libxml, xmlreader, fileinfo, zlib,
+          json, ctype and filter</strong> — required by the bundled libraries for plugin
+          installs, spreadsheet import and export, and QR generation.</li>
+      <li><strong>cURL</strong> (strongly recommended) — used for every outbound HTTP
+          request Zender makes: SMS gateways, webhooks, the WhatsApp server connection,
+          and other integrations. Without it, outbound requests still work through a
+          slower fallback, but cURL is the better-tested path and should be enabled.</li>
+    </ul>
+    <p>Most standard PHP installs — and virtually every shared-hosting or managed PHP
+       stack — already ship both of these enabled.</p>
+
+    <h2>Database</h2>
+    <p>Zender requires a <strong>MySQL or MariaDB</strong> server with InnoDB and
+       UTF-8 (4-byte, <code>utf8mb4</code>) character set support — standard on any
+       current MySQL or MariaDB build. The installer imports Zender's full schema into a
+       database you provide; it does not create the database for you. See Installation
+       for how to create one and what privileges the database user needs.</p>
+
+    <h2>Web server</h2>
+    <p>Zender ships ready-to-use rewrite rules for both Apache (<code>.htaccess</code>,
+       requires <code>mod_rewrite</code>) and nginx (<code>.nginx.conf</code>, included
+       from your server block). Both route every request that isn't an existing file or
+       directory through Zender's single entry point, and both also block direct access
+       to Zender's own internal PHP, template, and data files so they can't be
+       downloaded or executed directly.</p>
+    <p>Zender can be installed at your domain's root or inside a subdirectory — it
+       detects which one it's running from automatically and adjusts its own links
+       accordingly. Wherever you put it, that directory needs the rewrite rules above
+       active.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>

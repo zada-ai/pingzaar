@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main Theme Colors -->
+    <color name="colorPrimary">#FF6200EE</color>  <!-- Main purple accent color -->
+    <color name="colorPrimaryDark">#FF3700B3</color>
+    <color name="colorAccent">#FFBB86FC</color>
+
+    <!-- Login Screen Colors -->
+    <color name="login_button_color">@color/colorPrimary</color>  <!-- Login button color -->
+    <color name="qr_login_button_color">@color/colorPrimary</color>  <!-- QR login button text color -->
+    <color name="login_loading_color">@color/colorPrimary</color>  <!-- Loading circle color -->
+
+    <!-- Terminal Screen Colors -->
+    <color name="terminal_appbar_color">@color/colorPrimary</color>  <!-- Terminal app bar color -->
+
+    <!-- Base Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Splash screen colors -->
+    <color name="splash_background">#FFFFFFFF</color>
+    <color name="splash_text">#FF000000</color>
+    <color name="splash_progress">@color/colorPrimary</color>
+
+    <!-- Launcher icon colors -->
+    <color name="ic_launcher_background">@color/colorPrimary</color>
+
+</resources>
+

@@ -1,0 +1,2899 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Admin API",
+        "version": "09.13.25",
+        "description": "Comprehensive administrative API for managing a multi-service communication platform. This API provides complete system administration capabilities including user management, subscription control, billing operations, and platform configuration. Features include role-based access control, package management for SMS/WhatsApp/USSD services, voucher system administration, API key management, and system maintenance operations. All endpoints require system-level authentication and are designed for platform administrators to manage the entire ecosystem of services, users, and business operations."
+    },
+    "servers": [
+        {
+            "url": "{{site_url}}admin"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Roles",
+            "description": "Manage user roles and permissions. Create, update, and delete role definitions with granular permission sets. Roles control access to different system features and API endpoints."
+        },
+        {
+            "name": "Users",
+            "description": "Manage user accounts and profiles. Create, update, and delete user accounts with customizable settings including credits, timezone, language preferences, and role assignments."
+        },
+        {
+            "name": "Packages",
+            "description": "Manage subscription packages and service tiers. Configure package limits for SMS, WhatsApp, USSD, notifications, devices, API keys, webhooks, and other services. Control pricing and feature availability."
+        },
+        {
+            "name": "Subscriptions",
+            "description": "Manage user subscription assignments and durations. Create and manage active subscriptions linking users to packages with specific time periods and renewal cycles."
+        },
+        {
+            "name": "Transactions",
+            "description": "Manage billing transactions and payment records. Track payment history, refunds, and financial data across different payment providers and subscription types."
+        },
+        {
+            "name": "System",
+            "description": "Manage system-wide settings and maintenance operations. Clear cache, manage system configurations, and perform administrative tasks that affect the entire platform."
+        },
+        {
+            "name": "Languages",
+            "description": "Manage system languages and localization settings. Configure available languages, RTL support, language ordering, and internationalization preferences for the platform."
+        },
+        {
+            "name": "Vouchers",
+            "description": "Manage promotional vouchers and discount codes. Create bulk vouchers, track redemption status, and manage voucher-based subscription activations for marketing campaigns."
+        },
+        {
+            "name": "API Keys",
+            "description": "Manage API access keys for users and applications. Create, monitor, and revoke API keys with granular permission sets for programmatic access to platform services."
+        }
+    ],
+    "paths": {
+        "/get/languages": {
+            "get": {
+                "tags": [
+                    "Languages"
+                ],
+                "summary": "Get Languages",
+                "description": "Get the list of languages.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Limit the number of results per page."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Pagination of results."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System Languages",
+                                            "data": [
+                                                {
+                                                    "id": 1,
+                                                    "order": 2,
+                                                    "rtl": false,
+                                                    "iso": "US",
+                                                    "name": "English"
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "order": 1,
+                                                    "rtl": false,
+                                                    "iso": "PH",
+                                                    "name": "Filipino"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/get/languages?token=SYSTEM_TOKEN&limit=10&page=1\" \\\n     -H \"Content-Type: application/json\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\n# Define the endpoint and parameters\nurl = \"{{site_url}}admin/get/languages\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"limit\": 10,\n    \"page\": 1\n}\n\n# Make the GET request\nresponse = requests.get(url, params=params)\n\n# Handle the response\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\n// Define the API details\nconst url = \"{{site_url}}admin/get/languages\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    limit: 10,\n    page: 1\n};\n\n// Make the GET request\naxios.get(url, { params })\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n// Define the API endpoint and parameters\n$url = \"{{site_url}}admin/get/languages?token=SYSTEM_TOKEN&limit=10&page=1\";\n\n// Initialize cURL session\n$ch = curl_init();\n\n// Set cURL options\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n// Execute the request\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\n// Handle the response\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\n// Close cURL session\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/get/packages": {
+            "get": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Get Packages",
+                "description": "Get the list of packages.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Limit the number of results per page."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Pagination of results."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System Packages",
+                                            "data": [
+                                                {
+                                                    "id": 1,
+                                                    "price": 0,
+                                                    "hidden": false,
+                                                    "footermark": true,
+                                                    "services": "sms,whatsapp",
+                                                    "name": "Starter",
+                                                    "sms_send_limit": 1000,
+                                                    "sms_receive_limit": 250,
+                                                    "ussd_limit": 0,
+                                                    "notification_limit": 0,
+                                                    "device_limit": 3,
+                                                    "wa_send_limit": 0,
+                                                    "wa_receive_limit": 0,
+                                                    "wa_account_limit": 0,
+                                                    "scheduled_limit": 0,
+                                                    "key_limit": 5,
+                                                    "webhook_limit": 5,
+                                                    "action_limit": 0,
+                                                    "created": 1586370407
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "price": 12,
+                                                    "hidden": true,
+                                                    "footermark": false,
+                                                    "services": "sms,whatsapp",
+                                                    "name": "Professional",
+                                                    "sms_send_limit": 3000,
+                                                    "sms_receive_limit": 1500,
+                                                    "ussd_limit": 0,
+                                                    "notification_limit": 0,
+                                                    "device_limit": 30,
+                                                    "wa_send_limit": 0,
+                                                    "wa_receive_limit": 0,
+                                                    "wa_account_limit": 0,
+                                                    "scheduled_limit": 0,
+                                                    "key_limit": 10,
+                                                    "webhook_limit": 5,
+                                                    "action_limit": 0,
+                                                    "created": 1587393358
+                                                },
+                                                {
+                                                    "id": 3,
+                                                    "price": 30,
+                                                    "hidden": false,
+                                                    "footermark": false,
+                                                    "services": "sms,whatsapp",
+                                                    "name": "Enterprise",
+                                                    "sms_send_limit": 10000,
+                                                    "sms_receive_limit": 7000,
+                                                    "ussd_limit": 0,
+                                                    "notification_limit": 0,
+                                                    "device_limit": 50,
+                                                    "wa_send_limit": 0,
+                                                    "wa_receive_limit": 0,
+                                                    "wa_account_limit": 0,
+                                                    "scheduled_limit": 0,
+                                                    "key_limit": 25,
+                                                    "webhook_limit": 15,
+                                                    "action_limit": 0,
+                                                    "created": 1587393393
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/get/packages?token=SYSTEM_TOKEN&limit=10&page=1\" \\\n     -H \"Content-Type: application/json\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\n# Define the endpoint and parameters\nurl = \"{{site_url}}admin/get/packages\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"limit\": 10,\n    \"page\": 1\n}\n\n# Make the GET request\nresponse = requests.get(url, params=params)\n\n# Handle the response\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\n// Define the API details\nconst url = \"{{site_url}}admin/get/packages\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    limit: 10,\n    page: 1\n};\n\n// Make the GET request\naxios.get(url, { params })\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n// Define the API endpoint and parameters\n$url = \"{{site_url}}admin/get/packages?token=SYSTEM_TOKEN&limit=10&page=1\";\n\n// Initialize cURL session\n$ch = curl_init();\n\n// Set cURL options\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n// Execute the request\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\n// Handle the response\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\n// Close cURL session\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/create/package": {
+            "post": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Create Package",
+                "description": "Create a new package.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token, can be acquired from system settings."
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the package."
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "description": "Price of the package, cannot be less than 1. This is based on system currency."
+                                    },
+                                    "services": {
+                                        "type": "string",
+                                        "description": "The list of services you want to allow for this package. Select from <strong>sms, whatsapp, android_ussd, android_notifications, api, webhooks, templates, actions, flows, ai</strong> separated by commas."
+                                    },
+                                    "hidden": {
+                                        "type": "number",
+                                        "description": "Hide the package from homepage and modal. 1 for yes and 2 for no."
+                                    },
+                                    "footermark": {
+                                        "type": "number",
+                                        "description": "Include the footer mark in sms/chats. 1 for yes and 2 for no."
+                                    },
+                                    "send_limit": {
+                                        "type": "number",
+                                        "description": "SMS send limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "receive_limit": {
+                                        "type": "number",
+                                        "description": "SMS receive limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "ussd_limit": {
+                                        "type": "number",
+                                        "description": "USSD limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "notification_limit": {
+                                        "type": "number",
+                                        "description": "Notification limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "contact_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of contacts that can be saved. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "device_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of devices that can be linked. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "key_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of API keys that can be created. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "webhook_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of webhooks that can be created. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "action_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of actions that can be created. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "scheduled_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of scheduled sms/chats that can be created. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "wa_send_limit": {
+                                        "type": "number",
+                                        "description": "WhatsApp send limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "wa_receive_limit": {
+                                        "type": "number",
+                                        "description": "WhatsApp receive limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "wa_account_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of WhatsApp accounts that can be linked. Use <strong>0</strong> for unlimited."
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "name",
+                                    "price",
+                                    "services",
+                                    "hidden",
+                                    "footermark",
+                                    "send_limit",
+                                    "receive_limit",
+                                    "ussd_limit",
+                                    "notification_limit",
+                                    "contact_limit",
+                                    "device_limit",
+                                    "key_limit",
+                                    "webhook_limit",
+                                    "action_limit",
+                                    "scheduled_limit",
+                                    "wa_send_limit",
+                                    "wa_receive_limit",
+                                    "wa_account_limit"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Package has been created!",
+                                            "data": {
+                                                "id": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/create/package\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"name=Package Name\" \\\n     -F \"price=10\" \\\n     -F \"services=sms,whatsapp\" \\\n     -F \"hidden=2\" \\\n     -F \"footermark=1\" \\\n     -F \"send_limit=1000\" \\\n     -F \"receive_limit=500\" \\\n     -F \"ussd_limit=0\" \\\n     -F \"notification_limit=0\" \\\n     -F \"contact_limit=100\" \\\n     -F \"device_limit=10\" \\\n     -F \"key_limit=5\" \\\n     -F \"webhook_limit=5\" \\\n     -F \"action_limit=5\" \\\n     -F \"scheduled_limit=0\" \\\n     -F \"wa_send_limit=500\" \\\n     -F \"wa_receive_limit=500\" \\\n     -F \"wa_account_limit=3\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/create/package\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"name\": \"Package Name\",\n    \"price\": 10,\n    \"services\": \"sms,whatsapp\",\n    \"hidden\": 2,\n    \"footermark\": 1,\n    \"send_limit\": 1000,\n    \"receive_limit\": 500,\n    \"ussd_limit\": 0,\n    \"notification_limit\": 0,\n    \"contact_limit\": 100,\n    \"device_limit\": 10,\n    \"key_limit\": 5,\n    \"webhook_limit\": 5,\n    \"action_limit\": 5,\n    \"scheduled_limit\": 0,\n    \"wa_send_limit\": 500,\n    \"wa_receive_limit\": 500,\n    \"wa_account_limit\": 3\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/create/package\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    name: \"Package Name\",\n    price: 10,\n    services: \"sms,whatsapp\",\n    hidden: 2,\n    footermark: 1,\n    send_limit: 1000,\n    receive_limit: 500,\n    ussd_limit: 0,\n    notification_limit: 0,\n    contact_limit: 100,\n    device_limit: 10,\n    key_limit: 5,\n    webhook_limit: 5,\n    action_limit: 5,\n    scheduled_limit: 0,\n    wa_send_limit: 500,\n    wa_receive_limit: 500,\n    wa_account_limit: 3\n};\n\naxios.post(url, data)\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/create/package\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'name' => 'Package Name',\n    'price' => 10,\n    'services' => 'sms,whatsapp',\n    'hidden' => 2,\n    'footermark' => 1,\n    'send_limit' => 1000,\n    'receive_limit' => 500,\n    'ussd_limit' => 0,\n    'notification_limit' => 0,\n    'contact_limit' => 100,\n    'device_limit' => 10,\n    'key_limit' => 5,\n    'webhook_limit' => 5,\n    'action_limit' => 5,\n    'scheduled_limit' => 0,\n    'wa_send_limit' => 500,\n    'wa_receive_limit' => 500,\n    'wa_account_limit' => 3\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/update/package": {
+            "post": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Update Package",
+                "description": "Update an existing package. Note: Default package (ID < 2) cannot be hidden and will always have hidden=2.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token, can be acquired from system settings."
+                                    },
+                                    "id": {
+                                        "type": "number",
+                                        "description": "Package ID, you can obtain package ID from <strong>/get/packages</strong>."
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the package."
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "description": "Price of the package, cannot be less than 1. This is based on system currency."
+                                    },
+                                    "services": {
+                                        "type": "string",
+                                        "description": "The list of services you want to allow for this package. Select from <strong>sms, whatsapp, android_ussd, android_notifications, api, webhooks, templates, actions, flows, ai</strong> separated by commas."
+                                    },
+                                    "hidden": {
+                                        "type": "number",
+                                        "description": "Hide the package from homepage and modal. 1 for yes and 2 for no."
+                                    },
+                                    "footermark": {
+                                        "type": "number",
+                                        "description": "Include the footer mark in sms/chats. 1 for yes and 2 for no."
+                                    },
+                                    "send_limit": {
+                                        "type": "number",
+                                        "description": "SMS send limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "receive_limit": {
+                                        "type": "number",
+                                        "description": "SMS receive limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "ussd_limit": {
+                                        "type": "number",
+                                        "description": "USSD limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "notification_limit": {
+                                        "type": "number",
+                                        "description": "Notification limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "contact_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of contacts that can be saved. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "device_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of devices that can be linked. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "key_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of API keys that can be created. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "webhook_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of webhooks that can be created. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "action_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of actions that can be created. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "scheduled_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of scheduled sms/chats that can be created. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "wa_send_limit": {
+                                        "type": "number",
+                                        "description": "WhatsApp send limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "wa_receive_limit": {
+                                        "type": "number",
+                                        "description": "WhatsApp receive limit every cycle. Use <strong>0</strong> for unlimited."
+                                    },
+                                    "wa_account_limit": {
+                                        "type": "number",
+                                        "description": "Maximum number of WhatsApp accounts that can be linked. Use <strong>0</strong> for unlimited."
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Package has been updated!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/update/package\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"id=PACKAGE_ID\" \\\n     -F \"name=Updated Package Name\" \\\n     -F \"price=15\" \\\n     -F \"services=sms,whatsapp\" \\\n     -F \"hidden=2\" \\\n     -F \"footermark=1\" \\\n     -F \"send_limit=2000\" \\\n     -F \"receive_limit=1000\" \\\n     -F \"ussd_limit=0\" \\\n     -F \"notification_limit=0\" \\\n     -F \"contact_limit=200\" \\\n     -F \"device_limit=15\" \\\n     -F \"key_limit=7\" \\\n     -F \"webhook_limit=10\" \\\n     -F \"action_limit=10\" \\\n     -F \"scheduled_limit=0\" \\\n     -F \"wa_send_limit=1000\" \\\n     -F \"wa_receive_limit=1000\" \\\n     -F \"wa_account_limit=5\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/update/package\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": \"PACKAGE_ID\",\n    \"name\": \"Updated Package Name\",\n    \"price\": 15,\n    \"services\": \"sms,whatsapp\",\n    \"hidden\": 2,\n    \"footermark\": 1,\n    \"send_limit\": 2000,\n    \"receive_limit\": 1000,\n    \"ussd_limit\": 0,\n    \"notification_limit\": 0,\n    \"contact_limit\": 200,\n    \"device_limit\": 15,\n    \"key_limit\": 7,\n    \"webhook_limit\": 10,\n    \"action_limit\": 10,\n    \"scheduled_limit\": 0,\n    \"wa_send_limit\": 1000,\n    \"wa_receive_limit\": 1000,\n    \"wa_account_limit\": 5\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/update/package\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    id: \"PACKAGE_ID\",\n    name: \"Updated Package Name\",\n    price: 15,\n    services: \"sms,whatsapp\",\n    hidden: 2,\n    footermark: 1,\n    send_limit: 2000,\n    receive_limit: 1000,\n    ussd_limit: 0,\n    notification_limit: 0,\n    contact_limit: 200,\n    device_limit: 15,\n    key_limit: 7,\n    webhook_limit: 10,\n    action_limit: 10,\n    scheduled_limit: 0,\n    wa_send_limit: 1000,\n    wa_receive_limit: 1000,\n    wa_account_limit: 5\n};\n\naxios.post(url, data)\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/update/package\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'id' => 'PACKAGE_ID',\n    'name' => 'Updated Package Name',\n    'price' => 15,\n    'services' => 'sms,whatsapp',\n    'hidden' => 2,\n    'footermark' => 1,\n    'send_limit' => 2000,\n    'receive_limit' => 1000,\n    'ussd_limit' => 0,\n    'notification_limit' => 0,\n    'contact_limit' => 200,\n    'device_limit' => 15,\n    'key_limit' => 7,\n    'webhook_limit' => 10,\n    'action_limit' => 10,\n    'scheduled_limit' => 0,\n    'wa_send_limit' => 1000,\n    'wa_receive_limit' => 1000,\n    'wa_account_limit' => 5\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/delete/package": {
+            "get": {
+                "tags": [
+                    "Packages"
+                ],
+                "summary": "Delete Package",
+                "description": "Delete an existing package.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Package ID, you can obtain a package ID from <strong>/get/packages</strong>"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Package has been deleted!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/delete/package?token=SYSTEM_TOKEN&id=PACKAGE_ID\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/delete/package\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": PACKAGE_ID\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/delete/package\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    id: PACKAGE_ID\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/delete/package\";\n$params = [\n    'token' => 'SYSTEM_TOKEN',\n    'id' => PACKAGE_ID\n];\n\n$query = http_build_query($params);\n$response = file_get_contents(\"$url?$query\");\n\nif ($http_response_header[0] === \"HTTP/1.1 200 OK\") {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: \" . $http_response_header[0] . \" Response: \" . $response;\n}"
+                    }
+                ]
+            }
+        },
+        "/get/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get Roles",
+                "description": "Get the list of roles. Default roles (ID < 2) return ['default_permissions'] instead of actual permissions list.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Limit the number of results per page."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Pagination of results."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System Roles",
+                                            "data": [
+                                                {
+                                                    "id": 1,
+                                                    "name": "Default",
+                                                    "permissions": [
+                                                        "default_permissions"
+                                                    ]
+                                                },
+                                                {
+                                                    "id": 4,
+                                                    "name": "Rangers",
+                                                    "permissions": [
+                                                        "manage_users",
+                                                        "manage_roles"
+                                                    ]
+                                                },
+                                                {
+                                                    "id": 5,
+                                                    "name": "Developer",
+                                                    "permissions": [
+                                                        "manage_api"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/get/roles?token=SYSTEM_TOKEN&limit=10&page=1\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/get/roles\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"limit\": 10,\n    \"page\": 1\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/get/roles\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    limit: 10,\n    page: 1\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/get/roles\";\n$params = [\n    'token' => 'SYSTEM_TOKEN',\n    'limit' => 10,\n    'page' => 1\n];\n\n$query = http_build_query($params);\n$response = file_get_contents(\"$url?$query\");\n\nif ($http_response_header[0] === \"HTTP/1.1 200 OK\") {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: \" . $http_response_header[0] . \" Response: \" . $response;\n}"
+                    }
+                ]
+            }
+        },
+        "/create/role": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Create Role",
+                "description": "Create a new user role.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the user role."
+                                    },
+                                    "permissions": {
+                                        "type": "string",
+                                        "description": "List of permissions separated by commas."
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "name",
+                                    "permissions"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Role has been created!",
+                                            "data": {
+                                                "id": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/create/role\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"name=Role Name\" \\\n     -F \"permissions=manage_users,manage_roles\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/create/role\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"name\": \"Role Name\",\n    \"permissions\": \"manage_users,manage_roles\"\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/create/role\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    name: \"Role Name\",\n    permissions: \"manage_users,manage_roles\"\n};\n\naxios.post(url, data)\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/create/role\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'name' => 'Role Name',\n    'permissions' => 'manage_users,manage_roles'\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/update/role": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Update Role",
+                "description": "Update a user role.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token"
+                                    },
+                                    "id": {
+                                        "type": "number",
+                                        "description": "Role ID, you can obtain role ID from <strong>/get/roles</strong>"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the user role."
+                                    },
+                                    "permissions": {
+                                        "type": "string",
+                                        "description": "List of permissions separated by commas."
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Role has been updated!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/update/role\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"id=ROLE_ID\" \\\n     -F \"name=Updated Role Name\" \\\n     -F \"permissions=manage_users,manage_roles\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/update/role\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": \"ROLE_ID\",\n    \"name\": \"Updated Role Name\",\n    \"permissions\": \"manage_users,manage_roles\"\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/update/role\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    id: \"ROLE_ID\",\n    name: \"Updated Role Name\",\n    permissions: \"manage_users,manage_roles\"\n};\n\naxios.post(url, data)\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/update/role\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'id' => 'ROLE_ID',\n    'name' => 'Updated Role Name',\n    'permissions' => 'manage_users,manage_roles'\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/delete/role": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Delete Role",
+                "description": "Delete a user role.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Role ID, you can obtain a role ID from <strong>/get/roles</strong>"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Role has been deleted!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/delete/role\" \\\n     -G \\\n     -d \"token=SYSTEM_TOKEN\" \\\n     -d \"id=ROLE_ID\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/delete/role\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": \"ROLE_ID\"\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/delete/role\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    id: \"ROLE_ID\"\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/delete/role\";\n$params = [\n    'token' => 'SYSTEM_TOKEN',\n    'id' => 'ROLE_ID'\n];\n\n$query = http_build_query($params);\n$request_url = $url . '?' . $query;\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $request_url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/get/subscriptions": {
+            "get": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Get Subscriptions",
+                "description": "Get the list of active subscriptions.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Limit the number of results per page."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Pagination of results."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System Subscriptions",
+                                            "data": [
+                                                {
+                                                    "id": 2,
+                                                    "user": 16,
+                                                    "package": 2,
+                                                    "transaction": 4,
+                                                    "created": 1644202610
+                                                },
+                                                {
+                                                    "id": 3,
+                                                    "user": 6,
+                                                    "package": 3,
+                                                    "transaction": 6,
+                                                    "created": 1645635227
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/get/subscriptions\" \\\n     -G \\\n     -d \"token=SYSTEM_TOKEN\" \\\n     -d \"limit=10\" \\\n     -d \"page=1\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/get/subscriptions\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"limit\": 10,\n    \"page\": 1\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/get/subscriptions\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    limit: 10,\n    page: 1\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/get/subscriptions\";\n$params = [\n    'token' => 'SYSTEM_TOKEN',\n    'limit' => 10,\n    'page' => 1\n];\n\n$query = http_build_query($params);\n$request_url = $url . '?' . $query;\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $request_url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/create/subscription": {
+            "post": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Create Subscription",
+                "description": "Create a new subscription. If the user has an existing active subscription, the new subscription will start from the existing expiry date. Otherwise, it starts immediately.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token"
+                                    },
+                                    "user": {
+                                        "type": "number",
+                                        "description": "User ID."
+                                    },
+                                    "package": {
+                                        "type": "number",
+                                        "description": "Package ID, this can be obtained in <strong>/get/packages</strong>"
+                                    },
+                                    "duration": {
+                                        "type": "number",
+                                        "description": "Duration of subscription in months."
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "user",
+                                    "package",
+                                    "duration"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Subscription has been created!",
+                                            "data": {
+                                                "id": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/create/subscription\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"user=USER_ID\" \\\n     -F \"package=PACKAGE_ID\" \\\n     -F \"duration=12\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/create/subscription\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"user\": USER_ID,\n    \"package\": PACKAGE_ID,\n    \"duration\": 12\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/create/subscription\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    user: USER_ID,\n    package: PACKAGE_ID,\n    duration: 12\n};\n\naxios.post(url, data)\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/create/subscription\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'user' => USER_ID,\n    'package' => PACKAGE_ID,\n    'duration' => 12\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/delete/subscription": {
+            "get": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Delete Subscription",
+                "description": "Delete an active subscription.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Subscription ID, you can obtain a subscription ID from <strong>/get/subscriptions</strong>"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Subscription has been deleted!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/delete/subscription\" \\\n     -G \\\n     --data-urlencode \"token=SYSTEM_TOKEN\" \\\n     --data-urlencode \"id=SUBSCRIPTION_ID\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/delete/subscription\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": SUBSCRIPTION_ID\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/delete/subscription\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    id: SUBSCRIPTION_ID\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/delete/subscription\";\n$params = http_build_query([\n    'token' => 'SYSTEM_TOKEN',\n    'id' => SUBSCRIPTION_ID\n]);\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url . '?' . $params);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/clear/cache": {
+            "get": {
+                "tags": [
+                    "System"
+                ],
+                "summary": "Clear Cache",
+                "description": "Clear system cache files.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System cache files has been cleared!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/clear/cache\" \\\n     -G \\\n     --data-urlencode \"token=SYSTEM_TOKEN\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/clear/cache\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\"\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/clear/cache\";\nconst params = {\n    token: \"SYSTEM_TOKEN\"\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/clear/cache\";\n$params = http_build_query([\n    'token' => 'SYSTEM_TOKEN'\n]);\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url . '?' . $params);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/get/transactions": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get Transactions",
+                "description": "Get the list of transactions. Transaction type is returned as 'credits' for type 2, and 'package' for all other types.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Limit the number of results per page."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Pagination of results."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System Transactions",
+                                            "data": [
+                                                {
+                                                    "id": 1,
+                                                    "user": 3,
+                                                    "package": 0,
+                                                    "type": "credits",
+                                                    "price": 10,
+                                                    "currency": "GBP",
+                                                    "duration": 1,
+                                                    "provider": "paypal",
+                                                    "created": 1644030231
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "user": 7,
+                                                    "package": 4,
+                                                    "type": "package",
+                                                    "price": 100,
+                                                    "currency": "GBP",
+                                                    "duration": 1,
+                                                    "provider": "mollie",
+                                                    "created": 1644030301
+                                                },
+                                                {
+                                                    "id": 3,
+                                                    "user": 9,
+                                                    "package": 2,
+                                                    "type": "package",
+                                                    "price": 2400,
+                                                    "currency": "GBP",
+                                                    "duration": 24,
+                                                    "provider": "voucher",
+                                                    "created": 1644059151
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/get/transactions\" \\\n     -G \\\n     --data-urlencode \"token=SYSTEM_TOKEN\" \\\n     --data-urlencode \"limit=10\" \\\n     --data-urlencode \"page=1\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/get/transactions\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"limit\": 10,\n    \"page\": 1\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/get/transactions\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    limit: 10,\n    page: 1\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/get/transactions\";\n$params = http_build_query([\n    'token' => 'SYSTEM_TOKEN',\n    'limit' => 10,\n    'page' => 1\n]);\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url . '?' . $params);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/delete/transaction": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Delete Transaction",
+                "description": "Delete a transaction record.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Transaction ID, you can obtain a transaction ID from <strong>/get/transactions</strong>"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Transaction has been deleted!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/delete/transaction\" \\\n     -G \\\n     --data-urlencode \"token=SYSTEM_TOKEN\" \\\n     --data-urlencode \"id=TRANSACTION_ID\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/delete/transaction\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": TRANSACTION_ID\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/delete/transaction\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    id: TRANSACTION_ID\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/delete/transaction\";\n$params = http_build_query([\n    'token' => 'SYSTEM_TOKEN',\n    'id' => TRANSACTION_ID\n]);\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url . '?' . $params);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/get/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get Accounts",
+                "description": "Get the list of user accounts. The 'suspended' field indicates user suspension status (true = suspended, false = active).",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Limit the number of results per page."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Pagination of results."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System Users",
+                                            "data": [
+                                                {
+                                                    "id": 1,
+                                                    "role": 1,
+                                                    "credits": 798.132,
+                                                    "earnings": 1.9386,
+                                                    "partner": true,
+                                                    "email": "mail@domain.com",
+                                                    "name": "Shane Mondez",
+                                                    "country": "PH",
+                                                    "timezone": "asia/manila",
+                                                    "language": 5,
+                                                    "notification_sounds": true,
+                                                    "suspended": true,
+                                                    "registered": 1585646141
+                                                },
+                                                {
+                                                    "id": 4,
+                                                    "role": 3,
+                                                    "credits": 50,
+                                                    "earnings": 0,
+                                                    "partner": true,
+                                                    "email": "test@domain.net",
+                                                    "name": "Test User",
+                                                    "country": "KW",
+                                                    "timezone": "asia/kuwait",
+                                                    "language": 1,
+                                                    "notification_sounds": false,
+                                                    "suspended": false,
+                                                    "registered": 1587452434
+                                                },
+                                                {
+                                                    "id": 10,
+                                                    "role": 1,
+                                                    "credits": 0,
+                                                    "earnings": 0,
+                                                    "partner": false,
+                                                    "email": "test@domain.org",
+                                                    "name": "Bobby Matthews",
+                                                    "country": "US",
+                                                    "timezone": "america/chicago",
+                                                    "language": 3,
+                                                    "notification_sounds": true,
+                                                    "suspended": false,
+                                                    "registered": 1615488072
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/get/users\" \\\n     -G \\\n     --data-urlencode \"token=SYSTEM_TOKEN\" \\\n     --data-urlencode \"limit=10\" \\\n     --data-urlencode \"page=1\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/get/users\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"limit\": 10,\n    \"page\": 1\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/get/users\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    limit: 10,\n    page: 1\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/get/users\";\n$params = http_build_query([\n    'token' => 'SYSTEM_TOKEN',\n    'limit' => 10,\n    'page' => 1\n]);\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url . '?' . $params);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/create/user": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create Account",
+                "description": "Create a new user account.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token, can be acquired from system settings."
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Full name of the user."
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email address for the user account."
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Password for the user account."
+                                    },
+                                    "credits": {
+                                        "type": "number",
+                                        "description": "Credits for the user account. Whole number only."
+                                    },
+                                    "timezone": {
+                                        "type": "string",
+                                        "description": "Timezone for the user account, here's the list of valid timezones you can use: <a href=\"https://www.w3schools.com/php/php_ref_timezones.asp\">Click Here</a>."
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "description": "Country code, it should satisfy ISO Alpha-2 format."
+                                    },
+                                    "language": {
+                                        "type": "number",
+                                        "description": "Language ID, you can get the a language ID from <strong>/get/languages</strong>."
+                                    },
+                                    "theme": {
+                                        "type": "string",
+                                        "description": "Theme color, \"light\" or \"dark\"."
+                                    },
+                                    "role": {
+                                        "type": "number",
+                                        "description": "Role ID, you can get a role ID from <strong>/get/roles</strong>."
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "timezone",
+                                    "country",
+                                    "language"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "User has been created!",
+                                            "data": {
+                                                "id": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/create/user\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"name=John Doe\" \\\n     -F \"email=john.doe@example.com\" \\\n     -F \"password=securepassword\" \\\n     -F \"credits=100\" \\\n     -F \"timezone=America/New_York\" \\\n     -F \"country=US\" \\\n     -F \"language=1\" \\\n     -F \"theme=dark\" \\\n     -F \"role=2\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/create/user\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"password\": \"securepassword\",\n    \"credits\": 100,\n    \"timezone\": \"America/New_York\",\n    \"country\": \"US\",\n    \"language\": 1,\n    \"theme\": \"dark\",\n    \"role\": 2\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/create/user\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    name: \"John Doe\",\n    email: \"john.doe@example.com\",\n    password: \"securepassword\",\n    credits: 100,\n    timezone: \"America/New_York\",\n    country: \"US\",\n    language: 1,\n    theme: \"dark\",\n    role: 2\n};\n\naxios.post(url, data)\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/create/user\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'name' => 'John Doe',\n    'email' => 'john.doe@example.com',\n    'password' => 'securepassword',\n    'credits' => 100,\n    'timezone' => 'America/New_York',\n    'country' => 'US',\n    'language' => 1,\n    'theme' => 'dark',\n    'role' => 2\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/update/user": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update Account",
+                "description": "Update a user account.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token, can be acquired from system settings."
+                                    },
+                                    "id": {
+                                        "type": "number",
+                                        "description": "User ID, you can obtain user ID from <strong>/get/users</strong>."
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Full name of the user."
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email address for the user account."
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Password for the user account."
+                                    },
+                                    "credits": {
+                                        "type": "number",
+                                        "description": "Credits for the user account. Whole number only."
+                                    },
+                                    "timezone": {
+                                        "type": "string",
+                                        "description": "Timezone for the user account, here's the list of valid timezones you can use: <a href=\"https://www.w3schools.com/php/php_ref_timezones.asp\">Click Here</a>."
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "description": "Country code, it should satisfy ISO Alpha-2 format."
+                                    },
+                                    "language": {
+                                        "type": "number",
+                                        "description": "Language ID, you can get a language ID from <strong>/get/languages</strong>."
+                                    },
+                                    "theme": {
+                                        "type": "string",
+                                        "description": "Theme color, \"light\" or \"dark\"."
+                                    },
+                                    "role": {
+                                        "type": "number",
+                                        "description": "Role ID, you can get a role ID from <strong>/get/roles</strong>."
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "User has been updated!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/update/user\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"id=USER_ID\" \\\n     -F \"name=John Doe Updated\" \\\n     -F \"email=john.doe.updated@example.com\" \\\n     -F \"password=newsecurepassword\" \\\n     -F \"credits=200\" \\\n     -F \"timezone=America/Chicago\" \\\n     -F \"country=US\" \\\n     -F \"language=1\" \\\n     -F \"theme=light\" \\\n     -F \"role=3\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/update/user\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": \"USER_ID\",\n    \"name\": \"John Doe Updated\",\n    \"email\": \"john.doe.updated@example.com\",\n    \"password\": \"newsecurepassword\",\n    \"credits\": 200,\n    \"timezone\": \"America/Chicago\",\n    \"country\": \"US\",\n    \"language\": 1,\n    \"theme\": \"light\",\n    \"role\": 3\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/update/user\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    id: \"USER_ID\",\n    name: \"John Doe Updated\",\n    email: \"john.doe.updated@example.com\",\n    password: \"newsecurepassword\",\n    credits: 200,\n    timezone: \"America/Chicago\",\n    country: \"US\",\n    language: 1,\n    theme: \"light\",\n    role: 3\n};\n\naxios.post(url, data)\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/update/user\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'id' => 'USER_ID',\n    'name' => 'John Doe Updated',\n    'email' => 'john.doe.updated@example.com',\n    'password' => 'newsecurepassword',\n    'credits' => 200,\n    'timezone' => 'America/Chicago',\n    'country' => 'US',\n    'language' => 1,\n    'theme' => 'light',\n    'role' => 3\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/delete/user": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete Account",
+                "description": "Delete a user account.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "User ID, you can obtain a user ID from <strong>/get/users</strong>"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "User has been deleted!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/delete/user?token=SYSTEM_TOKEN&id=USER_ID\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/delete/user\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": \"USER_ID\"\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/delete/user\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    id: \"USER_ID\"\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/delete/user\";\n$params = [\n    'token' => 'SYSTEM_TOKEN',\n    'id' => 'USER_ID'\n];\n\n$query = http_build_query($params);\n$full_url = \"$url?$query\";\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $full_url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/get/vouchers": {
+            "get": {
+                "tags": [
+                    "Vouchers"
+                ],
+                "summary": "Get Vouchers",
+                "description": "Get the list of unused vouchers.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Limit the number of results per page."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Pagination of results."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System Vouchers",
+                                            "data": [
+                                                {
+                                                    "id": 27,
+                                                    "package": 4,
+                                                    "duration": 1,
+                                                    "name": "1k Voucher #1",
+                                                    "code": "caf1fbc8191d3bdfe736f5b6a36011cf",
+                                                    "created": 1605869831
+                                                },
+                                                {
+                                                    "id": 28,
+                                                    "package": 4,
+                                                    "duration": 1,
+                                                    "name": "1k Voucher #2",
+                                                    "code": "b7c289d2b0e69c5ee0791c966650e8ca",
+                                                    "created": 1605869831
+                                                },
+                                                {
+                                                    "id": 29,
+                                                    "package": 4,
+                                                    "duration": 1,
+                                                    "name": "1k Voucher #3",
+                                                    "code": "062a0cdc6faf8a3fa91aa572495c861f",
+                                                    "created": 1605869831
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/get/vouchers?token=SYSTEM_TOKEN&limit=10&page=1\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/get/vouchers\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"limit\": 10,\n    \"page\": 1\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/get/vouchers\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    limit: 10,\n    page: 1\n};\n\naxios.get(url, { params })\n    .then(response => console.log(\"Success:\", response.data))\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/get/vouchers\";\n$params = [\n    'token' => 'SYSTEM_TOKEN',\n    'limit' => 10,\n    'page' => 1\n];\n\n$query = http_build_query($params);\n$full_url = \"$url?$query\";\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $full_url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/create/voucher": {
+            "post": {
+                "tags": [
+                    "Vouchers"
+                ],
+                "summary": "Create Voucher",
+                "description": "Create new voucher/s.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the voucher/s."
+                                    },
+                                    "count": {
+                                        "type": "number",
+                                        "description": "Number of vouchers to create."
+                                    },
+                                    "duration": {
+                                        "type": "number",
+                                        "description": "Duration of subscription in months."
+                                    },
+                                    "package": {
+                                        "type": "number",
+                                        "description": "Package ID, this can be obtained in <strong>/get/packages</strong>."
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "name",
+                                    "count",
+                                    "duration",
+                                    "package"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Voucher has been created!",
+                                            "data": [
+                                                {
+                                                    "id": 1,
+                                                    "code": "314a0fdf80bb61247304b8b1e6f023ab",
+                                                    "name": "Amazing Voucher",
+                                                    "package": 3,
+                                                    "duration": 1
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/create/voucher\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"name=Voucher Name\" \\\n     -F \"count=5\" \\\n     -F \"duration=12\" \\\n     -F \"package=PACKAGE_ID\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/create/voucher\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"name\": \"Voucher Name\",\n    \"count\": 5,\n    \"duration\": 12,\n    \"package\": \"PACKAGE_ID\"\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/create/voucher\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    name: \"Voucher Name\",\n    count: 5,\n    duration: 12,\n    package: \"PACKAGE_ID\"\n};\n\naxios.post(url, data)\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/create/voucher\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'name' => 'Voucher Name',\n    'count' => 5,\n    'duration' => 12,\n    'package' => 'PACKAGE_ID'\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/redeem": {
+            "get": {
+                "tags": [
+                    "Vouchers"
+                ],
+                "summary": "Redeem Voucher",
+                "description": "Redeem an unused voucher.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "user",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "User ID, you can obtain a user ID from <strong>/get/users</strong>"
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Voucher Code"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Voucher has been redeemed!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/redeem?token=SYSTEM_TOKEN&user=USER_ID&code=VOUCHER_CODE\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/redeem\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"user\": USER_ID,\n    \"code\": \"VOUCHER_CODE\"\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/redeem\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    user: USER_ID,\n    code: \"VOUCHER_CODE\"\n};\n\naxios.get(url, { params })\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/redeem?token=SYSTEM_TOKEN&user=USER_ID&code=VOUCHER_CODE\";\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/delete/voucher": {
+            "get": {
+                "tags": [
+                    "Vouchers"
+                ],
+                "summary": "Delete Voucher",
+                "description": "Delete an unused voucher.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Voucher ID, you can obtain a voucher ID from <strong>/get/vouchers</strong>"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Voucher has been deleted!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Error Response": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/delete/voucher?token=SYSTEM_TOKEN&id=VOUCHER_ID\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/delete/voucher\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": VOUCHER_ID\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/delete/voucher\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    id: VOUCHER_ID\n};\n\naxios.get(url, { params })\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/delete/voucher?token=SYSTEM_TOKEN&id=VOUCHER_ID\";\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/create/apikey": {
+            "post": {
+                "tags": [
+                    "API Keys"
+                ],
+                "summary": "Create API Key",
+                "description": "Create a new API key for a user.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "System token, can be acquired from system settings."
+                                    },
+                                    "id": {
+                                        "type": "number",
+                                        "description": "User ID for whom the API key will be created."
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name for the API key."
+                                    },
+                                    "permissions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "description": "Array of permissions for the API key. Available permissions: otp, sms_send, sms_send_bulk, wa_send, wa_send_bulk, ussd, validate_wa_phone, get_credits, get_earnings, get_subscription, get_sms_pending, get_wa_pending, get_sms_received, get_wa_received, get_sms_sent, get_sms_campaigns, get_wa_sent, get_wa_campaigns, get_contacts, get_groups, get_ussd, get_notifications, get_wa_accounts, get_wa_groups, get_devices, get_rates, get_shorteners, get_unsubscribed, create_whatsapp, create_contact, create_group, start_sms_campaign, stop_sms_campaign, start_wa_campaign, stop_wa_campaign, delete_contact, delete_group, delete_sms_sent, delete_sms_campaign, delete_wa_account, delete_wa_sent, delete_wa_campaign, delete_sms_received, delete_wa_received, delete_ussd, delete_unsubscribed, delete_notification"
+                                    }
+                                },
+                                "required": [
+                                    "token",
+                                    "id",
+                                    "name",
+                                    "permissions"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "API key has been created!",
+                                            "data": {
+                                                "id": 1,
+                                                "secret": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Invalid Parameters": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    },
+                                    "Name Too Short": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Name is too short!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "API Disabled": {
+                                        "value": {
+                                            "status": 403,
+                                            "message": "This API endpoint is disabled!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Server Error": {
+                                        "value": {
+                                            "status": 500,
+                                            "message": "Something went wrong!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X POST \"{{site_url}}admin/create/apikey\" \\\n     -H \"Content-Type: multipart/form-data\" \\\n     -F \"token=SYSTEM_TOKEN\" \\\n     -F \"id=USER_ID\" \\\n     -F \"name=My API Key\" \\\n     -F \"permissions[]=sms_send\" \\\n     -F \"permissions[]=get_credits\" \\\n     -F \"permissions[]=get_contacts\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/create/apikey\"\ndata = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": USER_ID,\n    \"name\": \"My API Key\",\n    \"permissions[]\": [\"sms_send\", \"get_credits\", \"get_contacts\"]\n}\n\nresponse = requests.post(url, data=data)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/create/apikey\";\nconst data = {\n    token: \"SYSTEM_TOKEN\",\n    id: USER_ID,\n    name: \"My API Key\",\n    'permissions[]': [\"sms_send\", \"get_credits\", \"get_contacts\"]\n};\n\naxios.post(url, data)\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/create/apikey\";\n$data = [\n    'token' => 'SYSTEM_TOKEN',\n    'id' => USER_ID,\n    'name' => 'My API Key',\n    'permissions[]' => ['sms_send', 'get_credits', 'get_contacts']\n];\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $data);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/get/apikeys": {
+            "get": {
+                "tags": [
+                    "API Keys"
+                ],
+                "summary": "Get API Keys",
+                "description": "Get the list of API keys.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Limit the number of results per page. Default is 10."
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Pagination of results. Default is 1."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "System API Keys",
+                                            "data": [
+                                                {
+                                                    "id": 1,
+                                                    "uid": 5,
+                                                    "name": "My API Key",
+                                                    "permissions": [
+                                                        "sms_send",
+                                                        "get_credits",
+                                                        "get_contacts"
+                                                    ],
+                                                    "created": 1644030231
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "uid": 7,
+                                                    "name": "WhatsApp API Key",
+                                                    "permissions": [
+                                                        "wa_send",
+                                                        "get_wa_accounts",
+                                                        "get_wa_sent"
+                                                    ],
+                                                    "created": 1644030301
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Invalid Parameters": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "API Disabled": {
+                                        "value": {
+                                            "status": 403,
+                                            "message": "This API endpoint is disabled!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/get/apikeys?token=SYSTEM_TOKEN&limit=10&page=1\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/get/apikeys\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"limit\": 10,\n    \"page\": 1\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/get/apikeys\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    limit: 10,\n    page: 1\n};\n\naxios.get(url, { params })\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/get/apikeys\";\n$params = [\n    'token' => 'SYSTEM_TOKEN',\n    'limit' => 10,\n    'page' => 1\n];\n\n$query = http_build_query($params);\n$full_url = \"$url?$query\";\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $full_url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        },
+        "/delete/apikey": {
+            "get": {
+                "tags": [
+                    "API Keys"
+                ],
+                "summary": "Delete API Key",
+                "description": "Delete an API key.",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "System token, can be acquired from system settings."
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "API Key ID, you can obtain an API key ID from <strong>/get/apikeys</strong>"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Success Response": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "API key has been deleted!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Invalid Parameters": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Invalid Parameters!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "API Disabled": {
+                                        "value": {
+                                            "status": 403,
+                                            "message": "This API endpoint is disabled!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Server Error": {
+                                        "value": {
+                                            "status": 500,
+                                            "message": "Something went wrong!",
+                                            "data": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-code-samples": [
+                    {
+                        "lang": "cURL",
+                        "source": "curl -X GET \"{{site_url}}admin/delete/apikey?token=SYSTEM_TOKEN&id=APIKEY_ID\""
+                    },
+                    {
+                        "lang": "Python",
+                        "source": "import requests\n\nurl = \"{{site_url}}admin/delete/apikey\"\nparams = {\n    \"token\": \"SYSTEM_TOKEN\",\n    \"id\": APIKEY_ID\n}\n\nresponse = requests.get(url, params=params)\nif response.status_code == 200:\n    print(\"Success:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.json())"
+                    },
+                    {
+                        "lang": "Node.js",
+                        "source": "const axios = require('axios');\n\nconst url = \"{{site_url}}admin/delete/apikey\";\nconst params = {\n    token: \"SYSTEM_TOKEN\",\n    id: APIKEY_ID\n};\n\naxios.get(url, { params })\n    .then(response => {\n        console.log(\"Success:\", response.data);\n    })\n    .catch(error => {\n        if (error.response) {\n            console.error(\"Error:\", error.response.status, error.response.data);\n        } else {\n            console.error(\"Error:\", error.message);\n        }\n    });"
+                    },
+                    {
+                        "lang": "PHP",
+                        "source": "<?php\n\n$url = \"{{site_url}}admin/delete/apikey?token=SYSTEM_TOKEN&id=APIKEY_ID\";\n\n$ch = curl_init();\ncurl_setopt($ch, CURLOPT_URL, $url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n\n$response = curl_exec($ch);\n$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);\n\nif ($http_code === 200) {\n    echo \"Success: \" . $response;\n} else {\n    echo \"Error: HTTP Code \" . $http_code . \", Response: \" . $response;\n}\n\ncurl_close($ch);"
+                    }
+                ]
+            }
+        }
+    }
+}

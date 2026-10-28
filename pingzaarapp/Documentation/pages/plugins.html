@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plugins — Zender Documentation</title>
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="../index.html">
+            <span class="docs-wordmark">Zender</span>
+            <span class="docs-wordmark-sub">Documentation</span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="doc-search-wrap">
+                <i class="la la-search" aria-hidden="true"></i>
+                <input id="navsearch" type="search" placeholder="Search pages…" aria-label="Search pages">
+            </div>
+            <div id="navlist"></div>
+        </div>
+    </div>
+</nav>
+
+<main id="main" class="main-content">
+    <div class="header">
+        <div class="container">
+            <div class="header-body">
+                <div class="row align-items-end">
+                    <div class="col mb-2 mb-lg-0">
+                        <h6 class="header-pretitle">Administration</h6>
+                        <h1 class="header-title"><i class="la la-plug la-lg"></i> Plugins</h1>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-white doc-theme-toggle" aria-label="Toggle light or dark theme">
+                            <i class="la la-moon" aria-hidden="true"></i><i class="la la-sun" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="doc-main">
+    <p>Install, configure, and remove plugins &mdash; including the PayPal and Mollie
+       payment gateways shipped with this release. This page is the complete installation
+       guide for both; there's nothing else to read online to get them working.</p>
+<figure class="doc-shot">
+  <a href="../assets/screenshots/admin-plugins.png" target="_blank" rel="noopener"><img src="../assets/screenshots/admin-plugins.png" alt="Admin → Plugins" loading="lazy"></a>
+  <figcaption>Admin → Plugins</figcaption>
+</figure>
+
+
+    <h2>What a plugin is</h2>
+    <p>A plugin is a self-contained package that Zender registers once installed. Every
+       plugin needs exactly two files at the top of its folder:</p>
+    <ul>
+      <li>A manifest with the plugin's name, and optionally: a section declaring the
+          configurable fields it exposes (API keys, toggles, and so on &mdash; these become
+          the plugin's settings form in the dashboard), install/uninstall actions to call
+          automatically, a list of custom buttons to show on its row in <em>Admin &rarr;
+          Plugins</em>, and any extra model files it needs loaded before it runs.</li>
+      <li>An entry point that maps action names to the code that handles them &mdash; every
+          request the plugin handles is routed through this mapping.</li>
+    </ul>
+    <p>A plugin with nothing configurable in its manifest has nothing to configure &mdash;
+       its gear (settings) icon in the plugins list is disabled.</p>
+
+    <h2>Installing a plugin</h2>
+    <p>From <strong>Admin &rarr; Plugins</strong>, click <strong>Add plugin</strong> and
+       upload the plugin's <code>.zip</code> file. Zender extracts it, expects its first
+       entry to be a single top-level directory, copies that directory's contents into
+       place, confirms its manifest is present, runs the manifest's install action if one
+       is declared, and finally registers the plugin.</p>
+    <div class="doc-note">
+      Installing a plugin whose folder name matches one already registered is rejected
+      &mdash; remove the existing one first (see <em>Removing a plugin</em> below), or use
+      the <strong>Update</strong> button on its row instead of <strong>Add plugin</strong>.
+    </div>
+    <div class="doc-warn">
+      That duplicate check runs <strong>last</strong>, after the files have already been
+      extracted onto disk. Zender unconditionally removes whatever is currently installed
+      under that folder name and replaces it with the upload's contents <em>before</em> it
+      checks whether a plugin with that folder name is already registered. If you upload a
+      zip that happens to declare the same folder name as an already-installed plugin,
+      you'll get a "plugin already installed" error back &mdash; but the installed plugin's
+      files have already been destroyed and overwritten with the new zip's contents by the
+      time that error is returned. Don't rely on the rejection to mean nothing happened; if
+      you're not certain the new zip is identical to what's installed, remove the existing
+      plugin first instead of re-adding over it.
+    </div>
+
+    <h2>The bundled payment gateways</h2>
+
+    <div class="doc-warn">
+      <strong>USD conversion needs an exchange-rate key, or customers are quoted 0.</strong>
+      Both bundled gateways ship with USD conversion enabled. That conversion needs the
+      <em>Currency API Key</em> setting (Admin Panel &rarr; Overview &rarr; the
+      <strong>System</strong> button). Without it the conversion fails, the converted
+      amount becomes <strong>0</strong>, and checkout either quotes nothing or is rejected
+      by the provider for falling below its minimum charge. Set the key, or turn USD
+      conversion off in the gateway's own settings.
+    </div>
+    <p>Only the built-in offline/bank-transfer payment method is active out of the box &mdash; it's a core
+       feature gated by a site setting, not a plugin. Everything else, including card and wallet payment
+       providers, is installed as a plugin. Two payment gateway plugins ship in this release, in a top-level
+       <code>Plugins/</code> folder in the release zip:</p>
+    <table class="doc-table">
+      <thead><tr><th>File</th><th>Gateway</th></tr></thead>
+      <tbody>
+        <tr><td><code>Plugins/mollie-payment.zip</code></td><td>Mollie</td></tr>
+        <tr><td><code>Plugins/paypal-payment.zip</code></td><td>PayPal</td></tr>
+      </tbody>
+    </table>
+    <p>Install only the gateway(s) you actually intend to use. After installing one, open its settings from the
+       gear icon on its row in <em>Admin &rarr; Plugins</em> and fill in whatever credentials it asks for
+       before expecting it to work for customers.</p>
+
+    <h3>Setting up PayPal</h3>
+    <p>Once the PayPal plugin is installed, its settings form asks for:</p>
+    <ul>
+      <li><strong>USD conversion</strong> &mdash; converts the payment amount to USD on
+          PayPal's payment page before charging. Turn this on if your site's currency
+          isn't one PayPal supports directly; charging in an unsupported currency can
+          cause the payment to fail outright.</li>
+      <li><strong>Sandbox mode</strong> &mdash; runs the gateway against PayPal's test
+          environment instead of processing real transactions. Make sure this is off
+          before you go live.</li>
+      <li><strong>Client ID</strong> and <strong>Secret key</strong> &mdash; your
+          credentials from your PayPal developer account.</li>
+    </ul>
+
+    <h3>Setting up Mollie</h3>
+    <p>Once the Mollie plugin is installed, its settings form asks for:</p>
+    <ul>
+      <li><strong>USD conversion</strong> &mdash; the same idea as PayPal's: converts the
+          payment amount to USD before charging, useful if your site's currency isn't one
+          Mollie supports directly.</li>
+      <li><strong>API key</strong> &mdash; your key from your Mollie account.</li>
+    </ul>
+
+    <h2>Removing a plugin</h2>
+    <p>The trash icon on a plugin's row in <em>Admin &rarr; Plugins</em> removes it. Zender
+       deletes the plugin's registration first, then &mdash; while its files are still on
+       disk &mdash; runs the manifest's uninstall action if one is declared, and finally
+       deletes the plugin's entire folder. Because the registration is removed before the
+       uninstall action runs, a failure in that step (network error, plugin bug) is
+       silently logged and ignored &mdash; the plugin still gets fully removed either way,
+       whether or not its own cleanup succeeded.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" id="doc-toc-col"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/docs.js"></script>
+</body>
+</html>
